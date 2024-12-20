@@ -1,7 +1,9 @@
 'use client';  // Directive indiquant que ce composant doit être côté client
 
 import { useState, useEffect } from 'react';
-import WorkCard from '../../components/WorkCard';
+import WorkCard from '../../../components/WorkCard';
+import '../../../styles/MovieList.css'; // Import du CSS de la liste de films
+import '../../../styles/Loading.css'; // Import du CSS de l'indicateur de chargement
 
 function Movies() {
   const [movies, setMovies] = useState([]);
