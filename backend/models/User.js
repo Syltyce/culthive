@@ -23,6 +23,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  telephone: {
+    type: DataTypes.STRING,  
+    allowNull: true,  
+  },
 }, {
   tableName: 'users',
   timestamps: true, // createdAt et updatedAt

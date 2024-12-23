@@ -1,34 +1,47 @@
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
       - ./backend:/app
+      - /app/node_modules
     environment:
+      - NODE_ENV=development
       - DB_HOST=db
-      - DB_USER=root
-      - DB_PASSWORD=example
-      - DB_NAME=senscritique
+      - DB_PORT=3306
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - TMDB_JWT=${TMDB_JWT}
     depends_on:
       - db
+    command: ["sh", "-c", "until nc -z -v -w30 $DB_HOST $DB_PORT; do echo 'Waiting for DB...'; sleep 5; done; npm run dev"]
+
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "3001:3001"
+    environment:
+      - PORT=3001
     volumes:
       - ./frontend:/app
-    stdin_open: true
-    tty: true
+      - /app/node_modules 
+    command: ["npm", "run", "dev"]
 
   db:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: senscritique
+    image: mysql:latest
     ports:
-      - "3306:3306"
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  
+      MYSQL_DATABASE: ${DB_NAME}          
     volumes:
       - db_data:/var/lib/mysql
 

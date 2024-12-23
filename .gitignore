@@ -5,6 +5,9 @@
 # Ignore les fichiers d'environnement
 .env
 
+# Ignore dockerignore 
+.dockerignore 
+
 # Ignore les fichiers de logs
 *.log
 

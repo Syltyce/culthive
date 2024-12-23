@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import WorkCard from '../../../components/WorkCard';
+import Header from '../../../components/Header';
+import Footer from '@/components/Footer';
 import '../../../styles/MovieList.css'; // Import du CSS de la liste de films
 import '../../../styles/Loading.css'; // Import du CSS de l'indicateur de chargement
 
@@ -34,6 +36,7 @@ function Movies() {
 
   return (
     <div>
+      <Header />
       <h1>Films</h1>
       {error && <p>{error}</p>}  {/* Affiche l'erreur si elle existe */}
       <div className="movie-list">
@@ -45,6 +48,7 @@ function Movies() {
           <p>Aucun film trouvé</p>
         )}
       </div>
+      <Footer />
     </div>
   );
 }

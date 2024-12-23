@@ -1,0 +1,54 @@
+/* Header.css */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333;
+  color: green; /* Couleur du texte en vert */
+}
+
+.nav {
+  display: flex;
+  gap: 15px;
+}
+
+.nav a {
+  color: green; /* Couleur du texte en vert */
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.search-bar {
+  flex-grow: 1;
+  margin: 0 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-buttons button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #555;
+  color: green; /* Couleur du texte en vert */
+  cursor: pointer;
+}
+
+.auth-buttons button:hover {
+  background-color: #777;
+}
