@@ -6,7 +6,15 @@
   align-items: center;
   padding: 10px 20px;
   background-color: #333;
-  color: green; /* Couleur du texte en vert */
+  color: white; /* Couleur du texte en vert */
+}
+
+/* Logo styling */
+.header-logo {
+  max-height: 50px; /* Taille raisonnable pour le logo */
+  width: auto;
+  margin-right: 20px; /* Espacement avec le reste */
+  cursor: pointer;
 }
 
 .nav {
@@ -14,14 +22,26 @@
   gap: 15px;
 }
 
-.nav a {
-  color: green; /* Couleur du texte en vert */
-  text-decoration: none;
+.header-nav {
+  display: flex;
+  gap: 20%;
+  align-items: center;
 }
 
-.nav a:hover {
-  text-decoration: underline;
+
+/* Style par défaut des liens */
+.header-nav a {
+  text-decoration: none; /* Supprime le soulignement */
+  color: white; /* Couleur par défaut */
+  font-size: 1rem; /* Taille du texte */
+  transition: color 0.3s ease; /* Animation fluide */
 }
+
+/* Changement de couleur au survol */
+.header-nav a:hover {
+  color: #007BFF; /* Bleu par exemple, personnalisez selon vos goûts */
+}
+
 
 .search-bar {
   flex-grow: 1;

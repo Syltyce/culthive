@@ -5,7 +5,10 @@ import "../styles/Header.css";
 const Header = () => {
   return (
     <header className="header">
-      <div className="header-logo">Culthive</div>
+      <img className="header-logo"
+      src="/logo_culthive_svg.svg"
+      alt="Logo de CultHive" />
+      
       <nav className="header-nav">
         <Link href="/">Accueil</Link>
         <Link href="/works/movies">Films</Link>
