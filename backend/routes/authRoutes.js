@@ -1,9 +1,13 @@
 // backend/routes/authRoutes.js
 
 const express = require("express");
-const bcrypt = require("bcrypt");
-const { User } = require("../models");  // Le modèle User défini dans backend/models/User.js
+const bcrypt = require('bcrypt');
+const User = require("../models/User");
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const dotenv = require("dotenv");
+dotenv.config();
+
 
 // Route d'inscription (register)
 router.post("/register", async (req, res) => {
@@ -18,7 +22,7 @@ router.post("/register", async (req, res) => {
     return res.status(400).json({ message: "L'email est invalide." });
   }
 
-  if (phone && !/^\+?[1-9]\d{1,14}$/.test(phone)) {
+  if (phone && !/^0\d{9}$/.test(phone)) {
     return res.status(400).json({ message: "Le numéro de téléphone est invalide." });
   }
 
@@ -40,10 +44,18 @@ router.post("/register", async (req, res) => {
 
     // Créer l'utilisateur
     const newUser = await User.create({ username, email, password: hashedPassword, phone });
-    res.status(201).json({ message: "Inscription réussie", user: { username, email } });
+    res.status(201).json({ message: "Inscription réussie", user: { username: newUser.username, email: newUser.email } });
   } catch (error) {
-    console.error(error);
+    console.error("Erreur dans /register :", error.message, error.stack);
     res.status(500).json({ message: "Erreur serveur" });
+
+    if (error.name === 'SequelizeValidationError') {
+      return res.status(400).json({
+        error: 'Validation error',
+        details: error.errors.map(e => e.message),
+      });
+    }
+
   }
 });
 
@@ -69,7 +81,7 @@ router.post("/login", async (req, res) => {
       }
   
       // Générer un token JWT
-      const token = jwt.sign({ id: user.id, email: user.email }, "votre_clé_secrète", { expiresIn: "1h" });
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
   
       res.status(200).json({ message: "Connexion réussie", token });
     } catch (error) {

@@ -5,6 +5,9 @@ const express = require("express");
 const sequelize = require("./config/database");
 const axios = require("axios");
 
+const authRoutes = require('./routes/authRoutes');  // Import des routes
+
+
 const cors = require("cors");
 
 // models
@@ -18,8 +21,13 @@ const app = express();
 app.use(
   cors({
     origin: "http://localhost:3001", // Remplace par l'URL de ton frontend
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })
 );
+
+app.use(express.json());  // Middleware pour parser le corps en JSON
+
+app.use('/api', authRoutes);
 
 const PORT = process.env.PORT || 3000;
 
@@ -99,7 +107,7 @@ app.get("/api/works/series", async (req, res) => {
 });
 
 sequelize
-  .sync({ force: true })
+  .sync()
   .then(() => {
     console.log("BDD synchronisée");
     app.listen(PORT, () => {
