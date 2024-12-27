@@ -92,3 +92,24 @@
   .highlight_2 {
     color: #0070f3;
   }
+
+  .error {
+    color: rgb(200, 0, 0);
+    background-color: #ff9d9d; /* Vert clair */
+    border: 2px solid rgb(200, 0, 0);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .success {
+    color: rgb(0, 200, 0);
+    background-color: #b9ffc9; /* Vert clair */
+    border: 2px solid rgb(0, 200, 0);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 15px;
+  }

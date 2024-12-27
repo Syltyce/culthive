@@ -18,6 +18,11 @@ export default function Register() {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerTel, setRegisterTel] = useState("");
 
+  // État pour afficher les erreurs et les succès 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(""); // État pour les succès
+
+
   // Fonction Asynchrone appelée lorsqu'on soumet le formulaire pour s'inscrire
   const register = async () => {
 
@@ -37,6 +42,8 @@ export default function Register() {
     // Si la réponse du backend n'est pas OK : on affiche l'erreur 
     if (!response.ok) {
       const errorData = await response.json();
+      setErrorMessage(errorData.message); // Affiche le message d'erreur côté frontend
+      setSuccessMessage(""); // Réinitialiser le message de succès
       console.error("Erreur backend :", errorData.message);
       return;
     }
@@ -45,8 +52,12 @@ export default function Register() {
     const data = await response.json();
     if (response.ok) {
       console.log("Inscription réussie :", data);
+      setSuccessMessage("Inscription réussie ! Vous pouvez vous connecter désormais !");
+      setErrorMessage(""); // Efface les messages d'erreur en cas de succès
     } else {
       console.error("Erreur :", data.message);
+      setErrorMessage("Une erreur inattendue s'est produite. Veuillez réessayer.");
+      setSuccessMessage(""); // Réinitialiser le message de succès
     }
   };
 
@@ -59,6 +70,10 @@ export default function Register() {
         <p className={styles.subtitle}>
           Rejoignez-nous et découvrez de nouvelles œuvres passionnantes.
         </p>
+
+        {/* Affichage du message d'erreur ou de la réussite de l'inscription  */}
+        {successMessage && <p className={styles.success}>{successMessage}</p>}
+        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
 
         {/* Formulaire d'inscription qui enregistre les différents champs dans les useState grâce à onChange */}
         <form
@@ -100,6 +115,7 @@ export default function Register() {
             S'inscrire
           </button>
         </form>
+        
         <Link href="/users/login" className={styles.link}>
           Vous avez déjà un compte ?{" "}
           <span className={styles.highlight}>Je me connecte</span>

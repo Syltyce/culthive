@@ -8,6 +8,9 @@ const axios = require("axios");
 // Import des routes d'authentification (register et login)
 const authRoutes = require("./routes/authRoutes");
 
+// Import du middleware d'identification
+const authenticate = require("./middleware/authenticate");
+
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
 
@@ -62,6 +65,26 @@ app.post("/api/users", async (req, res) => {
     res.status(500).json({ error: "Erreur lors de l'ajout de l'utilisateur" });
   }
 });
+
+app.get('/api/user', authenticate, async (req, res) => {
+  try {
+    // `req.user` contient les données décodées du token (par ex. `id`, `username`, etc.)
+    const user = await User.findOne({
+      where: { id: req.user.id }, // Utiliser `req.user.id` pour identifier l'utilisateur
+      attributes: ["id", "username", "email", "phone"], // Sélectionnez les colonnes que vous voulez retourner
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    res.status(200).json(user); // Retourne les informations de l'utilisateur
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données utilisateur :", error);
+    res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
+
 
 // Parties Films
 // Route pour récupérer les films populaires depuis l'API TMDb

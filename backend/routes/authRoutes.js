@@ -20,19 +20,28 @@ router.post("/register", async (req, res) => {
   if (!username || !email || !password) {
     return res
       .status(400)
-      .json({ message: "Tous les champs obligatoires ne sont pas remplis." });
+      .json({ 
+        code: "FIELDS_MISSING",
+        message: "Tous les champs obligatoires ne sont pas remplis." 
+      });
   }
 
   // Vérification format email
   if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-    return res.status(400).json({ message: "L'email est invalide." });
+    return res.status(400).json({ 
+      code: "EMAIL_INVALID",
+      message: "L'email est invalide." 
+    });
   }
 
   // Vérification format téléphone
   if (phone && !/^0\d{9}$/.test(phone)) {
     return res
       .status(400)
-      .json({ message: "Le numéro de téléphone est invalide." });
+      .json({ 
+        code: "PHONE_INVALID",
+        message: "Le numéro de téléphone est invalide." 
+      });
   }
 
   // Vérification format mdp
@@ -43,8 +52,8 @@ router.post("/register", async (req, res) => {
     !/\d/.test(password)
   ) {
     return res.status(400).json({
-      message:
-        "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.",
+      code: "PASSWORD_WEAK",
+      message: "Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule et un chiffre.",
     });
   }
 
@@ -53,7 +62,10 @@ router.post("/register", async (req, res) => {
     // Vérifier si l'email existe déjà
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      return res.status(400).json({ message: "Cet email est déjà utilisé." });
+      return res.status(400).json({ 
+        code: "EMAIL_ALREADY_USED",
+        message: "Cet email est déjà utilisé." 
+      });
     }
 
     // Hache le mot de passe
@@ -108,7 +120,7 @@ router.post("/login", async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ message: "Email incorrect." });
+        .json({ message: "Email ou Mot de Passe incorrect." });
     }
 
     // Comparer le mot de passe avec celui haché en base
@@ -116,7 +128,7 @@ router.post("/login", async (req, res) => {
     if (!passwordMatch) {
       return res
         .status(400)
-        .json({ message: "Mot de passe incorrect." });
+        .json({ message: "Email ou Mot de Passe incorrect." });
     }
 
     // Générer un token JWT
