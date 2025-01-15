@@ -5,7 +5,7 @@ import '../styles/Footer.css';
 export default function Footer() {
   return (
     <footer>
-      <p>&copy; 2024 Mon Application de Films et Séries</p>
+      <p>&copy; 2024 CultHive </p>
       <nav>
         <ul>
           <li><a href="/about">À propos</a></li>
