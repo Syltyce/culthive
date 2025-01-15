@@ -1,4 +1,4 @@
-'use client';  // Directive indiquant que ce composant doit être côté client
+'use client'; 
 
 import { useState, useEffect } from 'react';
 import WorkCard from '../../../components/WorkCard';

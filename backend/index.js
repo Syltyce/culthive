@@ -138,6 +138,45 @@ app.get("/api/works/series", async (req, res) => {
   }
 });
 
+// Partie Gestion des Détails des Œuvres
+// Route pour récupérer les détails d'un film ou d'une série
+app.get('/api/works/:id', async (req, res) => {
+  const { id } = req.params; // Récupère l'ID du film ou de la série depuis les paramètres de l'URL
+  try {
+    const apiKey = process.env.TMDB_API_KEY;
+    
+    // Vérifie si c'est un film ou une série en fonction du type (film ou série)
+    const movieResponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
+      params: {
+        api_key: apiKey,
+        language: 'fr-FR', // Langue des résultats
+      },
+    });
+
+    if (movieResponse.data) {
+      return res.json(movieResponse.data); // Retourne les détails du film
+    }
+
+    // Si ce n'est pas un film, essaye de récupérer une série
+    const seriesResponse = await axios.get(`https://api.themoviedb.org/3/tv/${id}`, {
+      params: {
+        api_key: apiKey,
+        language: 'fr-FR', // Langue des résultats
+      },
+    });
+
+    if (seriesResponse.data) {
+      return res.json(seriesResponse.data); // Retourne les détails de la série
+    }
+
+    res.status(404).json({ message: "Œuvre non trouvée" }); // Si aucune œuvre n'est trouvée
+  } catch (error) {
+    console.error("Erreur lors de la récupération des détails de l'œuvre:", error);
+    res.status(500).json({ message: "Erreur du serveur" });
+  }
+});
+
+
 // Synchronisation de la base de données et démarrage du serveur
 sequelize
   .sync() // Synchronisation avec la base de données (création des tables si elles n'existent pas)
