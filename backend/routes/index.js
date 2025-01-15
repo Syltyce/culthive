@@ -1,6 +1,6 @@
 const express = require("express");
 const authRoutes = require("./authRoutes"); // Déjà existant
-const worksRoutes = require("./works");    // Déjà existant
+const worksRoutes = require("./worksRoutes");    // Déjà existant
 
 const router = express.Router();
 

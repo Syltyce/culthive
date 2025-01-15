@@ -1,7 +1,7 @@
 'use client'; 
 
 import { useState, useEffect } from 'react';
-import WorkCard from '../../../components/WorkCard';
+import WorkCardMovie from '../../../components/WorkCardMovie';
 import Header from '../../../components/Header';
 import Footer from '@/components/Footer';
 import '../../../styles/MovieList.css'; // Import du CSS de la liste de films
@@ -24,6 +24,8 @@ function Movies() {
 
         const data = await response.json();
         console.log('Data:', data);
+        console.log("First movie:", data[0]); // Afficher le premier objet movie pour vérifier sa structure
+
         setMovies(data);
       } catch (err) {
         console.error('Error:', err);
@@ -42,7 +44,7 @@ function Movies() {
       <div className="movie-list">
         {movies.length > 0 ? (
           movies.map((movie) => (
-            <WorkCard key={movie.id} work={movie} />
+            <WorkCardMovie key={movie.id} work={movie} />
           ))
         ) : (
           <p>Aucun film trouvé</p>

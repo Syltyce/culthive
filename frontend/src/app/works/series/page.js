@@ -1,7 +1,7 @@
 "use client"; // Directive indiquant que ce composant doit être côté client
 
 import { useState, useEffect } from "react";
-import WorkCard from "../../../components/WorkCard";
+import WorkCardSerie from "../../../components/WorkCardSerie";
 import Header from '../../../components/Header';
 import Footer from '@/components/Footer';
 import "../../../styles/MovieList.css"; // Import du CSS de la liste de films
@@ -41,7 +41,7 @@ function Series() {
       {error && <p>{error}</p>} {/* Affiche l'erreur si elle existe */}
       <div className="movie-list">
         {series.length > 0 ? (
-          series.map((movie) => <WorkCard key={movie.id} work={movie} />)
+          series.map((serie) => <WorkCardSerie key={serie.id} work={serie} />)
         ) : (
           <p>Aucun film trouvé</p>
         )}
