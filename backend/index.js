@@ -7,11 +7,8 @@ const axios = require("axios");
 
 // Import des routes d'authentification (register et login)
 const authRoutes = require("./routes/authRoutes");
-const worksRoutes = require("./routes/worksRoutes");  // Import des routes pour les films et séries
-
-
-// Import du middleware d'identification
-const authenticate = require("./middleware/authenticate");
+const userRoutes = require("./routes/userRoutes"); // Import des routes pour les films et séries
+const worksRoutes = require("./routes/worksRoutes"); // Import des routes pour les films et séries
 
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
@@ -44,140 +41,8 @@ app.get("/", (req, res) => {
   res.send("Bienvenue sur le Backend de CultHive !");
 });
 
-// Partie Gestion Utilisateur
-// Route pour récupérer tous les utilisateurs
-app.get("/api/users", async (req, res) => {
-  try {
-    const users = await User.findAll(); // Récupération de tous les utilisateurs dans la BDD
-    res.status(200).json(users);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Erreur lors de la récupération des utilisateurs" });
-  }
-});
-
-// Route pour ajouter un nouvel utilisateur
-app.post("/api/users", async (req, res) => {
-  try {
-    const { username, email, password, telephone } = req.body; // Extraction des données de la requête
-    const user = await User.create({ username, email, password, telephone }); // Création de l'utilisateur
-    res.status(201).json(user);
-  } catch (error) {
-    res.status(500).json({ error: "Erreur lors de l'ajout de l'utilisateur" });
-  }
-});
-
-app.get('/api/user', authenticate, async (req, res) => {
-  try {
-    // `req.user` contient les données décodées du token (par ex. `id`, `username`, etc.)
-    const user = await User.findOne({
-      where: { id: req.user.id }, // Utiliser `req.user.id` pour identifier l'utilisateur
-      attributes: ["id", "username", "email", "phone"], // Sélectionnez les colonnes que vous voulez retourner
-    });
-
-    if (!user) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
-    }
-
-    res.status(200).json(user); // Retourne les informations de l'utilisateur
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données utilisateur :", error);
-    res.status(500).json({ message: "Erreur du serveur" });
-  }
-});
-
+app.use("/api/users", userRoutes); // Préfixe les routes des utilisateurs
 app.use("/api/works", worksRoutes);  // Préfixe les routes des films et séries avec /api/works
-
-// Parties Films
-// Route pour récupérer les films populaires depuis l'API TMDb
-// app.get("/api/works/movies", async (req, res) => {
-//   try {
-
-//     const apiKey = process.env.TMDB_API_KEY;
-
-//     const response = await axios.get(
-//       "https://api.themoviedb.org/3/movie/popular",
-//       {
-//         params: {
-//           api_key: apiKey,
-//           language: "fr-FR", // Langue des résultats
-//         },
-//       }
-//     );
-
-//     // Les films récupérés depuis l'API
-//     const movies = response.data.results;
-//     res.json(movies); 
-//   } catch (error) {
-//     console.error("Erreur lors de la récupération des films:", error);
-//     res.status(500).json({ message: "Erreur du serveur" });
-//   }
-// });
-
-// Parties Séries 
-// Route pour récupérer les séries populaires depuis l'API TMDb
-// app.get("/api/works/series", async (req, res) => {
-//   try {
-
-//     const apiKey = process.env.TMDB_API_KEY;
-
-//     const response = await axios.get(
-//       "https://api.themoviedb.org/3/tv/popular",
-//       {
-//         params: {
-//           api_key: apiKey,
-//           language: "fr-FR", // Langue des résultats
-//         },
-//       }
-//     );
-
-//     // Les séries récupérés depuis l'API
-//     const series = response.data.results;
-//     res.json(series); 
-//   } catch (error) {
-//     console.error("Erreur lors de la récupération des films:", error);
-//     res.status(500).json({ message: "Erreur du serveur" });
-//   }
-// });
-
-// Partie Gestion des Détails des Œuvres
-// Route pour récupérer les détails d'un film ou d'une série
-// app.get('/api/works/:id', async (req, res) => {
-//   const { id } = req.params; // Récupère l'ID du film ou de la série depuis les paramètres de l'URL
-//   try {
-//     const apiKey = process.env.TMDB_API_KEY;
-    
-//     // Vérifie si c'est un film ou une série en fonction du type (film ou série)
-//     const movieResponse = await axios.get(`https://api.themoviedb.org/3/movie/${id}`, {
-//       params: {
-//         api_key: apiKey,
-//         language: 'fr-FR', // Langue des résultats
-//       },
-//     });
-
-//     if (movieResponse.data) {
-//       return res.json(movieResponse.data); // Retourne les détails du film
-//     }
-
-//     // Si ce n'est pas un film, essaye de récupérer une série
-//     const seriesResponse = await axios.get(`https://api.themoviedb.org/3/tv/${id}`, {
-//       params: {
-//         api_key: apiKey,
-//         language: 'fr-FR', // Langue des résultats
-//       },
-//     });
-
-//     if (seriesResponse.data) {
-//       return res.json(seriesResponse.data); // Retourne les détails de la série
-//     }
-
-//     res.status(404).json({ message: "Œuvre non trouvée" }); // Si aucune œuvre n'est trouvée
-//   } catch (error) {
-//     console.error("Erreur lors de la récupération des détails de l'œuvre:", error);
-//     res.status(500).json({ message: "Erreur du serveur" });
-//   }
-// });
 
 
 // Synchronisation de la base de données et démarrage du serveur

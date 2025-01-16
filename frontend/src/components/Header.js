@@ -13,7 +13,7 @@ const Header = () => {
     const token = localStorage.getItem("token");
     if (token) {
       // Si un token est trouvé, récupérer les données de l'utilisateur (par exemple via l'API)
-      fetch("http://localhost:3000/api/user", {
+      fetch("http://localhost:3000/api/users", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

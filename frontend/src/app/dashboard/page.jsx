@@ -19,7 +19,7 @@ export default function Dashboard() {
       router.push("/users/login"); // Si pas de token, rediriger vers la page de login
     } else {
       // Si un token est présent, récupérer les données de l'utilisateur (exemple avec un appel API)
-      fetch("http://localhost:3000/api/user", {
+      fetch("http://localhost:3000/api/users/profile", {
         headers: {
           "Authorization": `Bearer ${token}`, // Ajoute le token dans le header
         },
