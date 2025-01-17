@@ -9,6 +9,7 @@ const axios = require("axios");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes"); // Import des routes pour les films et séries
 const worksRoutes = require("./routes/worksRoutes"); // Import des routes pour les films et séries
+const listRoutes = require("./routes/listRoutes"); // Import des routes pour les films et séries
 
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
@@ -17,6 +18,11 @@ const cors = require("cors");
 const Work = require("./models/Work");
 const User = require("./models/User");
 const Review = require("./models/Review");
+const List = require("./models/List");
+
+List.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasMany(List, { foreignKey: 'userId' });
 
 const app = express();
 
@@ -32,6 +38,9 @@ app.use(express.json()); // Middleware pour parser le corps en JSON
 
 // Ajout des routes d'authentification (routes définies dans le fichier 'authRoutes')
 app.use("/api", authRoutes);
+app.use("/api/users", userRoutes); // Préfixe les routes des utilisateurs
+app.use("/api/works", worksRoutes);  // Préfixe les routes des films et séries avec /api/works
+app.use("/api/list", listRoutes);  
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
 const PORT = process.env.PORT || 3000;
@@ -41,8 +50,6 @@ app.get("/", (req, res) => {
   res.send("Bienvenue sur le Backend de CultHive !");
 });
 
-app.use("/api/users", userRoutes); // Préfixe les routes des utilisateurs
-app.use("/api/works", worksRoutes);  // Préfixe les routes des films et séries avec /api/works
 
 
 // Synchronisation de la base de données et démarrage du serveur
