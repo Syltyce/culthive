@@ -1,6 +1,10 @@
 const List = require("../models/List");
 const User = require("../models/User");
 
+const axios = require("axios");
+
+const TMDB_API_KEY = process.env.TMDB_API_KEY; // Charge la clé depuis l'environnement
+
 exports.addToList = async (req, res) => {
   try {
     const { userId, workId, type } = req.body;
@@ -103,5 +107,20 @@ exports.getUserLists = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+exports.getWorkDetails = async (req, res) => {
+  const { workId } = req.params;
+
+    try {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/${workId}?api_key=${TMDB_API_KEY}`
+      );
+
+      res.status(200).json(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des détails de l'œuvre :", error.message);
+      res.status(500).json({ message: "Erreur lors de la récupération des détails de l'œuvre." });
+    }
 };
 
