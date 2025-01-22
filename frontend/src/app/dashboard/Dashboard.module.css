@@ -1,22 +1,96 @@
-/* Dashboard.module.css */
+/* Container principal */
 .container {
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  font-family: 'Arial', sans-serif;
 }
 
+/* Style pour le titre principal */
 .main {
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  max-width: 900px;
+  width: 100%;
   margin: 0 auto;
 }
 
 .title {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 20px;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
+/* Style pour l'affichage des h2 */
+.title-user {
+  font-size: 1.5rem;
+  color: #555;
+  margin-top: 1.5rem;
+}
+
+/* Style pour l'affichage des erreurs */
 .error {
-  color: red;
+  color: #f44336;
+  font-size: 1rem;
+  margin-top: 1rem;
   text-align: center;
 }
 
+/* Style du menu de navigation */
+.navDashboard {
+  margin-top: 2rem;
+}
 
+.navDashboard ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.navDashboard ul li {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.btn {
+  background-color: #f7c731;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #f4a261;
+  transform: translateY(-2px);
+}
+
+.btn:focus {
+  outline: none;
+}
+
+/* Réactivité - Ajuster pour les petits écrans */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+
+
+  .btn {
+    width: 100%;
+    padding: 12px;
+  }
+}
