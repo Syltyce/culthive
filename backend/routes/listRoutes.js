@@ -6,6 +6,6 @@ router.post('/add', ListController.addToList);
 router.post('/remove', ListController.removeFromList);
 router.get('/list', ListController.getList);
 router.get('/lists', ListController.getUserLists);
-router.get('/details/:workId', ListController.getWorkDetails);
+router.get('/details/:workId/:workType', ListController.getWorkDetails);
 
 module.exports = router;

@@ -7,12 +7,13 @@ const TMDB_API_KEY = process.env.TMDB_API_KEY; // Charge la clé depuis l'enviro
 
 exports.addToList = async (req, res) => {
   try {
-    const { userId, workId, type } = req.body;
+    const { userId, workId, type, workType } = req.body;
 
     // Validation basique
-    if (!userId || !workId || !type) {
+    if (!userId || !workId || !type || !workType) {
       return res.status(400).json({
-        message: "Les champs userId, workId et type sont obligatoires.",
+        message:
+          "Les champs userId, workId, type et workType sont obligatoires.",
       });
     }
 
@@ -24,7 +25,7 @@ exports.addToList = async (req, res) => {
 
     // Vérifie si l'œuvre existe déjà dans la liste
     const existingEntry = await List.findOne({
-      where: { userId, workId, type },
+      where: { userId, workId, type, workType },
     });
     if (existingEntry) {
       return res
@@ -33,9 +34,10 @@ exports.addToList = async (req, res) => {
     }
 
     // Ajout de l'œuvre à la liste
-    const newEntry = await List.create({ userId, workId, type });
+    const newEntry = await List.create({ userId, workId, type, workType });
     return res.status(201).json({
-      message: "Ajouté à la liste avec succès.",
+      message: `${workType === "film" ? "Le film" : "La série"} a été ajouté
+      à la liste " ${type} " de l'utilisateur ${userId}.`,
       data: newEntry,
     });
   } catch (error) {
@@ -88,20 +90,37 @@ exports.getUserLists = async (req, res) => {
       });
     }
 
-    // Récupérer toutes les listes de l'utilisateur
-    const userLists = await List.findAll({
+    // Récupérer toutes les listes (watchlist et favorites)
+    const lists = await List.findAll({
       where: { userId },
+      // Aucune restriction sur le type, on récupère tout (watchlist et favorites)
     });
 
-    if (userLists.length === 0) {
-      return res.status(404).json({
-        message: "Aucune liste trouvée pour cet utilisateur.",
-      });
-    }
+    // Séparer les listes en deux : watchlist et favorites
+    const watchlist = lists.filter(item => item.type === 'watchlist');
+    const favorites = lists.filter(item => item.type === 'favorites');
 
-    return res.status(200).json(userLists);
+    // Séparer les films et séries dans la watchlist
+    const moviesWatchlist = watchlist.filter(item => item.workType === 'film');
+    const seriesWatchlist = watchlist.filter(item => item.workType === 'serie');
+
+    // Séparer les films et séries dans les favoris
+    const moviesFavorites = favorites.filter(item => item.workType === 'film');
+    const seriesFavorites = favorites.filter(item => item.workType === 'serie');
+
+    // Renvoyer les résultats sous forme structurée
+    return res.status(200).json({
+      watchlist: {
+        movies: moviesWatchlist,
+        series: seriesWatchlist,
+      },
+      favorites: {
+        movies: moviesFavorites,
+        series: seriesFavorites,
+      }
+    });
+
   } catch (error) {
-    console.error("Erreur lors de la récupération des listes:", error);
     return res.status(500).json({
       message: "Erreur lors de la récupération des listes.",
       error: error.message,
@@ -110,17 +129,32 @@ exports.getUserLists = async (req, res) => {
 };
 
 exports.getWorkDetails = async (req, res) => {
-  const { workId } = req.params;
+  const { workId, workType } = req.params;
 
-    try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${workId}?api_key=${TMDB_API_KEY}`
-      );
+  // Validation du workType
+  if (workType !== 'film' && workType !== 'serie') {
+    return res.status(400).json({ message: 'Type d\'œuvre non valide' });
+  }
 
-      res.status(200).json(response.data);
-    } catch (error) {
-      console.error("Erreur lors de la récupération des détails de l'œuvre :", error.message);
-      res.status(500).json({ message: "Erreur lors de la récupération des détails de l'œuvre." });
+  try {
+    let url = '';
+
+    // Logique selon le type d'œuvre
+    if (workType === 'film') {
+      url = `https://api.themoviedb.org/3/movie/${workId}?api_key=${TMDB_API_KEY}`;
+    } else if (workType === 'serie') {
+      url = `https://api.themoviedb.org/3/tv/${workId}?api_key=${TMDB_API_KEY}`;
     }
+
+    const response = await axios.get(url);
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des détails de l'œuvre :", error.message);
+    res.status(500).json({
+      message: "Erreur lors de la récupération des détails de l'œuvre.",
+    });
+  }
 };
+
 

@@ -19,6 +19,10 @@ const List = sequelize.define('List', {
     type: DataTypes.ENUM('watchlist', 'favorites'),
     allowNull: false,
   },
+  workType: {
+    type: DataTypes.STRING, // Afin de séparer les films des séries
+    allowNull: false,
+  },
 }, {
   tableName: 'Lists',
   timestamps: true, // Ajoute `createdAt` et `updatedAt`

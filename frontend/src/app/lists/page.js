@@ -7,8 +7,10 @@ import { useRouter } from "next/navigation";
 import "../../styles/ListsPage.css";
 
 function ListsPage() {
-  const [watchlist, setWatchlist] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [moviesWatchlist, setMoviesWatchlist] = useState([]);
+  const [seriesWatchlist, setSeriesWatchlist] = useState([]);
+  const [moviesFavorites, setMoviesFavorites] = useState([]);
+  const [seriesFavorites, setSeriesFavorites] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -31,7 +33,7 @@ function ListsPage() {
         try {
           setLoading(true);
 
-          // Récupère la watchlist
+          // Récupère les watchlist
           const watchlistResponse = await fetch(
             `http://localhost:3000/api/list/list?userId=${userId}&type=watchlist`,
             {
@@ -48,22 +50,41 @@ function ListsPage() {
 
           const watchlistData = await watchlistResponse.json();
 
-          // Récupère les détails des œuvres via le backend
-          const watchlistDetails = await Promise.all(
-            watchlistData.map(async (item) => {
-              const workDetailsResponse = await fetch(
-                `http://localhost:3000/api/list/details/${item.workId}`
-              );
+          // Sépare les films et séries dans la watchlist
+          const moviesWatchlistData = watchlistData.filter(
+            (item) => item.workType === "film"
+          );
+          const seriesWatchlistData = watchlistData.filter(
+            (item) => item.workType === "serie"
+          );
 
-              if (!workDetailsResponse.ok) {
-                throw new Error("Erreur lors de la récupération des détails des films.");
-              }
+          // Récupère les détails des films et séries dans la watchlist
+          const fetchWorkDetails = async (workId, workType) => {
+            const response = await fetch(
+              `http://localhost:3000/api/list/details/${workId}/${workType}`
+            );
 
-              return workDetailsResponse.json();
+            if (!response.ok) {
+              throw new Error("Erreur lors de la récupération des détails.");
+            }
+
+            return await response.json();
+          };
+
+          const moviesWatchlistDetails = await Promise.all(
+            moviesWatchlistData.map(async (item) => {
+              return await fetchWorkDetails(item.workId, "film");
             })
           );
 
-          setWatchlist(watchlistDetails);
+          const seriesWatchlistDetails = await Promise.all(
+            seriesWatchlistData.map(async (item) => {
+              return await fetchWorkDetails(item.workId, "serie");
+            })
+          );
+
+          setMoviesWatchlist(moviesWatchlistDetails);
+          setSeriesWatchlist(seriesWatchlistDetails);
 
           // Récupère les favoris
           const favoritesResponse = await fetch(
@@ -82,21 +103,28 @@ function ListsPage() {
 
           const favoritesData = await favoritesResponse.json();
 
-          const favoritesDetails = await Promise.all(
-            favoritesData.map(async (item) => {
-              const workDetailsResponse = await fetch(
-                `http://localhost:3000/api/list/details/${item.workId}`
-              );
+          // Sépare les films et séries dans les favoris
+          const moviesFavoritesData = favoritesData.filter(
+            (item) => item.workType === "film"
+          );
+          const seriesFavoritesData = favoritesData.filter(
+            (item) => item.workType === "serie"
+          );
 
-              if (!workDetailsResponse.ok) {
-                throw new Error("Erreur lors de la récupération des détails des films.");
-              }
-
-              return workDetailsResponse.json();
+          const moviesFavoritesDetails = await Promise.all(
+            moviesFavoritesData.map(async (item) => {
+              return await fetchWorkDetails(item.workId, "film");
             })
           );
 
-          setFavorites(favoritesDetails);
+          const seriesFavoritesDetails = await Promise.all(
+            seriesFavoritesData.map(async (item) => {
+              return await fetchWorkDetails(item.workId, "serie");
+            })
+          );
+
+          setMoviesFavorites(moviesFavoritesDetails);
+          setSeriesFavorites(seriesFavoritesDetails);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -134,13 +162,14 @@ function ListsPage() {
       <div className="lists-page">
         <h1>Mes Listes</h1>
 
+        {/* Movies Watchlist */}
         <div className="list-section">
-          <h2>Watchlist</h2>
-          {watchlist.length === 0 ? (
-            <p>Vous n'avez pas d'œuvres dans votre Watchlist.</p>
+          <h2>Watchlist - Films</h2>
+          {moviesWatchlist.length === 0 ? (
+            <p>Vous n'avez pas de films dans votre Watchlist.</p>
           ) : (
             <div className="list-items">
-              {watchlist.map((item) => (
+              {moviesWatchlist.map((item) => (
                 <div key={item.id} className="list-item">
                   <h3>{item.title || "Titre non disponible"}</h3>
                   <img
@@ -158,13 +187,39 @@ function ListsPage() {
           )}
         </div>
 
+        {/* Series Watchlist */}
         <div className="list-section">
-          <h2>Favoris</h2>
-          {favorites.length === 0 ? (
-            <p>Vous n'avez pas d'œuvres dans vos Favoris.</p>
+          <h2>Watchlist - Séries</h2>
+          {seriesWatchlist.length === 0 ? (
+            <p>Vous n'avez pas de séries dans votre Watchlist.</p>
           ) : (
             <div className="list-items">
-              {favorites.map((item) => (
+              {seriesWatchlist.map((item) => (
+                <div key={item.id} className="list-item">
+                  <h3>{item.name || "Titre non disponible"}</h3>
+                  <img
+                    src={
+                      item.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                        : "/default-image.jpg"
+                    }
+                    alt={item.name || "Image indisponible"}
+                    className="list-item-poster"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Movies Favorites */}
+        <div className="list-section">
+          <h2>Favoris - Films</h2>
+          {moviesFavorites.length === 0 ? (
+            <p>Vous n'avez pas de films dans vos Favoris.</p>
+          ) : (
+            <div className="list-items">
+              {moviesFavorites.map((item) => (
                 <div key={item.id} className="list-item">
                   <h3>{item.title || "Titre non disponible"}</h3>
                   <img
@@ -174,6 +229,31 @@ function ListsPage() {
                         : "/default-image.jpg"
                     }
                     alt={item.title || "Image indisponible"}
+                    className="list-item-poster"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Series Favorites */}
+        <div className="list-section">
+          <h2>Favoris - Séries</h2>
+          {seriesFavorites.length === 0 ? (
+            <p>Vous n'avez pas de séries dans vos Favoris.</p>
+          ) : (
+            <div className="list-items">
+              {seriesFavorites.map((item) => (
+                <div key={item.id} className="list-item">
+                  <h3>{item.name || "Titre non disponible"}</h3>
+                  <img
+                    src={
+                      item.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                        : "/default-image.jpg"
+                    }
+                    alt={item.name || "Image indisponible"}
                     className="list-item-poster"
                   />
                 </div>

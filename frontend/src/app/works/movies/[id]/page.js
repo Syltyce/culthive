@@ -5,7 +5,6 @@ import Header from "../../../../components/Header";
 import Footer from "../../../../components/Footer";
 import "../../../../styles/WorkDetail.css";
 
-
 function MovieDetail({ params: initialParams }) {
   const [params, setParams] = useState(null); // Stockage des paramètres résolus
   const [movie, setMovie] = useState(null);
@@ -66,12 +65,12 @@ function MovieDetail({ params: initialParams }) {
       // Décoder le token pour obtenir l'ID utilisateur
       const decodedToken = JSON.parse(atob(token.split(".")[1])); // Décoder le token JWT
       const userId = decodedToken?.id; // Extraire l'ID de l'utilisateur
-  
+
       if (!userId) {
         setActionError("ID utilisateur manquant dans le token.");
         return;
       }
-  
+
       // Envoi de la requête POST avec l'ID de l'utilisateur
       const response = await fetch("http://localhost:3000/api/list/add", {
         method: "POST", // Méthode HTTP
@@ -83,9 +82,10 @@ function MovieDetail({ params: initialParams }) {
           userId, // Ajoute l'ID de l'utilisateur
           workId: movie.id, // L'ID du film à ajouter
           type, // 'watchlist' ou 'favorites'
+          workType: "film", // Film ou série 
         }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         setIsAdded(true);
@@ -93,7 +93,9 @@ function MovieDetail({ params: initialParams }) {
         alert(`Film ajouté à votre ${type}!`);
       } else {
         const errorData = await response.json();
-        setActionError(errorData.message || "Erreur lors de l'ajout du film à votre liste.");
+        setActionError(
+          errorData.message || "Erreur lors de l'ajout du film à votre liste."
+        );
       }
     } catch (err) {
       console.error("Erreur lors de l'ajout :", err);

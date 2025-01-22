@@ -11,6 +11,9 @@ function SeriesDetail({ params: initialParams }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const [isAdded, setIsAdded] = useState(false); // Suivi de l'ajout de la série à la liste
+  const [actionError, setActionError] = useState(null); // Gestion des erreurs d'action
+
   useEffect(() => {
     async function resolveParams() {
       if (initialParams instanceof Promise) {
@@ -47,6 +50,59 @@ function SeriesDetail({ params: initialParams }) {
     }
     fetchSeriesDetails();
   }, [params]);
+
+  // Fonction pour ajouter une série à la liste
+  const handleAddToList = async (type) => {
+    const token = localStorage.getItem("token"); // Récupère le token du localStorage
+    if (!token) {
+      setActionError(
+        "Vous devez être connecté pour ajouter une série à votre liste."
+      );
+      return;
+    }
+
+    try {
+      // Décoder le token pour obtenir l'ID utilisateur
+      const decodedToken = JSON.parse(atob(token.split(".")[1])); // Décoder le token JWT
+      const userId = decodedToken?.id; // Extraire l'ID de l'utilisateur
+
+      if (!userId) {
+        setActionError("ID utilisateur manquant dans le token.");
+        return;
+      }
+
+      // Envoi de la requête POST avec l'ID de l'utilisateur
+      const response = await fetch("http://localhost:3000/api/list/add", {
+        method: "POST", // Méthode HTTP
+        headers: {
+          "Content-Type": "application/json", // Type de contenu JSON
+          Authorization: `Bearer ${token}`, // Envoie le token dans l'en-tête Authorization
+        },
+        body: JSON.stringify({
+          userId, // Ajoute l'ID de l'utilisateur
+          workId: series.id, // L'ID de la série à ajouter
+          type, // 'watchlist' ou 'favorites'
+          workType: "serie", // Ajoute le type de travail pour différencier les séries
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setIsAdded(true);
+        setActionError(null);
+        alert(`Série ajoutée à votre ${type}!`);
+      } else {
+        const errorData = await response.json();
+        setActionError(
+          errorData.message ||
+            "Erreur lors de l'ajout de la série à votre liste."
+        );
+      }
+    } catch (err) {
+      console.error("Erreur lors de l'ajout :", err);
+      setActionError("Erreur lors de l'ajout de la série à votre liste.");
+    }
+  };
 
   if (!params) {
     return <div className="loading">Chargement des paramètres...</div>;
@@ -95,6 +151,23 @@ function SeriesDetail({ params: initialParams }) {
         <p>
           <strong>Note moyenne :</strong> {series.vote_average} / 10
         </p>
+
+        {/* Boutons d'ajout à la liste */}
+        <div className="add-to-list-buttons">
+          <button
+            onClick={() => handleAddToList("watchlist")}
+            disabled={isAdded}
+          >
+            {isAdded ? "Ajoutée à la Watchlist" : "Ajouter à ma Watchlist"}
+          </button>
+          <button
+            onClick={() => handleAddToList("favorites")}
+            disabled={isAdded}
+          >
+            {isAdded ? "Ajoutée aux Favoris" : "Ajouter à mes Favoris"}
+          </button>
+        </div>
+        {actionError && <p className="error">{actionError}</p>}
       </div>
       <Footer />
     </div>
