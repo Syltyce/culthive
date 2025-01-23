@@ -10,6 +10,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes"); // Import des routes pour les films et séries
 const worksRoutes = require("./routes/worksRoutes"); // Import des routes pour les films et séries
 const listRoutes = require("./routes/listRoutes"); // Import des routes pour les films et séries
+const reviewRoutes = require("./routes/reviewRoutes")
 
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
@@ -41,6 +42,7 @@ app.use("/api", authRoutes);
 app.use("/api/users", userRoutes); // Préfixe les routes des utilisateurs
 app.use("/api/works", worksRoutes);  // Préfixe les routes des films et séries avec /api/works
 app.use("/api/list", listRoutes);  
+app.use("/api/reviews", reviewRoutes);  
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
 const PORT = process.env.PORT || 3000;

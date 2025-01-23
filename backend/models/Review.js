@@ -16,6 +16,10 @@ Review.init(
     rating: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 1,
+        max: 10
+      }
     },
     title: {
       type: DataTypes.STRING,
@@ -23,6 +27,7 @@ Review.init(
     },
     comment: {
       type: DataTypes.TEXT,
+      allowNull: false,
     },
   },
   {
