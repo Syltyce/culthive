@@ -169,6 +169,12 @@ function SeriesDetail({ params: initialParams }) {
         </div>
         {actionError && <p className="error">{actionError}</p>}
       </div>
+
+      <div>
+        {/* Détails de l'œuvre */}
+        {userIsAuthenticated && <ReviewForm workId={work.id} />}
+      </div>
+
       <Footer />
     </div>
   );

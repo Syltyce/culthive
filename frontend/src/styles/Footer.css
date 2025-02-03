@@ -9,13 +9,28 @@ footer {
   bottom: 0;
   width: 100%;
 }
-  
-footer a {
-  color: white;
-  text-decoration: none;
+
+footer nav {
+  display: flex; /* Utilise Flexbox pour aligner les éléments en ligne */
+  justify-content: center; /* Centre les éléments horizontalement */
+  flex-wrap: wrap; /* Permet aux éléments de se renvoyer à la ligne si l'espace est trop petit */
 }
   
-footer a:hover {
-  color: #007bff;
+footer nav .footer-link {
+  text-decoration: none; /* Supprime la décoration par défaut du lien (souligné) */
+  color: white; /* Couleur du texte des liens */
+  font-size: 16px; /* Taille de police */
+  font-weight: 500; /* Poids de la police */
+  margin: 20px; /* Espace entre chaque lien */
+  transition: color 0.3s ease; /* Ajoute une transition douce pour l'effet hover */
 }
   
+footer nav .footer-link:hover {
+  color: #007bff; /* Changer la couleur des liens au survol */
+}
+
+footer p {
+  font-size: 14px; /* Taille de police du texte */
+  color: #777; /* Couleur de texte */
+  margin-top: 20px;
+}

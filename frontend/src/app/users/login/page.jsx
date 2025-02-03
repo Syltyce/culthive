@@ -1,7 +1,6 @@
-// "use client" indique que ce fichier utilise React côté client (frontend), ce qui permet l'interactivité.
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
@@ -9,20 +8,21 @@ import Header from "../../../components/Header";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import AuthContext from "@/components/AuthContext";
+
 import styles from "./Login.module.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
   // État pour les erreurs et les succès
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Nouvelle variable d'état pour vérifier la connexion
   const router = useRouter();
 
-  // Fonction de gestion de la connexion
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -36,41 +36,39 @@ export default function Login() {
       if (!response.ok) {
         const errorData = await response.json();
         setError(errorData.message);
-        setSuccessMessage(""); // Réinitialiser le message de succès
+        setSuccessMessage("");
         return;
       }
 
       const data = await response.json();
       console.log("Connexion réussie :", data);
+
+      setIsAuthenticated(true); // Mettre à jour le contexte
+      localStorage.setItem("token", data.token); // Mettre à jour le localStorage
+
       setSuccessMessage("Connexion Réussie !");
-      setError(null); // Réinitialiser l'erreur
-      setIsLoggedIn(true); // Marquer l'utilisateur comme connecté
+      setError(null);
 
-      // Sauvegarder le token JWT localement
-      localStorage.setItem("token", data.token);
-
-      // Redirection ou action après connexion
-      // window.location.href = "/dashboard"; // Exemple de redirection
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       setError("Une erreur est survenue. Veuillez réessayer.");
-      setSuccessMessage("Vous êtes connecté !"); // Réinitialiser le message de succès
     }
   };
 
-  // Utiliser useEffect pour gérer la redirection après la connexion
   useEffect(() => {
-    if (isLoggedIn) {
-      router.push("/dashboard"); // Rediriger vers le tableau de bord
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      router.push("/dashboard"); // Rediriger si authentifié
     }
-  }, [isLoggedIn, router]); // Assurez-vous que l'effet se déclenche lorsque isLoggedIn change
+  }, [isAuthenticated, router]);
 
   return (
     <div className={styles.container}>
       <Header />
       <main className={styles.main}>
-        <h1 className={styles.title}> Se connecter</h1>
-        <p className={styles.subtitle}>Ca fait plaisir de vous voir</p>
+        <h1 className={styles.title}>Se connecter</h1>
+        <p className={styles.subtitle}>Ça fait plaisir de vous voir</p>
 
         {successMessage && <p className={styles.success}>{successMessage}</p>}
         {error && <p className={styles.error}>{error}</p>}
@@ -93,7 +91,7 @@ export default function Login() {
             required
           />
           <Link href="#" className={styles.link}>
-            <span className={styles.highlight_2}> Mot de passe oublié ? </span>
+            <span className={styles.highlight_2}>Mot de passe oublié ?</span>
           </Link>
 
           <button type="submit" className={styles.button}>
@@ -101,7 +99,7 @@ export default function Login() {
           </button>
         </form>
         <Link href="/users/register" className={styles.link}>
-          Pas encore de compte ?{" "}
+          Pas encore de compte ?{" "}
           <span className={styles.highlight}>Inscrivez-vous</span>
         </Link>
       </main>

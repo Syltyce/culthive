@@ -1,11 +1,15 @@
 "use client"; // Directive pour marquer ce fichier comme un composant client
 
-import React, { useState, useEffect } from "react";
-import Header from "../../../../components/Header";
-import Footer from "../../../../components/Footer";
+import React, { useState, useEffect, useContext } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import "../../../../styles/WorkDetail.css";
+import AuthContext from "@/components/AuthContext";
+import ReviewForm from "@/components/ReviewForm";
 
 function MovieDetail({ params: initialParams }) {
+  const { isAuthenticated, user } = useContext(AuthContext); // Correction ici
+
   const [params, setParams] = useState(null); // Stockage des paramètres résolus
   const [movie, setMovie] = useState(null);
   const [error, setError] = useState(null);
@@ -168,6 +172,14 @@ function MovieDetail({ params: initialParams }) {
         </div>
         {actionError && <p className="error">{actionError}</p>}
       </div>
+
+      {/* Formulaire Note et Critique */}
+      {isAuthenticated ? (
+        <ReviewForm workId={movie.id} userId={user?.id} />
+      ) : (
+        <p> Si vous voulez noter ou faire une critique sur une oeuvre, veuillez vous connecter </p>
+      )}
+
       <Footer />
     </div>
   );
