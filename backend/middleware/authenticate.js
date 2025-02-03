@@ -1,5 +1,3 @@
-// backend/middleware/authenticate.js
-
 // Importation du module jsonwebtoken pour manipuler les tokens JWT
 const jwt = require("jsonwebtoken");
 

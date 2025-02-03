@@ -1,20 +1,24 @@
-// backend/routes/authRoutes.js
+// Ce fichier contient deux routes pour l'authentification des utilisateurs : 
+// une pour l'inscription (/register) et une pour la connexion (/login). 
+// Il gère la création d'un nouvel utilisateur, la validation des entrées, 
+// le hachage des mots de passe avec bcrypt, 
+// et la génération de tokens JWT pour les utilisateurs authentifiés.
 
+// Variables d'environnement 
 const dotenv = require("dotenv");
 dotenv.config();
 
-const User = require("../models/User");
+const User = require("../models/User"); // Modèle User 
 
 const express = require("express");
-const bcrypt = require("bcrypt");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+
+const bcrypt = require("bcrypt"); // Module de hashage des mdp
+const jwt = require("jsonwebtoken"); // Module pour manipuler les tokens JWT
 
 // Route d'inscription (register)
 router.post("/register", async (req, res) => {
-  const { username, email, password, phone } = req.body;
-
-  // Vérification que tous les champs obligatoires sont présents
+  const { username, email, password } = req.body;  // Extraction des données du corps de la requête
 
   // Envoie un message s'il manque l'un des 3 champs obligatoire du formulaire
   if (!username || !email || !password) {
@@ -32,16 +36,6 @@ router.post("/register", async (req, res) => {
       code: "EMAIL_INVALID",
       message: "L'email est invalide." 
     });
-  }
-
-  // Vérification format téléphone
-  if (phone && !/^0\d{9}$/.test(phone)) {
-    return res
-      .status(400)
-      .json({ 
-        code: "PHONE_INVALID",
-        message: "Le numéro de téléphone est invalide." 
-      });
   }
 
   // Vérification format mdp
@@ -76,7 +70,6 @@ router.post("/register", async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      phone,
     });
 
     // Réponse de succès avec les informations de l'utilisateur (sans le mot de passe)
@@ -123,7 +116,7 @@ router.post("/login", async (req, res) => {
         .json({ message: "Email ou Mot de Passe incorrect." });
     }
 
-    // Comparer le mot de passe avec celui haché en base
+    // Comparer le mot de passe avec celui haché en BDD
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res
@@ -138,6 +131,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    // Répondre avec le token JWT
     res.status(200).json({ message: "Connexion réussie", token });
   } catch (error) {
     console.error(error);
@@ -145,4 +139,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = router; // Exposer le routeur pour l'utiliser dans l'application

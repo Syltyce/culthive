@@ -1,3 +1,10 @@
+// Ce fichier définit plusieurs routes pour la gestion des utilisateurs, 
+// y compris la récupération de tous les utilisateurs, 
+// l'ajout d'un utilisateur et la récupération du profil d'un utilisateur authentifié. 
+// Le middleware authenticate est utilisé pour protéger la route de récupération du profil, 
+// assurant que seules les personnes authentifiées peuvent y accéder.
+
+// Importation des modules nécessaires
 const express = require("express");
 const User = require("../models/User");
 const authenticate = require("../middleware/authenticate");
@@ -27,12 +34,13 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Route pour récupérer le profil de l'utilisateur connecté (accessible uniquement après authentification)
 router.get('/profile', authenticate, async (req, res) => {
   try {
     // `req.user` contient les données décodées du token (par ex. `id`, `username`, etc.)
     const user = await User.findOne({
       where: { id: req.user.id }, // Utiliser `req.user.id` pour identifier l'utilisateur
-      attributes: ["id", "username", "email", "phone"], // Sélectionnez les colonnes que vous voulez retourner
+      attributes: ["id", "username", "email"], // Sélectionnez les colonnes que vous voulez retourner
     });
 
     if (!user) {

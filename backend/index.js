@@ -1,33 +1,31 @@
+// Variables d'environnement
 const dotenv = require("dotenv");
 dotenv.config();
 
 const express = require("express");
 const sequelize = require("./config/database");
-const axios = require("axios");
 
-// Import des routes d'authentification (register et login)
+// Import des routes pour les différentes fonctionnalités du backend
 const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes"); // Import des routes pour les films et séries
-const worksRoutes = require("./routes/worksRoutes"); // Import des routes pour les films et séries
-const listRoutes = require("./routes/listRoutes"); // Import des routes pour les films et séries
-const reviewRoutes = require("./routes/reviewRoutes")
+const userRoutes = require("./routes/userRoutes");
+const worksRoutes = require("./routes/worksRoutes");
+const listRoutes = require("./routes/listRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
 
-// models
-const Work = require("./models/Work");
+// models nécessaires
 const User = require("./models/User");
-const Review = require("./models/Review");
 const List = require("./models/List");
 
-List.belongsTo(User, { foreignKey: 'userId' });
+// Définition des relations entre les modèles
+List.belongsTo(User, { foreignKey: "userId" }); // Une liste appartient à un utilisateur
+User.hasMany(List, { foreignKey: "userId" }); // Un utilisateur peut avoir plusieurs listes
 
-User.hasMany(List, { foreignKey: 'userId' });
+const app = express(); // Création de l'instance Express
 
-const app = express();
-
-// Permettre l'accès depuis le frontend (port 3001)
+// Middleware CORS pour permettre l'accès depuis le frontend (port 3001)
 app.use(
   cors({
     origin: "http://localhost:3001",
@@ -37,12 +35,12 @@ app.use(
 
 app.use(express.json()); // Middleware pour parser le corps en JSON
 
-// Ajout des routes d'authentification (routes définies dans le fichier 'authRoutes')
+// Enregistrement des différentes routes
 app.use("/api", authRoutes);
-app.use("/api/users", userRoutes); // Préfixe les routes des utilisateurs
-app.use("/api/works", worksRoutes);  // Préfixe les routes des films et séries avec /api/works
-app.use("/api/list", listRoutes);  
-app.use("/api/reviews", reviewRoutes);  
+app.use("/api/users", userRoutes); 
+app.use("/api/works", worksRoutes); 
+app.use("/api/list", listRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
 const PORT = process.env.PORT || 3000;
@@ -51,8 +49,6 @@ const PORT = process.env.PORT || 3000;
 app.get("/", (req, res) => {
   res.send("Bienvenue sur le Backend de CultHive !");
 });
-
-
 
 // Synchronisation de la base de données et démarrage du serveur
 sequelize
