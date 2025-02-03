@@ -49,6 +49,8 @@ export default function Login() {
       setSuccessMessage("Connexion Réussie !");
       setError(null);
 
+      router.push("/dashboard");
+
     } catch (error) {
       console.error("Erreur lors de la connexion :", error);
       setError("Une erreur est survenue. Veuillez réessayer.");
@@ -61,7 +63,7 @@ export default function Login() {
     if (token) {
       router.push("/dashboard"); // Rediriger si authentifié
     }
-  }, [isAuthenticated, router]);
+  }, [router]);
 
   return (
     <div className={styles.container}>
