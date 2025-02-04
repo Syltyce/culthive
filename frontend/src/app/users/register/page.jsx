@@ -16,7 +16,6 @@ export default function Register() {
   const [registerUsername, setRegisterUsername] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
-  const [registerTel, setRegisterTel] = useState("");
 
   // État pour afficher les erreurs et les succès 
   const [errorMessage, setErrorMessage] = useState("");
@@ -35,7 +34,6 @@ export default function Register() {
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
-        phone: registerTel,
       }),
     });
 
@@ -86,7 +84,7 @@ export default function Register() {
           <input
             className={styles.input}
             type="text"
-            placeholder="Nom d'utilisateur"
+            placeholder="Nom d'utilisateur ou pseudo"
             name="username"
             onChange={(e) => setRegisterUsername(e.target.value)}
           />
@@ -96,13 +94,6 @@ export default function Register() {
             placeholder="Email"
             name="email"
             onChange={(e) => setRegisterEmail(e.target.value)}
-          />
-          <input
-            className={styles.input}
-            type="tel"
-            placeholder="Téléphone"
-            name="phone"
-            onChange={(e) => setRegisterTel(e.target.value)}
           />
           <input
             className={styles.input}

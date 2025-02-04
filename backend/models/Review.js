@@ -5,7 +5,6 @@ const sequelize = require("../config/database");
 
 // Importation des modèles User et Work
 const User = require("./User");
-const Work = require("./Work");
 
 // Définition du modèle Review (critique)
 class Review extends Model {}
@@ -29,6 +28,19 @@ Review.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    userId: { // Définir explicitement la clé étrangère userId
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: User,
+        key: "id"
+      },
+      onDelete: "CASCADE"
+    },
+    workId: { // Stocker l'ID de l'œuvre provenant de l'API externe
+      type: DataTypes.STRING, // Utilise STRING ou INTEGER selon le type de l'ID externe
+      allowNull: false
+    }
   },
   {
     sequelize,
@@ -37,7 +49,6 @@ Review.init(
 );
 
 // Relation entre Review, User et Work
-Review.belongsTo(User); // Chaque critique appartient à un utilisateur
-Review.belongsTo(Work); // Chaque critique est liée à une œuvre
+Review.belongsTo( User, { foreignKey: "userId" } ); // Chaque critique appartient à un utilisateur
 
 module.exports = Review;
