@@ -136,8 +136,51 @@ function ListsPage() {
     }
   }, [router]);
 
+  const handleRemove = async (workId, type) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/users/login");
+      return;
+    }
 
-      
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
+    const userId = decodedToken?.id;
+
+    try {
+      const response = await fetch("http://localhost:3000/api/list/remove", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ userId, workId, type }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression.");
+      }
+
+      // Mise à jour de l'affichage après suppression
+      if (type === "watchlist") {
+        setMoviesWatchlist(
+          moviesWatchlist.filter((item) => item.id !== workId)
+        );
+        setSeriesWatchlist(
+          seriesWatchlist.filter((item) => item.id !== workId)
+        );
+      } else if (type === "favorites") {
+        setMoviesFavorites(
+          moviesFavorites.filter((item) => item.id !== workId)
+        );
+        setSeriesFavorites(
+          seriesFavorites.filter((item) => item.id !== workId)
+        );
+      }
+    } catch (error) {
+      console.error("Erreur :", error);
+      setError("Erreur lors de la suppression.");
+    }
+  };
 
   if (loading) {
     return (
@@ -184,6 +227,10 @@ function ListsPage() {
                     alt={item.title || "Image indisponible"}
                     className="list-item-poster"
                   />
+
+                  <button onClick={() => handleRemove(item.id, "watchlist")}>
+                    Supprimer
+                  </button>
                 </div>
               ))}
             </div>
@@ -209,6 +256,10 @@ function ListsPage() {
                     alt={item.name || "Image indisponible"}
                     className="list-item-poster"
                   />
+
+                  <button onClick={() => handleRemove(item.id, "watchlist")}>
+                    Supprimer
+                  </button>
                 </div>
               ))}
             </div>
@@ -234,6 +285,10 @@ function ListsPage() {
                     alt={item.title || "Image indisponible"}
                     className="list-item-poster"
                   />
+
+                  <button onClick={() => handleRemove(item.id, "favorites")}>
+                    Supprimer
+                  </button>
                 </div>
               ))}
             </div>
@@ -259,6 +314,11 @@ function ListsPage() {
                     alt={item.name || "Image indisponible"}
                     className="list-item-poster"
                   />
+
+                  <button onClick={() => handleRemove(item.id, "favorites")}>
+                    Supprimer
+                  </button>
+
                 </div>
               ))}
             </div>
