@@ -132,6 +132,64 @@ function MovieDetail({ params: initialParams }) {
     }
   };
 
+  // Fonction de mise à jour d'une review
+  const handleUpdateReview = async (updatedReview) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/reviews/${updatedReview.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedReview), // Passer les nouvelles données de la critique
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setReviews((prevReviews) =>
+          prevReviews.map((review) =>
+            review.id === updatedReview.id ? data : review
+          )
+        );
+        alert("Critique mise à jour !");
+      } else {
+        alert("Erreur lors de la mise à jour de la critique.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la mise à jour de la critique.");
+    }
+  };
+
+  // Fonction de suppression d'une review
+  const handleDeleteReview = async (reviewId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/reviews/${reviewId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        setReviews((prevReviews) =>
+          prevReviews.filter((review) => review.id !== reviewId)
+        );
+        alert("Critique supprimée !");
+      } else {
+        alert("Erreur lors de la suppression de la critique.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erreur lors de la suppression de la critique.");
+    }
+  };
+
   if (!params) {
     return <div className="loading">Chargement des paramètres...</div>;
   }
@@ -213,7 +271,11 @@ function MovieDetail({ params: initialParams }) {
         <h2>Critiques des spectateurs sur ce film </h2>
         {reviews.length > 0 ? (
           reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
+            <ReviewCard 
+            key={review.id} 
+            review={review} 
+            onUpdate={handleUpdateReview} 
+            onDelete={handleDeleteReview} />
           ))
         ) : (
           <p>Aucune critique pour le moment.</p>
