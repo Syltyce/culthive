@@ -10,35 +10,58 @@ function ReviewForm({ workId }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    // Vérifier la présence du token dans le localStorage au démarrage
     const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true); // L'utilisateur est connecté
+    
+    if (token) {  
+      setIsLoggedIn(true);
+      try {
+        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Décoder le token JWT
+        setUserId(decodedToken.id);  // Récupère l'ID de l'user dans le Token 
+      } catch (error) {
+        console.error('Erreur lors du décodage du token:', error);
+      }
     } else {
-      setIsLoggedIn(false); // L'utilisateur est déconnecté
+      setIsLoggedIn(false);
     }
   }, []);
+  
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsSubmitting(true);
     setErrorMessage('');
 
+      // Vérifie les valeurs de userId et workId avant d'envoyer
+  console.log('userId:', userId);
+  console.log('workId:', workId);
+
     try {
+      if (!userId || !workId) {
+        throw new Error("Utilisateur ou œuvre manquants");
+      }
+
       const token = localStorage.getItem('token');
       if (!token) {
         throw new Error("Vous devez être connecté pour soumettre une review");
       }
 
-      const response = await fetch(`http://localhost:3000/api/reviews/works/${workId}/reviews`, {
+      const response = await fetch(`http://localhost:3000/api/reviews/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ rating, title, comment }),
+        body: JSON.stringify({
+          userId,    // Ajout de userId
+          workId,    // Ajout de workId
+          rating,
+          title,
+          comment,
+        }),
       });
 
       if (!response.ok) {

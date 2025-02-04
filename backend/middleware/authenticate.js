@@ -15,6 +15,7 @@ const authenticate = (req, res, next) => {
     // Vérifier et décoder le token à l'aide de la clé secrète
     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Utilisez la variable d'environnement pour la clé secrète
     req.user = decoded; // Attache les informations de l'utilisateur à la requête
+
     next(); // Passe à la prochaine middleware ou à la route
   } catch (error) {
     // Si la vérification du token échoue (par exemple, token expiré ou invalide), retourner une erreur 403

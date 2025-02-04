@@ -5,12 +5,13 @@ const Review = require("../models/Review");
 // Créer un avis
 exports.createReview = async (req, res) => {
   try {
-    const { userId, workId, rating, title, comment } = req.body;
+    const userId = req.user.id; // On récupère l'ID de l'utilisateur à partir du token décodé
+    const { workId, rating, title, comment } = req.body;
 
     // Vérifier si l'utilisateur existe
     const user = await User.findByPk(userId);
     if (!user) {
-      return res.status(404).json({ message: "Utilisateur non trouvé." });
+      return res.status(400).json({ message: "Utilisateur non trouvé." });
     }
 
     if (!userId || !workId || !rating) {
