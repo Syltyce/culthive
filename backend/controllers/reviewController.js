@@ -36,7 +36,28 @@ exports.createReview = async (req, res) => {
 exports.getReviewsByWork = async (req, res) => {
   try {
     const { workId } = req.params;
-    const reviews = await Review.findAll({ where: { workId } });
+
+    const reviews = await Review.findAll({
+      where: { workId },
+      include: [
+        {
+          model: User, // Jointure avec User
+          attributes: ["username"], // On ne récupère que le username
+        },
+      ],
+    });
+
+    // Transformer la réponse pour inclure le username directement
+    const formattedReviews = reviews.map((review) => ({
+      id: review.id,
+      workId: review.workId,
+      userId: review.userId,
+      username: review.User?.username || "Utilisateur inconnu", // On ajoute le nom ici
+      rating: review.rating,
+      comment: review.comment,
+      createdAt: review.createdAt,
+    }));
+
     res.json(reviews);
   } catch (error) {
     res.status(500).json({ error: "Erreur serveur." });

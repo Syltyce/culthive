@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import "../../../../styles/WorkDetail.css";
 import AuthContext from "@/components/AuthContext";
 import ReviewForm from "@/components/ReviewForm";
+import ReviewCard from "@/components/ReviewCard";
 
 function MovieDetail({ params: initialParams }) {
   const { isAuthenticated, user } = useContext(AuthContext); // Correction ici
@@ -17,6 +18,8 @@ function MovieDetail({ params: initialParams }) {
 
   const [isAdded, setIsAdded] = useState(false); // Suivi de l'ajout du film à la liste
   const [actionError, setActionError] = useState(null); // Gestion des erreurs d'action
+
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     async function resolveParams() {
@@ -30,6 +33,7 @@ function MovieDetail({ params: initialParams }) {
     resolveParams();
   }, [initialParams]);
 
+  // Fetch des détails d'un film
   useEffect(() => {
     async function fetchMovieDetails() {
       if (params?.id) {
@@ -53,6 +57,27 @@ function MovieDetail({ params: initialParams }) {
       }
     }
     fetchMovieDetails();
+  }, [params]);
+
+  // Fetch des reviews
+  useEffect(() => {
+    async function fetchReviews() {
+      if (params?.id) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/reviews/${params.id}`
+          );
+          if (!response.ok) {
+            throw new Error("Erreur lors de la récupération des critiques.");
+          }
+          const data = await response.json();
+          setReviews(data);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    }
+    fetchReviews();
   }, [params]);
 
   // Fonction pour ajouter un film à la liste
@@ -86,7 +111,7 @@ function MovieDetail({ params: initialParams }) {
           userId, // Ajoute l'ID de l'utilisateur
           workId: movie.id, // L'ID du film à ajouter
           type, // 'watchlist' ou 'favorites'
-          workType: "film", // Film ou série 
+          workType: "film", // Film ou série
         }),
       });
 
@@ -177,8 +202,23 @@ function MovieDetail({ params: initialParams }) {
       {isAuthenticated ? (
         <ReviewForm workId={movie.id} userId={user?.id} />
       ) : (
-        <p> Si vous voulez noter ou faire une critique sur une oeuvre, veuillez vous connecter </p>
+        <p>
+          {" "}
+          Si vous voulez noter ou faire une critique sur une oeuvre, veuillez
+          vous connecter{" "}
+        </p>
       )}
+
+      <div className="reviews-section">
+        <h2>Critiques des spectateurs sur ce film </h2>
+        {reviews.length > 0 ? (
+          reviews.map((review) => (
+            <ReviewCard key={review.id} review={review} />
+          ))
+        ) : (
+          <p>Aucune critique pour le moment.</p>
+        )}
+      </div>
 
       <Footer />
     </div>

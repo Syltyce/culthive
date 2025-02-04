@@ -1,11 +1,12 @@
 'use client'; 
 
 import { useState, useEffect } from 'react';
-import WorkCardMovie from '../../../components/WorkCardMovie';
-import Header from '../../../components/Header';
+import WorkCardMovie from '@/components/WorkCardMovie';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import '../../../styles/MovieList.css'; // Import du CSS de la liste de films
 import '../../../styles/Loading.css'; // Import du CSS de l'indicateur de chargement
+
 
 function Movies() {
   const [movies, setMovies] = useState([]);
