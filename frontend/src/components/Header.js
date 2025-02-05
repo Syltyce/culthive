@@ -82,6 +82,7 @@ const Header = () => {
         <Link href="/works/movies">Films</Link>
         <Link href="/works/series">Séries</Link>
         <Link href="#members">Membres</Link>
+        <Link href="/paiement">Faire un don</Link>
       </nav>
 
 {/* Barre de recherche */}

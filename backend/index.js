@@ -12,7 +12,7 @@ const worksRoutes = require("./routes/worksRoutes");
 const listRoutes = require("./routes/listRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const searchRoutes = require("./routes/searchRoutes");
-
+const stripeRoutes = require("./routes/stripe");
 
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
@@ -44,6 +44,7 @@ app.use("/api/works", worksRoutes);
 app.use("/api/list", listRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/search", searchRoutes);
+app.use("/api/stripe", stripeRoutes);
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
 const PORT = process.env.PORT || 3000;

@@ -1,0 +1,55 @@
+"use client";
+
+import { useState } from "react";
+
+export default function DonationPage() {
+  const [amount, setAmount] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleDonate = async () => {
+    if (!amount || amount < 1) {
+      alert("Veuillez entrer un montant valide");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch(
+        "http://localhost:3000/api/stripe/create-donation-session",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ amount }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url; // Redirige vers Stripe Checkout
+      } else {
+        alert("Erreur : " + data.error);
+      }
+    } catch (error) {
+      console.error("Erreur lors du paiement :", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="donation-container">
+      <h1>Faire un don</h1>
+      <input
+        type="number"
+        placeholder="Montant (€)"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+      <button onClick={handleDonate} disabled={loading}>
+        {loading ? "Redirection..." : "Faire un don"}
+      </button>
+    </div>
+  );
+}
