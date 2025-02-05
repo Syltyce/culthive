@@ -84,28 +84,32 @@ const Header = () => {
         <Link href="#members">Membres</Link>
       </nav>
 
-      {/* Barre de recherche */}
-      <div className="search-container">
-        <input
-          type="text"
-          className="search-bar"
-          placeholder="Rechercher..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        {loading && <p className="loading-text">Chargement...</p>}
-        {results.length > 0 && (
-          <ul className="search-results">
-            {results.slice(0, 6).map((item) => (
-              <li key={item.id} className="search-item">
-                <Link href={`/works/movies/${item.id}`} onClick={() => setQuery("")}>
-                  {item.title || item.name} ({item.media_type})
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+{/* Barre de recherche */}
+<div className="search-container">
+  <input
+    type="text"
+    className="search-bar"
+    placeholder="Rechercher..."
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+  />
+  {loading && <p className="loading-text">Chargement...</p>}
+  {results.length > 0 && (
+    <ul className="search-results">
+      {results.slice(0, 6).map((item) => (
+        <li key={item.id} className="search-item">
+          <Link
+            href={item.media_type === "movie" ? `/works/movies/${item.id}` : `/works/series/${item.id}`}
+            onClick={() => setQuery("")}
+          >
+            {item.title || item.name} ({item.media_type})
+          </Link>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
 
       <div className="header-actions">
         {/* Afficher les boutons de connexion/inscription si l'utilisateur n'est pas connecté */}
