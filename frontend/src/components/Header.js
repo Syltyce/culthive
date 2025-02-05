@@ -9,6 +9,11 @@ const Header = () => {
   const [user, setUser] = useState(null);
   const router = useRouter(); // Déclarer le hook useRouter
 
+  // Variable pour la search bar
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -29,11 +34,40 @@ const Header = () => {
     }
   }, []);
 
+  // Fonction de déconnexion
   const handleLogout = () => {
     localStorage.removeItem("token"); // Retirer le token à la déconnexion
     setUser(null); // Réinitialiser l'état de l'utilisateur
     router.push("/"); // Rediriger vers la page d'accueil après la déconnexion
   };
+
+  // Gérer la recherche
+  useEffect(() => {
+    if (query.length < 2) {
+      setResults([]);
+      return;
+    }
+
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(
+          `http://localhost:3000/api/search?query=${query}`
+        );
+        const data = await res.json();
+        setResults(data);
+      } catch (error) {
+        console.error("Erreur lors de la recherche", error);
+      }
+      setLoading(false);
+    };
+
+    const timer = setTimeout(() => {
+      fetchData();
+    }, 300); // Débounce de 300ms
+
+    return () => clearTimeout(timer);
+  }, [query]);
 
   return (
     <header className="header">
@@ -49,8 +83,31 @@ const Header = () => {
         <Link href="/works/series">Séries</Link>
         <Link href="#members">Membres</Link>
       </nav>
+
+      {/* Barre de recherche */}
+      <div className="search-container">
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="Rechercher..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        {loading && <p className="loading-text">Chargement...</p>}
+        {results.length > 0 && (
+          <ul className="search-results">
+            {results.slice(0, 6).map((item) => (
+              <li key={item.id} className="search-item">
+                <Link href={`/works/movies/${item.id}`} onClick={() => setQuery("")}>
+                  {item.title || item.name} ({item.media_type})
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
       <div className="header-actions">
-        <input type="text" className="search-bar" placeholder="Rechercher..." />
         {/* Afficher les boutons de connexion/inscription si l'utilisateur n'est pas connecté */}
         {!user ? (
           <>
@@ -73,6 +130,7 @@ const Header = () => {
           </>
         )}
       </div>
+
     </header>
   );
 };

@@ -5,6 +5,7 @@ const authRoutes = require("./authRoutes");
 const worksRoutes = require("./worksRoutes");
 const listRoutes = require("./listRoutes");
 const reviewRoutes = require("./reviewRoutes");
+const searchRoutes = require("./searchRoutes");
 
 const router = express.Router(); // Création du routeur central avec Express
 
@@ -13,6 +14,7 @@ router.use("/auth", authRoutes); // Authentification
 router.use("/works", worksRoutes); // Gestion des œuvres
 router.use('/list', listRoutes); // Gestion des listes 
 router.use("/reviews", reviewRoutes) // Gestion des avis
+router.use("/search", searchRoutes) // Gestion de la search bar de film 
 
 module.exports = router; // Exportation du routeur pour qu'il puisse être utilisé dans l'application principale
 
