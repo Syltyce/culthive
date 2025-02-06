@@ -11,7 +11,6 @@ export default function Home() {
         <h1 className={styles.title}>Bienvenue sur CultHive</h1>
         <p className={styles.paragraph}>Archivez vos découvertes, listez vos envies.</p>
         <p className={styles.paragraph}>Explorez les recommandations de votre réseau.</p>
-        <p className={styles.paragraph}>Partagez ce qui vous fait vibrer.</p>
 
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Culthive vous permet de...</h2>
@@ -23,7 +22,7 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Garder une trace de tout ce que vous regardez, lisez ou écoutez.</p>
+              <p className={styles.paragraph}>Garder une trace de des films et séries ce que vous regardez</p>
             </div>
             <div className={styles.card}>
               <Image
@@ -32,7 +31,7 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Montrer votre appréciation pour vos œuvres, critiques et listes préférées.</p>
+              <p className={styles.paragraph}>Montrer votre appréciation pour vos œuvres</p>
             </div>
             <div className={styles.card}>
               <Image
@@ -41,7 +40,7 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Écrire et partager vos avis, et suivre vos amis ainsi que d'autres membres pour découvrir les leurs.</p>
+              <p className={styles.paragraph}>Écrire et partager vos avis à d'autres membres</p>
             </div>
             <div className={styles.card}>
               <Image
@@ -59,7 +58,7 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Tenir un journal de vos activités culturelles (et passer à la version Premium pour accéder à des statistiques complètes).</p>
+              <p className={styles.paragraph}>Tenir un journal de vos activités culturelles afin de garder une trace</p>
             </div>
             <div className={styles.card}>
               <Image
@@ -68,7 +67,7 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Créer et partager des listes thématiques et conserver une liste de vos envies culturelles.</p>
+              <p className={styles.paragraph}>Créer une liste de vos œuvres favorites et une liste de celles que vous voulez découvrir.</p>
             </div>
           </div>
           <div className={styles.callToAction}>

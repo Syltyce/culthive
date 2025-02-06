@@ -81,7 +81,7 @@ const Header = () => {
         <Link href="/">Accueil</Link>
         <Link href="/works/movies">Films</Link>
         <Link href="/works/series">Séries</Link>
-        <Link href="#members">Membres</Link>
+        {/* <Link href="#members">Membres</Link> */}
         <Link href="/paiement">Faire un don</Link>
       </nav>
 
