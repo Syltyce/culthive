@@ -13,6 +13,7 @@ const listRoutes = require("./routes/listRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const searchRoutes = require("./routes/searchRoutes");
 const stripeRoutes = require("./routes/stripe");
+const adminRoutes = require("./routes/adminRoutes");
 
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
@@ -31,7 +32,7 @@ const app = express(); // Création de l'instance Express
 app.use(
   cors({
     origin: "http://localhost:3001",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
 );
 
@@ -45,6 +46,8 @@ app.use("/api/list", listRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/stripe", stripeRoutes);
+app.use("/api/admin", adminRoutes);
+
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
 const PORT = process.env.PORT || 3000;

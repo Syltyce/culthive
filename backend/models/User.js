@@ -31,6 +31,10 @@ const User = sequelize.define(
       allowNull: false, 
       defaultValue: "user"  // Par défaut, un utilisateur n'est pas admin
     },
+    banned: { 
+      type: DataTypes.BOOLEAN,
+      defaultValue: false, 
+    },
   },
   {
     tableName: "users", // Nom de la table dans la base de données
