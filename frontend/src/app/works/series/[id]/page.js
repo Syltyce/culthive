@@ -1,14 +1,19 @@
 "use client"; // Directive pour marquer ce fichier comme un composant client
 
 import React, { useState, useEffect, useContext } from "react";
-import Header from "../../../../components/Header";
-import Footer from "../../../../components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import "../../../../styles/WorkDetail.css";
 import AuthContext from "@/components/AuthContext";
 import ReviewForm from "@/components/ReviewForm";
 import ReviewCard from "@/components/ReviewCard";
 
+export const dynamic = "force-dynamic";
+
 function SeriesDetail({ params: initialParams }) {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const { isAuthenticated, user } = useContext(AuthContext); // Correction ici
 
   const [params, setParams] = useState(null); // Stockage des paramètres résolus
@@ -40,7 +45,7 @@ function SeriesDetail({ params: initialParams }) {
         try {
           setLoading(true);
           const response = await fetch(
-            `http://localhost:3000/api/works/series/${params.id}`
+            `${API_URL}/api/works/series/${params.id}`
           );
           if (!response.ok) {
             throw new Error(
@@ -65,7 +70,7 @@ function SeriesDetail({ params: initialParams }) {
       if (params?.id) {
         try {
           const response = await fetch(
-            `http://localhost:3000/api/reviews/${params.id}`
+            `${API_URL}/api/reviews/${params.id}`
           );
           if (!response.ok) {
             throw new Error("Erreur lors de la récupération des critiques.");
@@ -101,7 +106,7 @@ function SeriesDetail({ params: initialParams }) {
       }
 
       // Envoi de la requête POST avec l'ID de l'utilisateur
-      const response = await fetch("http://localhost:3000/api/list/add", {
+      const response = await fetch(`${API_URL}/api/list/add`, {
         method: "POST", // Méthode HTTP
         headers: {
           "Content-Type": "application/json", // Type de contenu JSON
@@ -137,7 +142,7 @@ function SeriesDetail({ params: initialParams }) {
   const handleUpdateReview = async (updatedReview) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/reviews/${updatedReview.id}`,
+        `${API_URL}/api/reviews/${updatedReview.id}`,
         {
           method: "PUT",
           headers: {
@@ -168,7 +173,7 @@ function SeriesDetail({ params: initialParams }) {
   const handleDeleteReview = async (reviewId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/reviews/${reviewId}`,
+        `${API_URL}/api/reviews/${reviewId}`,
         {
           method: "DELETE",
           headers: {
@@ -287,5 +292,6 @@ function SeriesDetail({ params: initialParams }) {
     </div>
   );
 }
+
 
 export default SeriesDetail;

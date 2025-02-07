@@ -8,7 +8,12 @@ import AuthContext from "@/components/AuthContext";
 import ReviewForm from "@/components/ReviewForm";
 import ReviewCard from "@/components/ReviewCard";
 
+export const dynamic = "force-dynamic"; // Empêche la génération statique au build
+
 function MovieDetail({ params: initialParams }) {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const { isAuthenticated, user } = useContext(AuthContext); // Correction ici
 
   const [params, setParams] = useState(null); // Stockage des paramètres résolus
@@ -40,7 +45,7 @@ function MovieDetail({ params: initialParams }) {
         try {
           setLoading(true);
           const response = await fetch(
-            `http://localhost:3000/api/works/movies/${params.id}`
+            `${API_URL}/api/works/movies/${params.id}`
           );
           if (!response.ok) {
             throw new Error(
@@ -65,7 +70,7 @@ function MovieDetail({ params: initialParams }) {
       if (params?.id) {
         try {
           const response = await fetch(
-            `http://localhost:3000/api/reviews/${params.id}`
+            `${API_URL}/api/reviews/${params.id}`
           );
           if (!response.ok) {
             throw new Error("Erreur lors de la récupération des critiques.");
@@ -101,7 +106,7 @@ function MovieDetail({ params: initialParams }) {
       }
 
       // Envoi de la requête POST avec l'ID de l'utilisateur
-      const response = await fetch("http://localhost:3000/api/list/add", {
+      const response = await fetch(`${API_URL}/api/list/add`, {
         method: "POST", // Méthode HTTP
         headers: {
           "Content-Type": "application/json", // Type de contenu JSON
@@ -136,7 +141,7 @@ function MovieDetail({ params: initialParams }) {
   const handleUpdateReview = async (updatedReview) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/reviews/${updatedReview.id}`,
+        `${API_URL}/api/reviews/${updatedReview.id}`,
         {
           method: "PUT",
           headers: {
@@ -167,7 +172,7 @@ function MovieDetail({ params: initialParams }) {
   const handleDeleteReview = async (reviewId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/reviews/${reviewId}`,
+        `${API_URL}/api/reviews/${reviewId}`,
         {
           method: "DELETE",
           headers: {

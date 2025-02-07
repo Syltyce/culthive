@@ -13,6 +13,9 @@ import AuthContext from "@/components/AuthContext";
 import styles from "./Login.module.css";
 
 export default function Login() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
@@ -27,7 +30,7 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/api/login", {
+      const response = await fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

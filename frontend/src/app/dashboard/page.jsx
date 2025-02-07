@@ -8,6 +8,9 @@ import Link from "next/link";
 import styles from "./Dashboard.module.css";
 
 export default function Dashboard() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
   const router = useRouter();
@@ -20,7 +23,7 @@ export default function Dashboard() {
       router.push("/users/login"); // Si pas de token, rediriger vers la page de login
     } else {
       // Si un token est présent, récupérer les données de l'utilisateur (exemple avec un appel API)
-      fetch("http://localhost:3000/api/users/profile", {
+      fetch(`${API_URL}/api/users/profile`, {
         headers: {
           Authorization: `Bearer ${token}`, // Ajoute le token dans le header
         },

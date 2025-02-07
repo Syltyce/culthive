@@ -12,6 +12,9 @@ import { useState } from "react";
 
 // Composant fonctionnel Register qui représente la page d'inscription
 export default function Register() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   // Déclaration des états pour gérer les différents champs du formulaire
   const [registerUsername, setRegisterUsername] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
@@ -26,7 +29,7 @@ export default function Register() {
   const register = async () => {
 
     // Envoie d'une requête POST à l'API /api/register avec les données du formulaire 
-    const response = await fetch("http://localhost:3000/api/register", {
+    const response = await fetch(`${API_URL}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // Envoie des données en JSON (username, mail, mdp, téléphone)

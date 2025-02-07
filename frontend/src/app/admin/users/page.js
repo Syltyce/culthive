@@ -2,13 +2,16 @@
 import { useEffect, useState } from "react";
 
 export default function UsersPage() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [users, setUsers] = useState([]);
 
   // Fonction pour récupérer les utilisateurs
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/admin/users", {
+        const response = await fetch(`${API_URL}/api/admin/users`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -29,7 +32,7 @@ export default function UsersPage() {
   const handleBanUser = async (userId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/api/admin/ban/${userId}`,
+        `${API_URL}/api/admin/ban/${userId}`,
         {
           method: "PATCH", // ou "PUT" selon la méthode utilisée
           headers: {

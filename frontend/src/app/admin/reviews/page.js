@@ -2,13 +2,16 @@
 import { useEffect, useState } from "react";
 
 export default function ReviewsPage() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [reviews, setReviews] = useState([]);
 
   // Fonction pour récupérer les reviews
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/admin/reviews", {
+        const response = await fetch(`${API_URL}/api/admin/reviews`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -27,7 +30,7 @@ export default function ReviewsPage() {
   // Fonction pour supprimer une review
   const handleDeleteReview = async (reviewId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/reviews/${reviewId}`, {
+      const response = await fetch(`${API_URL}/api/admin/reviews/${reviewId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

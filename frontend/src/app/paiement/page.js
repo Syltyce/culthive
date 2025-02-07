@@ -3,6 +3,9 @@
 import { useState } from "react";
 
 export default function DonationPage() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +19,7 @@ export default function DonationPage() {
 
     try {
       const response = await fetch(
-        "http://localhost:3000/api/stripe/create-donation-session",
+        `${API_URL}/api/stripe/create-donation-session`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

@@ -9,6 +9,9 @@ import '../../../styles/Loading.css'; // Import du CSS de l'indicateur de charge
 
 
 function Movies() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null); // Pour afficher l'erreur si nécessaire
 
@@ -16,7 +19,7 @@ function Movies() {
     async function fetchMovies() {
       try {
         console.log('Fetching movies...');
-        const response = await fetch("http://localhost:3000/api/works/movies"); // L'URL du backend
+        const response = await fetch(`${API_URL}/api/works/movies`); // L'URL du backend
         console.log('Response:', response);
 
         if (!response.ok) {

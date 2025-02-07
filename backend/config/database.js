@@ -1,38 +1,38 @@
-// Ce fichier est utilisé pour configurer la connexion 
-// à la base de données MySQL en utilisant l'ORM Sequelize. 
-// Il établit la connexion à la base de données, 
-// vérifie que la connexion est réussie et exporte l'instance sequelize 
-// pour qu'elle puisse être utilisée dans d'autres parties du projet.
-
-const { Sequelize } = require("sequelize"); // Sequelize est utilisé pour interagir avec la BDD
-
-// Configuration variables d'environnement 
+const { Sequelize } = require("sequelize");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Création d'une instance Sequelize pour se connecter à la BDD
-const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST || 'db',
-    port: process.env.DB_PORT || 3306,
-    dialect: "mysql", 
-  }
-);
+const env = process.env.NODE_ENV || "development";
+const config = require("../config/config")[env];
 
-// Fonction pour tester la connexion à la base de données
+let sequelize;
+
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], {
+    dialect: "mysql",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  });
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, {
+    host: config.host,
+    dialect: config.dialect
+  });
+}
+
 async function testConnection() {
   try {
-    await sequelize.authenticate(); // Tentative d'authentification avec la base de données
-    console.log("✅ Connexion à la base de données réussie.");
+    await sequelize.authenticate();
+    console.log(`✅ Connexion réussie (${env}) !`);
   } catch (error) {
-    console.error("❌ Erreur de connexion à la base de données :", error);
+    console.error(`❌ Erreur de connexion (${env}) :`, error);
   }
 }
 
-testConnection(); // Appel de la fonction pour tester la connexion
+testConnection();
 
-// Exporte l'instance Sequelize pour être utilisée dans d'autres fichiers
 module.exports = sequelize;

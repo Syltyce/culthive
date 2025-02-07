@@ -7,6 +7,9 @@ import { useRouter } from "next/navigation";
 import "../../styles/ListsPage.css";
 
 function ListsPage() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [moviesWatchlist, setMoviesWatchlist] = useState([]);
   const [seriesWatchlist, setSeriesWatchlist] = useState([]);
   const [moviesFavorites, setMoviesFavorites] = useState([]);
@@ -35,7 +38,7 @@ function ListsPage() {
 
           // Récupère les watchlist
           const watchlistResponse = await fetch(
-            `http://localhost:3000/api/list/list?userId=${userId}&type=watchlist`,
+            `${API_URL}/api/list/list?userId=${userId}&type=watchlist`,
             {
               method: "GET",
               headers: {
@@ -61,7 +64,7 @@ function ListsPage() {
           // Récupère les détails des films et séries dans la watchlist
           const fetchWorkDetails = async (workId, workType) => {
             const response = await fetch(
-              `http://localhost:3000/api/list/details/${workId}/${workType}`
+              `${API_URL}/api/list/details/${workId}/${workType}`
             );
 
             if (!response.ok) {
@@ -88,7 +91,7 @@ function ListsPage() {
 
           // Récupère les favoris
           const favoritesResponse = await fetch(
-            `http://localhost:3000/api/list/list?userId=${userId}&type=favorites`,
+            `${API_URL}/api/list/list?userId=${userId}&type=favorites`,
             {
               method: "GET",
               headers: {
@@ -147,7 +150,7 @@ function ListsPage() {
     const userId = decodedToken?.id;
 
     try {
-      const response = await fetch("http://localhost:3000/api/list/remove", {
+      const response = await fetch(`${API_URL}/api/list/remove`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -8,6 +8,9 @@ import "../../../styles/MovieList.css"; // Import du CSS de la liste de films
 import "../../../styles/Loading.css"; // Import du CSS de l'indicateur de chargement
 
 function Series() {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
   const [series, setSeries] = useState([]);
   const [error, setError] = useState(null); // Pour afficher l'erreur si nécessaire
 
@@ -15,7 +18,7 @@ function Series() {
     async function fetchSeries() {
       try {
         console.log("Fetching series...");
-        const response = await fetch("http://localhost:3000/api/works/series"); // L'URL du backend
+        const response = await fetch(`${API_URL}/api/works/series`); // L'URL du backend
         console.log("Response:", response);
 
         if (!response.ok) {

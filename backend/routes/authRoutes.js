@@ -13,7 +13,7 @@ const User = require("../models/User"); // Modèle User
 const express = require("express");
 const router = express.Router();
 
-const bcrypt = require("bcrypt"); // Module de hashage des mdp
+const bcrypt = require("bcryptjs"); // Module de hashage des mdp
 const jwt = require("jsonwebtoken"); // Module pour manipuler les tokens JWT
 
 // Route d'inscription (register)

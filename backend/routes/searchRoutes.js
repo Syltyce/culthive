@@ -1,5 +1,6 @@
+// Importer Axios au lieu de fetch
+const axios = require('axios');
 const express = require("express");
-const fetch = require("node-fetch");
 require("dotenv").config();
 
 const router = express.Router();
@@ -12,13 +13,15 @@ router.get("/", async (req, res) => {
   }
 
   try {
-    const response = await fetch(
+    // Utiliser Axios pour effectuer la requête
+    const response = await axios.get(
       `https://api.themoviedb.org/3/search/multi?query=${encodeURIComponent(
         query
       )}&api_key=${process.env.TMDB_API_KEY}&language=fr-FR`
     );
-    const data = await response.json();
-    res.status(200).json(data.results);
+
+    // Renvoie les résultats de la réponse d'Axios
+    res.status(200).json(response.data.results);
   } catch (error) {
     console.error("Erreur lors de la recherche :", error);
     res.status(500).json({ error: "Erreur serveur" });
