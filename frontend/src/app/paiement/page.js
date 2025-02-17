@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function DonationPage() {
-
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
   const [amount, setAmount] = useState("");
@@ -42,17 +43,21 @@ export default function DonationPage() {
   };
 
   return (
-    <div className="donation-container">
-      <h1>Faire un don</h1>
-      <input
-        type="number"
-        placeholder="Montant (€)"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <button onClick={handleDonate} disabled={loading}>
-        {loading ? "Redirection..." : "Faire un don"}
-      </button>
+    <div>
+      <Header />
+      <div className="donation-container">
+        <h1>Faire un don</h1>
+        <input
+          type="number"
+          placeholder="Montant (€)"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <button onClick={handleDonate} disabled={loading}>
+          {loading ? "Redirection..." : "Faire un don"}
+        </button>
+      </div>
+      <Footer />
     </div>
   );
 }
