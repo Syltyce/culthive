@@ -2,7 +2,7 @@ const CGV = () => {
     return (
       <div>
         <h1>Conditions Générales de Ventes</h1>
-        <p>Voici les mentions légales...</p>
+        <p>Vous avez la possibilité de faire des dons de montants libres grâces à Stripe</p>
       </div>
     );
   }

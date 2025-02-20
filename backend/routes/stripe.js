@@ -6,6 +6,7 @@ const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 router.post('/create-donation-session', async (req, res) => {
+
   try {
     const { amount } = req.body;
     

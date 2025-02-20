@@ -17,13 +17,11 @@ const adminRoutes = require("./routes/adminRoutes");
 
 // CORS pour autoriser les requêtes entre le frontend et le backend
 const cors = require("cors");
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001" || "https://culthivefrontend.vercel.app";
+// const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://culthive-frontend.vercel.app" || "http://localhost:3001";
 
 // models nécessaires
 const User = require("./models/User");
 const List = require("./models/List");
-
-
 
 // Définition des relations entre les modèles
 List.belongsTo(User, { foreignKey: "userId" }); // Une liste appartient à un utilisateur
@@ -34,10 +32,14 @@ const app = express(); // Création de l'instance Express
 // Middleware CORS pour permettre l'accès depuis le frontend (port 3001)
 app.use(
   cors({
-    origin: API_URL,
+    origin: ['http://localhost:3001', 'https://culthive-frontend.vercel.app'],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   })
 );
+
+app.options('*', cors());
 
 app.use(express.json()); // Middleware pour parser le corps en JSON
 
@@ -50,7 +52,6 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/stripe", stripeRoutes);
 app.use("/api/admin", adminRoutes);
-
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
 const PORT = process.env.PORT || 3000;
