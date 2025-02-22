@@ -18,7 +18,8 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+
+  const { setIsAuthenticated, setUser } = useContext(AuthContext);
 
   // État pour les erreurs et les succès
   const [error, setError] = useState(null);
@@ -45,13 +46,14 @@ export default function Login() {
 
       const data = await response.json();
       console.log("Connexion réussie :", data);
-
-      setIsAuthenticated(true); // Mettre à jour le contexte
-      localStorage.setItem("token", data.token); // Mettre à jour le localStorage
-
+  
+      setIsAuthenticated(true);
+      setUser(data.user);  // Mettre à jour l'utilisateur dans le contexte
+      localStorage.setItem("token", data.token);
+  
       setSuccessMessage("Connexion Réussie !");
       setError(null);
-
+  
       router.push("/dashboard");
 
     } catch (error) {

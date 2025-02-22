@@ -1,11 +1,13 @@
 import styles from "./page.module.css"; // Import du fichier CSS spécifique à cette page
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Image from "next/image";
+import Image from "next/image"; 
+import TarteConsent from "@/components/TarteConsent";
 
 export default function Home() {
   return (
     <div className={styles.page}>
+      <TarteConsent />
       <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>Bienvenue sur CultHive</h1>

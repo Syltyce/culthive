@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "../styles/ReviewCard.css";
+import AuthContext from "./AuthContext";
 
 function ReviewCard({ review, onUpdate, onDelete }) {
+  const { user } = useContext(AuthContext);
+
   const [isEditing, setIsEditing] = useState(false); // Suivi de l'état d'édition
   const [updatedTitle, setUpdatedTitle] = useState(review.title);
   const [updatedComment, setUpdatedComment] = useState(review.comment);
   const [updatedRating, setUpdatedRating] = useState(review.rating); // Ajout de la note modifiable
+
   const [username, setUsername] = useState(
     review.User ? review.User.username : ""
   ); // Conserver le username séparément
@@ -28,15 +32,15 @@ function ReviewCard({ review, onUpdate, onDelete }) {
     setIsEditing(false); // Fermer le mode édition après la mise à jour
   };
 
+  const isUserReviewOwner = user?.id === review.userId; 
+
   return (
     <div className="review-card">
       <div className="review-content">
-        {/* Avis (Titre + Commentaire) */}
         {isEditing ? (
           <>
             <h4>
-              <strong>{username}</strong> a commenté :{" "}
-              {/* Utilisation de username stocké dans l'état */}
+              <strong>{username}</strong> a commenté :
             </h4>
             <input
               type="text"
@@ -64,24 +68,31 @@ function ReviewCard({ review, onUpdate, onDelete }) {
         ) : (
           <>
             <h3>
-              <strong>{username}</strong> a commenté :{" "}
-              {/* Toujours afficher le username ici */}
+              <strong>{username}</strong> a commenté :
             </h3>
             <h4>{review.title}</h4>
             <p>{review.comment}</p>
-            <p>Note: {review.rating} / 10</p> {/* Afficher la note actuelle */}
-            <button onClick={() => setIsEditing(true)} className="update-btn">
-              Modifier
-            </button>
+            <p>Note: {review.rating} / 10</p>
+
+            {isUserReviewOwner && ( // Afficher les boutons seulement si l'utilisateur est le propriétaire de la critique
+              <>
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="update-btn"
+                >
+                  Modifier
+                </button>
+                <button
+                  onClick={() => onDelete(review.id)}
+                  className="delete-btn"
+                >
+                  Supprimer
+                </button>
+              </>
+            )}
+
           </>
         )}
-
-        {/* Bouton Delete */}
-        <div className="actions">
-          <button onClick={() => onDelete(review.id)} className="delete-btn">
-            Supprimer
-          </button>
-        </div>
       </div>
     </div>
   );

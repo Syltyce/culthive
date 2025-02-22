@@ -11,7 +11,6 @@ import ReviewCard from "@/components/ReviewCard";
 export const dynamic = "force-dynamic"; // Empêche la génération statique au build
 
 function MovieDetail({ params: initialParams }) {
-
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
   const { isAuthenticated, user } = useContext(AuthContext); // Correction ici
@@ -69,9 +68,7 @@ function MovieDetail({ params: initialParams }) {
     async function fetchReviews() {
       if (params?.id) {
         try {
-          const response = await fetch(
-            `${API_URL}/api/reviews/${params.id}`
-          );
+          const response = await fetch(`${API_URL}/api/reviews/${params.id}`);
           if (!response.ok) {
             throw new Error("Erreur lors de la récupération des critiques.");
           }
@@ -140,11 +137,14 @@ function MovieDetail({ params: initialParams }) {
   // Fonction de mise à jour d'une review
   const handleUpdateReview = async (updatedReview) => {
     try {
+      const token = localStorage.getItem("token"); // Vérifie comment tu stockes le token
+
       const response = await fetch(
         `${API_URL}/api/reviews/${updatedReview.id}`,
         {
           method: "PUT",
           headers: {
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(updatedReview), // Passer les nouvelles données de la critique
@@ -170,16 +170,16 @@ function MovieDetail({ params: initialParams }) {
 
   // Fonction de suppression d'une review
   const handleDeleteReview = async (reviewId) => {
+    const token = localStorage.getItem("token"); // Vérifie comment tu stockes le token
+
     try {
-      const response = await fetch(
-        `${API_URL}/api/reviews/${reviewId}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/reviews/${reviewId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.ok) {
         setReviews((prevReviews) =>
@@ -276,11 +276,12 @@ function MovieDetail({ params: initialParams }) {
         <h2>Critiques des spectateurs sur ce film </h2>
         {reviews.length > 0 ? (
           reviews.map((review) => (
-            <ReviewCard 
-            key={review.id} 
-            review={review} 
-            onUpdate={handleUpdateReview} 
-            onDelete={handleDeleteReview} />
+            <ReviewCard
+              key={review.id}
+              review={review}
+              onUpdate={handleUpdateReview}
+              onDelete={handleDeleteReview}
+            />
           ))
         ) : (
           <p>Aucune critique pour le moment.</p>

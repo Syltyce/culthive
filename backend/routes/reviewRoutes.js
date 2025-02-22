@@ -7,7 +7,7 @@ const ReviewController = require("../controllers/reviewController");
 // CRUD des avis
 router.post("/", authenticate, ReviewController.createReview);
 router.get("/:workId", ReviewController.getReviewsByWork);
-router.put("/:id", ReviewController.updateReview);
-router.delete("/:id", ReviewController.deleteReview);
+router.put("/:id", authenticate, ReviewController.updateReview);
+router.delete("/:id", authenticate, ReviewController.deleteReview);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { AuthProvider } from "@/components/AuthContext";
+
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +25,19 @@ export default function RootLayout({ children }) {
   return (
     <AuthProvider>
       <html lang="fr">
-        <link rel="icon" href="/logo_culthive_svg.svg" />
+        <head>
+          <link
+            rel="stylesheet"
+            href="/tarteaucitron/css/tarteaucitron.min.css"
+          />
+          {/* Ajouter le script JavaScript de Tarteaucitron */}
+          <script
+            src="/tarteaucitron/tarteaucitron.min.js"
+            async={false} // Charger de façon synchrone
+          />
+          <link rel="icon" href="/logo_culthive_svg.svg" />
+        </head>
+
         <body className={`${geistSans.variable} ${geistMono.variable}`}>
           {children}
         </body>
