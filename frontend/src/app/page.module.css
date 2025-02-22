@@ -1,130 +1,149 @@
-/* page.module.css */
 
-#tarteaucitron {
-  display: block !important;
-  position: fixed !important;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  z-index: 9999 !important;
-  padding: 10px;
-}
+  /* 
+  
+  --bleu-clair: #82D0F5; 
+  --bleu-foncé: #0084C6; 
+  --rouge-clair: #E5281F; 
+  --rouge-foncé: #A01C18; 
+  --noir: #1d1d1b;  
+  --font-family: 'Roboto', sans-serif; 
 
+ */
 
 .page {
+  background-color: white;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  background: linear-gradient(to bottom, #f3f4f6, #ffffff);
-  color: #333;
-  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 .main {
-  flex: 1;
+  flex-grow: 1; /* Permet au main de prendre tout l'espace disponible, en poussant le footer en bas */
+}
+
+/* Style pour la section présentation */
+.presentation {
+  background-image: url('../../public/images/cinema.jpg'); /* Remplace par le chemin de ton image */
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  color: black;
+  height: 25vh; /* Ajuste la hauteur comme souhaité */
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 40px 20px;
-  text-align: center;
+  position: relative;
 }
 
-.sectionTitle {
-  padding-bottom: 2rem;
+.presentation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8); /* Couleur blanche avec opacité de 50% */
+  z-index: 1; /* Pour que l'image soit derrière l'overlay */
 }
 
+/* Texte sur l'image, assure-toi qu'il soit au-dessus de l'overlay */
+.presentation .content {
+  position: relative;
+  z-index: 2;
+  color: black;
+}
+
+/* Style du titre et des paragraphes dans présentation */
 .title {
   font-size: 3rem;
-  color: #2c3e50;
-}
-
-.description {
-  font-size: 1.2rem;
-  color: #34495e;
-  margin: 10px 0;
-}
-
-.container {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* Trois colonnes */
-  grid-template-rows: repeat(2, auto);    /* Deux lignes */
-  gap: 20px;
-}
-
-.card {
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  text-align: center;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.callToAction {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  color: #1abc9c;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .paragraph {
-  font-size: 1.3rem; 
-  color: #7f8c8d;
-  line-height: 1.4; 
-  margin: 10px 0; 
+  font-size: 1.2rem;
+  margin: 10px;
+  color: black; /* Texte noir */
 }
 
-.icon {
-  fill: #000; /* couleur par défaut */
-  transition: fill 0.3s ease;
+.sectionTitle {
+  text-align: center;
+  margin: 10px;
 }
 
-.icon:hover {
-  fill: #FF5733; /* couleur au survol */
+/* Style pour les cartes */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cartes par ligne */
+  gap: 20px;
+  padding: 20px;
+  margin: 0 10px;
 }
 
-/* Animation des icônes au chargement */
+/* Carte individuelle */
+.card {
+  background-color: #82D0F5;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.card:hover {
+  background-color: #0084C6; /* Au survol, la carte devient plus foncée */
+}
+
+/* Image dans la carte */
 .card img {
-  opacity: 0;
-  animation: fadeIn 1s forwards;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Texte dans la carte */
+.card p {
+  font-size: 1rem;
+}
+
+/* Call to action */
+.callToAction {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px;
 }
 
 
-/* Responsive CSS */
+/* MEDIA QUERIES - Pour les écrans plus petits */
+
+/* Sur les écrans moyens, afficher 2 cartes par ligne */
+@media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr); /* 2 cartes par ligne */
+  }
+}
+
+/* Sur les petits écrans, afficher 1 carte par ligne */
 @media (max-width: 768px) {
   .cards {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: 1fr; /* 1 carte par ligne */
   }
-}
 
-@media (max-width: 480px) {
-  .cards {
-    grid-template-columns: 1fr; 
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .paragraph {
+    font-size: 1rem;
+  }
+
+  .callToAction {
+    font-size: 1.2rem;
   }
 }

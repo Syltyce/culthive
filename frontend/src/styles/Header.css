@@ -1,115 +1,194 @@
-/* Header.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  --bleu-clair: #82D0F5; /* Bleu clair */
+  --bleu-foncé: #0084C6; /* Bleu foncé */
+  --rouge-clair: #E5281F; /* Rouge clair */
+  --rouge-foncé: #A01C18; /* Rouge foncé */ 
+  --noir: #1d1d1b; /* Noir foncé */ 
+  --font-family: 'Roboto', sans-serif; /* Roboto */
+}
+
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #333;
-  color: white; /* Couleur du texte en vert */
+  background-color: #fff; /* Fond blanc */
+  border-bottom: 2px solid var(--bleu-clair); /* Bordure en bas */
+  font-family: var(--font-family);
 }
 
-/* Logo styling */
+/* Logo du header */
 .header-logo {
-  max-height: 50px; /* Taille raisonnable pour le logo */
-  width: auto;
-  margin-right: 20px; /* Espacement avec le reste */
-  cursor: pointer;
+  width: 100px;
+  height: auto;
 }
 
-.nav {
-  display: flex;
-  gap: 15px;
-}
-
+/* Navigation */
 .header-nav {
   display: flex;
-  gap: 20%;
-  align-items: center;
+  gap: 40px;
 }
 
-
-/* Style par défaut des liens */
 .header-nav a {
-  text-decoration: none; /* Supprime le soulignement */
-  color: white; /* Couleur par défaut */
-  font-size: 1rem; /* Taille du texte */
-  transition: color 0.3s ease; /* Animation fluide */
+  text-decoration: none;
+  color: black; /* Texte gris pour les liens */
+  font-weight: 500;
+  font-size: 16px;
 }
 
-/* Changement de couleur au survol */
 .header-nav a:hover {
-  color: #007BFF; /* Bleu par exemple, personnalisez selon vos goûts */
+  color: var(--bleu-foncé); 
 }
 
-
-.search-bar {
-  flex-grow: 1;
-  margin: 0 20px;
-}
-
-.search-bar input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.auth-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.auth-buttons button {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  background-color: #555;
-  color: green; /* Couleur du texte en vert */
-  cursor: pointer;
-}
-
-.auth-buttons button:hover {
-  background-color: #777;
-}
-
+/* Conteneur de la barre de recherche */
 .search-container {
   position: relative;
-  width: 250px;
 }
 
 .search-bar {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.search-results {
-  position: absolute;
-  top: 40px;
-  left: 0;
-  width: 100%;
-  background: black;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  max-height: 200px;
-  overflow-y: auto;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.search-item {
-  padding: 10px;
-  cursor: pointer;
+  padding: 8px 12px;
   font-size: 14px;
-}
-
-.search-item:hover {
-  background-color: #0062be;
+  border: 2px solid var(--bleu-clair); /* Bordure claire */
+  border-radius: 4px;
+  width: 200px;
 }
 
 .loading-text {
   font-size: 12px;
-  color: gray;
-  margin-top: 5px;
+  color: var(--bleu-clair);
+  position: absolute;
+  top: 35px;
+  left: 10px;
+}
+
+.search-results {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  background-color: white;
+  border: 1px solid var(--bleu-clair);
+  border-radius: 4px;
+  width: 200px;
+  position: absolute;
+  z-index: 10;
+}
+
+.search-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search-item:hover {
+  background-color: var(--bleu-clair);
+}
+
+/* Actions du header */
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Boutons : Connexion, Inscription, Profil */
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid var(--bleu-foncé); /* Bordure bleue par défaut */
+  background-color: #fff; /* Fond blanc */
+  color: var(--bleu-foncé); /* Texte bleu */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Transition pour l'effet au survol */
+}
+
+/* Connexion et Inscription */
+.btn.login, .btn.signup {
+  border-color: var(--bleu-foncé); /* Bordure bleue */
+}
+
+.btn.login:hover, .btn.signup:hover {
+  background-color: var(--bleu-clair); /* Fond bleu au survol */
+  color: black; /* Texte blanc au survol */
+  border-color: var(--bleu-clair); /* Bordure plus foncée au survol */
+}
+
+/* Profil */
+.btn.profile {
+  border: 2px solid var(--bleu-foncé); /* Bordure bleue par défaut */
+}
+
+.btn.profile:hover {
+  background-color: var(--bleu-clair); /* Fond bleu au survol */
+  color: black; /* Texte blanc au survol */
+  border-color: var(--bleu-clair); /* Bordure plus foncée au survol */
+}
+
+/* Déconnexion */
+.btn.logout {
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: 2px solid var(--rouge-clair); /* Bordure rouge pour déconnexion */
+  background-color: var(--rouge-clair); /* Fond rouge */
+  color: #fff; /* Texte blanc */
+}
+
+.btn.logout:hover {
+  background-color: var(--rouge-foncé); /* Fond rouge foncé au survol */
+  border-color: var(--rouge-foncé); /* Bordure rouge foncé au survol */
+}
+
+/* Responsive Design : Écrans de moins de 768px (tablettes et mobiles) */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* Colonne pour les petits écrans */
+    align-items: flex-start;
+  }
+
+  .header-nav {
+    flex-direction: column; /* Empiler les liens de navigation */
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .header-logo {
+    width: 120px; /* Réduire la taille du logo */
+    margin-bottom: 10px; /* Espacement en bas */
+  }
+
+  .search-container {
+    margin-top: 10px; /* Ajouter de l'espace au-dessus */
+    width: 100%; /* S'assurer que la recherche prend tout l'espace */
+  }
+
+  .header-actions {
+    flex-direction: column; /* Empiler les boutons */
+    gap: 10px;
+    align-items: flex-start; /* Aligner à gauche sur petit écran */
+  }
+
+  .btn {
+    width: 100%; /* Boutons prennent toute la largeur sur petits écrans */
+  }
+
+  .search-results {
+    max-height: 200px; /* Limite la hauteur des résultats de recherche */
+    overflow-y: auto; /* Ajoute un scroll si nécessaire */
+  }
+}
+
+/* Responsive Design : Écrans de moins de 480px (mobiles très petits) */
+@media (max-width: 480px) {
+  .header-logo {
+    width: 100px; /* Encore plus petit sur très petits écrans */
+  }
+
+  .header-nav {
+    gap: 5px;
+    font-size: 14px; /* Réduire la taille du texte pour les petits écrans */
+  }
+
+  .search-bar {
+    font-size: 12px; /* Réduire la taille de la barre de recherche */
+  }
 }

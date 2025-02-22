@@ -1,7 +1,7 @@
 import styles from "./page.module.css"; // Import du fichier CSS spécifique à cette page
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Image from "next/image"; 
+import Image from "next/image";
 import TarteConsent from "@/components/TarteConsent";
 
 export default function Home() {
@@ -10,9 +10,17 @@ export default function Home() {
       <TarteConsent />
       <Header />
       <main className={styles.main}>
-        <h1 className={styles.title}>Bienvenue sur CultHive</h1>
-        <p className={styles.paragraph}>Archivez vos découvertes, listez vos envies.</p>
-        <p className={styles.paragraph}>Explorez les recommandations de votre réseau.</p>
+        <div className={styles.presentation}>
+          <div className={styles.content}>
+            <h1 className={styles.title}>Bienvenue sur CultHive</h1>
+            <p className={styles.paragraph}>
+              Archivez vos découvertes, listez vos envies.
+            </p>
+            <p className={styles.paragraph}>
+              Explorez les recommandations de votre réseau.
+            </p>
+          </div>
+        </div>
 
         <div className={styles.container}>
           <h2 className={styles.sectionTitle}>Culthive vous permet de...</h2>
@@ -24,16 +32,15 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Garder une trace de des films et séries ce que vous regardez</p>
+              <p className={styles.paragraph}>
+                Garder une trace de des films et séries ce que vous regardez
+              </p>
             </div>
             <div className={styles.card}>
-              <Image
-                src="/icons/like.svg"
-                alt="Aimer"
-                width={50}
-                height={50}
-              />
-              <p className={styles.paragraph}>Montrer votre appréciation pour vos œuvres</p>
+              <Image src="/icons/like.svg" alt="Aimer" width={50} height={50} />
+              <p className={styles.paragraph}>
+                Montrer votre appréciation pour vos œuvres
+              </p>
             </div>
             <div className={styles.card}>
               <Image
@@ -42,7 +49,9 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Écrire et partager vos avis à d'autres membres</p>
+              <p className={styles.paragraph}>
+                Écrire et partager vos avis à d'autres membres
+              </p>
             </div>
             <div className={styles.card}>
               <Image
@@ -51,7 +60,10 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Noter chaque œuvre sur une échelle de 1 à 10 pour enregistrer et partager vos impressions.</p>
+              <p className={styles.paragraph}>
+                Noter chaque œuvre sur une échelle de 1 à 10 pour enregistrer et
+                partager vos impressions.
+              </p>
             </div>
             <div className={styles.card}>
               <Image
@@ -60,7 +72,10 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Tenir un journal de vos activités culturelles afin de garder une trace</p>
+              <p className={styles.paragraph}>
+                Tenir un journal de vos activités culturelles afin de garder une
+                trace
+              </p>
             </div>
             <div className={styles.card}>
               <Image
@@ -69,7 +84,10 @@ export default function Home() {
                 width={50}
                 height={50}
               />
-              <p className={styles.paragraph}>Créer une liste de vos œuvres favorites et une liste de celles que vous voulez découvrir.</p>
+              <p className={styles.paragraph}>
+                Créer une liste de vos œuvres favorites et une liste de celles
+                que vous voulez découvrir.
+              </p>
             </div>
           </div>
           <div className={styles.callToAction}>
