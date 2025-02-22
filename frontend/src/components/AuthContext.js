@@ -10,7 +10,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 // Fournisseur du contexte
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null); // État pour stocker les données de l'utilisateur
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // État pour l'authentification 
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // État pour l'authentification
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");

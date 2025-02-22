@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import "../styles/ReviewCard.css";
-import AuthContext from "./AuthContext";
 
 function ReviewCard({ review, onUpdate, onDelete }) {
-  const { user } = useContext(AuthContext);
+
+  const [userId, setUserId] = useState(null);
 
   const [isEditing, setIsEditing] = useState(false); // Suivi de l'état d'édition
   const [updatedTitle, setUpdatedTitle] = useState(review.title);
@@ -15,6 +15,14 @@ function ReviewCard({ review, onUpdate, onDelete }) {
   const [username, setUsername] = useState(
     review.User ? review.User.username : ""
   ); // Conserver le username séparément
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split(".")[1]));
+      setUserId(decodedToken?.id); // Récupère l'ID utilisateur du token
+    }
+  }, []);
 
   useEffect(() => {
     // Met à jour le username si review.User.change (si jamais l'objet `User` change au fil du temps)
@@ -32,7 +40,15 @@ function ReviewCard({ review, onUpdate, onDelete }) {
     setIsEditing(false); // Fermer le mode édition après la mise à jour
   };
 
-  const isUserReviewOwner = user?.id === review.userId; 
+  console.log(setUserId);
+
+  if (!setUserId) {
+    console.log("Utilisateur non chargé");
+  } else {
+    console.log("Utilisateur chargé :", userId);
+    console.log("ID utilisateur :", userId);
+  }
+  
 
   return (
     <div className="review-card">
@@ -74,7 +90,7 @@ function ReviewCard({ review, onUpdate, onDelete }) {
             <p>{review.comment}</p>
             <p>Note: {review.rating} / 10</p>
 
-            {isUserReviewOwner && ( // Afficher les boutons seulement si l'utilisateur est le propriétaire de la critique
+            {userId && userId === review.userId && (
               <>
                 <button
                   onClick={() => setIsEditing(true)}

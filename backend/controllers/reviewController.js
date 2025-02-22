@@ -42,7 +42,7 @@ exports.getReviewsByWork = async (req, res) => {
       include: [
         {
           model: User, // Jointure avec User
-          attributes: ["username"], // On ne récupère que le username
+          attributes: ["id", "username"], // On ne récupère que le username
         },
       ],
     });
