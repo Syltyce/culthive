@@ -41,7 +41,7 @@ describe('ReviewCard', () => {
   });
 
   it('met à jour la review et appelle onUpdate', () => {
-    fireEvent.click(screen.getByText('Modifier'));
+    fireEvent.click(screen.getByRole('button', { name: /Modifier/i }));
 
     const titleInput = screen.getByDisplayValue('Super film');
     const commentInput = screen.getByDisplayValue('J’ai adoré ce film !');
@@ -62,7 +62,7 @@ describe('ReviewCard', () => {
   });
 
   it('supprime la review lorsque l’on clique sur "Supprimer"', () => {
-    fireEvent.click(screen.getByText('Supprimer'));
+    fireEvent.click(screen.getByRole('button', { name: /Supprimer/i }));
     expect(mockOnDelete).toHaveBeenCalledWith(1);
   });
 });

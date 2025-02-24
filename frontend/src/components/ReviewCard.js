@@ -48,16 +48,6 @@ function ReviewCard({ review, onUpdate, onDelete }) {
     setIsEditing(false); // Fermer le mode édition après la mise à jour
   };
 
-  console.log(setUserId);
-
-  if (!setUserId) {
-    console.log("Utilisateur non chargé");
-  } else {
-    console.log("Utilisateur chargé :", userId);
-    console.log("ID utilisateur :", userId);
-  }
-  
-
   return (
     <div className="review-card">
       <div className="review-content">
