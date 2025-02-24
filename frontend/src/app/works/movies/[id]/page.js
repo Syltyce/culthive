@@ -1,5 +1,6 @@
 "use client"; // Directive pour marquer ce fichier comme un composant client
 
+// Importation des dépendances nécessaires
 import React, { useState, useEffect, useContext } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -13,18 +14,27 @@ export const dynamic = "force-dynamic"; // Empêche la génération statique au 
 function MovieDetail({ params: initialParams }) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
-  const { isAuthenticated, user } = useContext(AuthContext); // Correction ici
+  // Récupération des informations d'authentification via le contexte
+  const { isAuthenticated, user } = useContext(AuthContext);
 
-  const [params, setParams] = useState(null); // Stockage des paramètres résolus
-  const [movie, setMovie] = useState(null);
+  // Déclaration des états du composant
+  const [params, setParams] = useState(null); // Paramètres à utiliser pour la récupération des détails du film
+  const [movie, setMovie] = useState(null); // Détails du film
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [isAdded, setIsAdded] = useState(false); // Suivi de l'ajout du film à la liste
-  const [actionError, setActionError] = useState(null); // Gestion des erreurs d'action
+  const [isAdded, setIsAdded] = useState(false); // État pour savoir si le film est déjà ajouté à la liste
+  const [actionError, setActionError] = useState(null); // Erreurs d'actions d'ajout à la liste
 
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState([]); // Critiques du films
 
+  // useEffect(() => {
+  //   if (isAuthenticated && user?.id) {
+  //     console.log("User ID:", user.id);
+  //   }
+  // }, [isAuthenticated, user]);
+
+  // Utilisation d'un useEffect pour résoudre les paramètres initiaux passés
   useEffect(() => {
     async function resolveParams() {
       if (initialParams instanceof Promise) {
@@ -137,7 +147,7 @@ function MovieDetail({ params: initialParams }) {
   // Fonction de mise à jour d'une review
   const handleUpdateReview = async (updatedReview) => {
     try {
-      const token = localStorage.getItem("token"); // Vérifie comment tu stockes le token
+      const token = localStorage.getItem("token");
 
       const response = await fetch(
         `${API_URL}/api/reviews/${updatedReview.id}`,
@@ -170,7 +180,7 @@ function MovieDetail({ params: initialParams }) {
 
   // Fonction de suppression d'une review
   const handleDeleteReview = async (reviewId) => {
-    const token = localStorage.getItem("token"); // Vérifie comment tu stockes le token
+    const token = localStorage.getItem("token");
 
     try {
       const response = await fetch(`${API_URL}/api/reviews/${reviewId}`, {

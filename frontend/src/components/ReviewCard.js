@@ -16,6 +16,14 @@ function ReviewCard({ review, onUpdate, onDelete }) {
     review.User ? review.User.username : ""
   ); // Conserver le username séparément
 
+  const renderStars = (rating) => {
+    const maxStars = 10; // Note sur 10
+    return Array.from({ length: maxStars }, (_, i) => (
+      <span key={i} className={`star-review ${i < rating ? "filled" : ""}`}>★</span>
+    ));
+  };
+  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -84,11 +92,13 @@ function ReviewCard({ review, onUpdate, onDelete }) {
         ) : (
           <>
             <h3>
-              <strong>{username}</strong> a commenté :
+              Critique de <strong>{username}</strong>
             </h3>
-            <h4>{review.title}</h4>
-            <p>{review.comment}</p>
-            <p>Note: {review.rating} / 10</p>
+            <h4>Titre : {review.title}</h4>
+            <p>Commentaire : {review.comment}</p>
+            <div className="star-review-rating">
+              <span className="note-label">Note :</span> {renderStars(review.rating)}
+            </div>
 
             {userId && userId === review.userId && (
               <>
