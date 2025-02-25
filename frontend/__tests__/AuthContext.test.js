@@ -1,70 +1,106 @@
-import "@testing-library/jest-dom";
-import { render, screen, act } from "@testing-library/react";
-import React, { useContext } from "react";
-import AuthContext, { AuthProvider } from "@/components/AuthContext";
+import React from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { AuthProvider } from "@/components/AuthContext";
+import AuthContext from "@/components/AuthContext";
 
-// Composant de test pour accéder au contexte
-const TestComponent = ({ onSetUser }) => {
-  const { user, isAuthenticated, setUser } = useContext(AuthContext);
-
-  // On expose setUser à l'extérieur pour le test
-  React.useEffect(() => {
-    if (onSetUser) onSetUser(setUser);
-  }, [onSetUser, setUser]);
-
-  return (
-    <div>
-      <p data-testid="auth-status">
-        {isAuthenticated ? "Authenticated" : "Not Authenticated"}
-      </p>
-      <p data-testid="user-info">{user ? `User: ${user.name}` : "No user"}</p>
-    </div>
-  );
-};
+// Mock de la fonction fetch
+global.fetch = jest.fn();
 
 describe("AuthContext", () => {
-  it("devrait initialiser l'authentification en fonction du token dans localStorage", () => {
-    localStorage.setItem("token", "fake-token");
-
-    render(
-      <AuthProvider>
-        <TestComponent />
-      </AuthProvider>
-    );
-
-    expect(screen.getByTestId("auth-status")).toHaveTextContent(
-      "Authenticated"
-    );
+  beforeEach(() => {
+    // Réinitialiser fetch avant chaque test
+    fetch.mockClear();
   });
 
-  it('devrait afficher "Not Authenticated" si aucun token n\'est présent dans localStorage', () => {
-    localStorage.removeItem("token");
+  it("devrait mettre à jour l'état de l'utilisateur et l'authentification si un token est stocké", async () => {
+    // Mock de la réponse fetch
+    const mockUser = { name: "Utilisateur Test", email: "test@example.com" };
+    localStorage.setItem("token", "fake-token"); // Simuler un token stocké dans localStorage
 
-    render(
-      <AuthProvider>
-        <TestComponent />
-      </AuthProvider>
-    );
-
-    expect(screen.getByTestId("auth-status")).toHaveTextContent(
-      "Not Authenticated"
-    );
-  });
-
-  it("devrait mettre à jour les données utilisateur", () => {
-    let setUserFunction; // Variable pour stocker la fonction setUser
-
-    render(
-      <AuthProvider>
-        <TestComponent onSetUser={(setUser) => (setUserFunction = setUser)} />
-      </AuthProvider>
-    );
-
-    // Simuler une mise à jour du contexte utilisateur avec act()
-    act(() => {
-      setUserFunction({ name: "John Doe" });
+    fetch.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValue(mockUser),
     });
 
-    expect(screen.getByTestId("user-info")).toHaveTextContent("User: John Doe");
+    // Rendre le composant avec le contexte
+    render(
+      <AuthProvider>
+        <AuthContext.Consumer>
+          {({ user, isAuthenticated }) => (
+            <>
+              <div>{isAuthenticated ? "Authenticated" : "Not Authenticated"}</div>
+              <div>{user ? user.name : "No User"}</div>
+            </>
+          )}
+        </AuthContext.Consumer>
+      </AuthProvider>
+    );
+
+    // Attendre la mise à jour de l'état
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith(
+        "http://localhost:3000/api/users/profile",
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            Authorization: "Bearer fake-token",
+          }),
+        })
+      );
+    });
+
+    // Vérifier si l'utilisateur est authentifié et que les informations de l'utilisateur sont rendues
+    await waitFor(() => {
+      expect(screen.getByText("Authenticated")).toBeInTheDocument();
+      expect(screen.getByText("Utilisateur Test")).toBeInTheDocument();
+    });
+  });
+
+  it("devrait ne pas authentifier si un token est absent ou invalide", async () => {
+    localStorage.removeItem("token"); // Retirer le token de localStorage
+
+    // Rendre le composant avec le contexte
+    render(
+      <AuthProvider>
+        <AuthContext.Consumer>
+          {({ user, isAuthenticated }) => (
+            <>
+              <div>{isAuthenticated ? "Authenticated" : "Not Authenticated"}</div>
+              <div>{user ? user.name : "No User"}</div>
+            </>
+          )}
+        </AuthContext.Consumer>
+      </AuthProvider>
+    );
+
+    // Attendre que le composant se mette à jour
+    await waitFor(() => {
+      expect(screen.getByText("Not Authenticated")).toBeInTheDocument();
+      expect(screen.getByText("No User")).toBeInTheDocument();
+    });
+  });
+
+  it("devrait gérer les erreurs de requête API", async () => {
+    localStorage.setItem("token", "fake-token"); // Simuler un token stocké dans localStorage
+
+    fetch.mockRejectedValueOnce(new Error("Erreur de connexion"));
+
+    // Rendre le composant avec le contexte
+    render(
+      <AuthProvider>
+        <AuthContext.Consumer>
+          {({ user, isAuthenticated }) => (
+            <>
+              <div>{isAuthenticated ? "Authenticated" : "Not Authenticated"}</div>
+              <div>{user ? user.name : "No User"}</div>
+            </>
+          )}
+        </AuthContext.Consumer>
+      </AuthProvider>
+    );
+
+    // Attendre que le composant se mette à jour après l'échec de la requête
+    await waitFor(() => {
+      expect(screen.getByText("Not Authenticated")).toBeInTheDocument();
+      expect(screen.getByText("No User")).toBeInTheDocument();
+    });
   });
 });

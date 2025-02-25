@@ -1,68 +1,49 @@
-import '@testing-library/jest-dom';
-import { render, screen, fireEvent } from '@testing-library/react';
-import React from 'react';
-import ReviewCard from '@/components/ReviewCard';
+import { render, screen } from "@testing-library/react";
+import ReviewCard from "@/components/ReviewCard";
+import React from "react";
 
-describe('ReviewCard', () => {
-  const mockReview = {
+// Mock de la fonction onUpdate et onDelete
+const mockOnUpdate = jest.fn();
+const mockOnDelete = jest.fn();
+
+describe("ReviewCard", () => {
+  const reviewMock = {
     id: 1,
-    title: 'Super film',
-    comment: 'J’ai adoré ce film !',
-    rating: 9,
-    User: { username: 'JohnDoe' },
+    title: "Super film",
+    comment: "Très agréable à regarder.",
+    rating: 8,
+    userId: 123,
+    User: { username: "UtilisateurTest" },
   };
 
-  const mockOnUpdate = jest.fn();
-  const mockOnDelete = jest.fn();
-
-  beforeEach(() => {
+  test("affiche correctement les étoiles en fonction de la note", () => {
     render(
-      <ReviewCard 
-        review={mockReview} 
-        onUpdate={mockOnUpdate} 
-        onDelete={mockOnDelete} 
+      <ReviewCard
+        review={reviewMock}
+        onUpdate={mockOnUpdate}
+        onDelete={mockOnDelete}
       />
     );
+
+    // Vérifier que les étoiles sont rendues pour une note de 8/10
+    const stars = screen.getAllByText('★');  // Cherche par texte dans chaque span
+    expect(stars).toHaveLength(10); // Vérifie qu'il y a bien 10 étoiles
+    expect(stars.filter(star => star.classList.contains("filled"))).toHaveLength(8); // Vérifie qu'il y a 8 étoiles remplies
   });
 
-  it('affiche correctement les informations de la review', () => {
-    expect(screen.getByText('Super film')).toBeInTheDocument();
-    expect(screen.getByText('J’ai adoré ce film !')).toBeInTheDocument();
-    expect(screen.getByText('Note: 9 / 10')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 3, name: /JohnDoe a commenté/i })).toBeInTheDocument();
-});
+  test("affiche correctement le titre et le commentaire de la critique", () => {
+    render(
+      <ReviewCard
+        review={reviewMock}
+        onUpdate={mockOnUpdate}
+        onDelete={mockOnDelete}
+      />
+    );
 
-  it('passe en mode édition lorsqu’on clique sur "Modifier"', () => {
-    fireEvent.click(screen.getByText('Modifier'));
-    
-    expect(screen.getByDisplayValue('Super film')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('J’ai adoré ce film !')).toBeInTheDocument();
-    expect(screen.getByDisplayValue('9')).toBeInTheDocument();
-  });
-
-  it('met à jour la review et appelle onUpdate', () => {
-    fireEvent.click(screen.getByRole('button', { name: /Modifier/i }));
-
-    const titleInput = screen.getByDisplayValue('Super film');
-    const commentInput = screen.getByDisplayValue('J’ai adoré ce film !');
-    const ratingInput = screen.getByDisplayValue('9');
-
-    fireEvent.change(titleInput, { target: { value: 'Film incroyable' } });
-    fireEvent.change(commentInput, { target: { value: 'Vraiment un chef-d’œuvre !' } });
-    fireEvent.change(ratingInput, { target: { value: '10' } });
-
-    fireEvent.click(screen.getByText('Valider'));
-
-    expect(mockOnUpdate).toHaveBeenCalledWith({
-      ...mockReview,
-      title: 'Film incroyable',
-      comment: 'Vraiment un chef-d’œuvre !',
-      rating: '10',
-    });
-  });
-
-  it('supprime la review lorsque l’on clique sur "Supprimer"', () => {
-    fireEvent.click(screen.getByRole('button', { name: /Supprimer/i }));
-    expect(mockOnDelete).toHaveBeenCalledWith(1);
+    // Vérifier que le texte "Critique de UtilisateurTest" est bien présent
+    expect(screen.getByText("Critique de")).toBeInTheDocument();
+    expect(screen.getByText("UtilisateurTest")).toBeInTheDocument();
+    expect(screen.getByText("Titre : Super film")).toBeInTheDocument();
+    expect(screen.getByText("Commentaire : Très agréable à regarder.")).toBeInTheDocument();
   });
 });

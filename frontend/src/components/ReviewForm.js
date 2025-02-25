@@ -95,8 +95,9 @@ function ReviewForm({ workId }) {
       <h2>Ajouter une Review</h2>
 
       <div className="form-group">
-        <label>Note :</label>
+        <label htmlFor="rating">Note :</label>
         <input
+          id="rating" 
           type="number"
           value={rating}
           onChange={(e) => setRating(e.target.value)}
@@ -112,6 +113,7 @@ function ReviewForm({ workId }) {
             key={index}
             className={`star ${rating > index ? "selected" : ""}`}
             onClick={() => handleStarClick(index + 1)}
+            data-testid={`star-${index}`}
           >
             ★
           </span>
@@ -119,8 +121,9 @@ function ReviewForm({ workId }) {
       </div>
 
       <div className="form-group">
-        <label>Titre (optionnel) :</label>
+        <label htmlFor="titre">Titre (optionnel) :</label>
         <input
+          id="titre"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -129,8 +132,9 @@ function ReviewForm({ workId }) {
       </div>
 
       <div className="form-group">
-        <label>Commentaire :</label>
+        <label htmlFor="commentaire">Commentaire :</label>
         <textarea
+          id="commentaire"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           className="form-textarea"
