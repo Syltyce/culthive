@@ -17,14 +17,29 @@ module.exports = {
     port: process.env.DB_PORT || process.env.MYSQLPORT,
     dialect: "mysql"
   },
-  production: {
-    use_env_variable: "DATABASE_URL",
-    dialect: "mysql",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
+  production: process.env.DATABASE_URL
+  ? {
+      url: process.env.DATABASE_URL, 
+      dialect: "mysql",
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
       }
     }
-  }
+  : {
+      username: process.env.MYSQLUSER,
+      password: process.env.MYSQLPASSWORD,
+      database: process.env.MYSQL_DATABASE,
+      host: process.env.MYSQLHOST,
+      port: process.env.MYSQLPORT,
+      dialect: "mysql",
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      }
+    }
 };

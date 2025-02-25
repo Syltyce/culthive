@@ -2,12 +2,12 @@ import styles from "./page.module.css"; // Import du fichier CSS spécifique à 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Image from "next/image";
-import TarteConsent from "@/components/TarteConsent";
+// import TarteConsent from "@/components/TarteConsent";
 
 export default function Home() {
   return (
     <div className={styles.page}>
-      <TarteConsent />
+      {/* <TarteConsent /> */}
       <Header />
       <main className={styles.main}>
         <div className={styles.presentation}>

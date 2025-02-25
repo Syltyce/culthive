@@ -7,14 +7,24 @@ const config = require("../config/config")[env];
 
 let sequelize;
 
-if (config.use_env_variable) {
-  sequelize = new Sequelize(config.use_env_variable);
+if (env === "production" && process.env.DATABASE_URL) {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "mysql",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+  }); 
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
-    dialect: config.dialect
+    port: config.port,
+    dialect: config.dialect,
   });
 }
+
 
 async function testConnection() {
   try {

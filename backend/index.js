@@ -29,17 +29,24 @@ User.hasMany(List, { foreignKey: "userId" }); // Un utilisateur peut avoir plusi
 
 const app = express(); // Création de l'instance Express
 
-// Middleware CORS pour permettre l'accès depuis le frontend (port 3001)
+// Log toutes les requêtes pour voir ce qui arrive
+app.use((req, res, next) => {
+  console.log(`${req.method} request to ${req.url}`);
+  next();  // Passe à la suite des middlewares
+});
+
+// Middleware CORS pour permettre l'accès depuis le frontend 
 app.use(
   cors({
-    origin: ['http://localhost:3001', 'https://culthive-frontend.vercel.app'],
+    origin: [
+    'http://localhost:3001', 
+    'https://culthive-frontend.vercel.app'
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
 );
-
-app.options('*', cors());
 
 app.use(express.json()); // Middleware pour parser le corps en JSON
 
@@ -54,7 +61,7 @@ app.use("/api/stripe", stripeRoutes);
 app.use("/api/admin", adminRoutes);
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000 || 8080;
 
 // Route de test
 app.get("/", (req, res) => {
@@ -67,7 +74,7 @@ sequelize
   .then(() => {
     console.log("BDD synchronisée");
     app.listen(PORT, () => {
-      console.log(`Serveur backend lancé sur http://localhost:${PORT}`);
+      console.log(`Serveur backend lancé sur le port ${PORT}`);
     });
   })
   .catch((error) => {
