@@ -55,7 +55,7 @@ const PolitiqueConfidentialite = () => {
         à tout moment. Les modifications seront mises à jour sur cette page.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default PolitiqueConfidentialite;
+export default PolitiqueConfidentialite

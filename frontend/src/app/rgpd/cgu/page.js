@@ -66,7 +66,7 @@ const CGU = () => {
         les tribunaux compétents seront ceux du ressort de Athis-Mons.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default CGU;
+export default CGU

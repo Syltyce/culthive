@@ -1,7 +1,7 @@
-import styles from "./page.module.css"; // Import du fichier CSS spécifique à cette page
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Image from "next/image";
+import styles from './page.module.css' // Import du fichier CSS spécifique à cette page
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import Image from 'next/image'
 // import TarteConsent from "@/components/TarteConsent";
 
 export default function Home() {
@@ -97,5 +97,5 @@ export default function Home() {
       </main>
       <Footer />
     </div>
-  );
+  )
 }

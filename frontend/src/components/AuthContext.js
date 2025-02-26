@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react'
 
 // Création du contexte
-const AuthContext = createContext();
+const AuthContext = createContext()
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 // Fournisseur du contexte
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // État pour stocker les données de l'utilisateur
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // État pour l'authentification
+  const [user, setUser] = useState(null) // État pour stocker les données de l'utilisateur
+  const [isAuthenticated, setIsAuthenticated] = useState(false) // État pour l'authentification
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
+    const storedToken = localStorage.getItem('token')
     if (storedToken) {
       fetch(`${API_URL}/api/users/profile`, {
         // Tu dois avoir un endpoint qui renvoie les infos de l'utilisateur
@@ -23,15 +23,15 @@ export const AuthProvider = ({ children }) => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setUser(data); // Mettre l'utilisateur dans le contexte
-          setIsAuthenticated(true);
+          setUser(data) // Mettre l'utilisateur dans le contexte
+          setIsAuthenticated(true)
         })
         .catch(() => {
-          setIsAuthenticated(false);
-          setUser(null);
-        });
+          setIsAuthenticated(false)
+          setUser(null)
+        })
     }
-  }, []);
+  }, [])
 
   return (
     <AuthContext.Provider
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     >
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
 
-export default AuthContext;
+export default AuthContext

@@ -2,10 +2,9 @@
 
 /* Indicateur de chargement */
 .loading-spinner {
-    text-align: center;
-    margin-top: 50px;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #333;
-  }
-  
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}

@@ -1,68 +1,69 @@
 // "use client" indique que ce fichier utilise React côté client (frontend), ce qui permet l'interactivité.
-"use client";
+'use client'
 
 // Importations des components
-import Footer from "../../../components/Footer";
-import Header from "../../../components/Header";
+import Footer from '../../../components/Footer'
+import Header from '../../../components/Header'
 
 // Diverses Importations
-import Link from "next/link";
-import styles from "./Register.module.css";
-import { useState } from "react";
+import Link from 'next/link'
+import styles from './Register.module.css'
+import { useState } from 'react'
 
 // Composant fonctionnel Register qui représente la page d'inscription
 export default function Register() {
-
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
   // Déclaration des états pour gérer les différents champs du formulaire
-  const [registerUsername, setRegisterUsername] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
-  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerUsername, setRegisterUsername] = useState('')
+  const [registerPassword, setRegisterPassword] = useState('')
+  const [registerEmail, setRegisterEmail] = useState('')
 
-  // État pour afficher les erreurs et les succès 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); // État pour les succès
-
+  // État pour afficher les erreurs et les succès
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('') // État pour les succès
 
   // Fonction Asynchrone appelée lorsqu'on soumet le formulaire pour s'inscrire
   const register = async () => {
-
-    // Envoie d'une requête POST à l'API /api/register avec les données du formulaire 
+    // Envoie d'une requête POST à l'API /api/register avec les données du formulaire
     const response = await fetch(`${API_URL}/api/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       // Envoie des données en JSON (username, mail, mdp, téléphone)
       body: JSON.stringify({
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
       }),
-    });
+    })
 
-    // Si la réponse du backend n'est pas OK : on affiche l'erreur 
+    // Si la réponse du backend n'est pas OK : on affiche l'erreur
     if (!response.ok) {
-      const errorData = await response.json();
-      setErrorMessage(errorData.message); // Affiche le message d'erreur côté frontend
-      setSuccessMessage(""); // Réinitialiser le message de succès
-      console.error("Erreur backend :", errorData.message);
-      return;
+      const errorData = await response.json()
+      setErrorMessage(errorData.message) // Affiche le message d'erreur côté frontend
+      setSuccessMessage('') // Réinitialiser le message de succès
+      console.error('Erreur backend :', errorData.message)
+      return
     }
 
-    // Si tout va bien, on récupère les données renvoyées par le serveur 
-    const data = await response.json();
+    // Si tout va bien, on récupère les données renvoyées par le serveur
+    const data = await response.json()
     if (response.ok) {
-      console.log("Inscription réussie :", data);
-      setSuccessMessage("Inscription réussie ! Vous pouvez vous connecter désormais !");
-      setErrorMessage(""); // Efface les messages d'erreur en cas de succès
+      console.log('Inscription réussie :', data)
+      setSuccessMessage(
+        'Inscription réussie ! Vous pouvez vous connecter désormais !'
+      )
+      setErrorMessage('') // Efface les messages d'erreur en cas de succès
     } else {
-      console.error("Erreur :", data.message);
-      setErrorMessage("Une erreur inattendue s'est produite. Veuillez réessayer.");
-      setSuccessMessage(""); // Réinitialiser le message de succès
+      console.error('Erreur :', data.message)
+      setErrorMessage(
+        "Une erreur inattendue s'est produite. Veuillez réessayer."
+      )
+      setSuccessMessage('') // Réinitialiser le message de succès
     }
-  };
+  }
 
-  // Rendu HTML du composant 
+  // Rendu HTML du composant
   return (
     <div className={styles.container}>
       <Header />
@@ -79,8 +80,8 @@ export default function Register() {
         {/* Formulaire d'inscription qui enregistre les différents champs dans les useState grâce à onChange */}
         <form
           onSubmit={(e) => {
-            e.preventDefault();
-            register();
+            e.preventDefault()
+            register()
           }}
           className={styles.form}
         >
@@ -109,13 +110,13 @@ export default function Register() {
             S'inscrire
           </button>
         </form>
-        
+
         <Link href="/users/login" className={styles.link}>
-          Vous avez déjà un compte ?{" "}
+          Vous avez déjà un compte ?{' '}
           <span className={styles.highlight}>Je me connecte</span>
         </Link>
       </main>
       <Footer />
     </div>
-  );
+  )
 }

@@ -1,12 +1,11 @@
 const MentionsLegales = () => {
   return (
     <div>
-
       <h1> Mentions légales </h1>
 
       <p>
         Site : CultHive https://www.culthive.fictyverse.com/ ou
-        https://www.fictyverse.com/culthive{" "}
+        https://www.fictyverse.com/culthive{' '}
       </p>
 
       <p>Editeur du site : CultHive </p>
@@ -21,11 +20,11 @@ const MentionsLegales = () => {
 
       <p>
         Hostinger International Ltd 61 Lordou Vironos Street 6023 Larnaca,
-        Cyprus, joignable par le moyen suivant https://www.hostinger.fr/contact{" "}
+        Cyprus, joignable par le moyen suivant
+        https://www.hostinger.fr/contact{' '}
       </p>
-
     </div>
-  );
-};
+  )
+}
 
-export default MentionsLegales;
+export default MentionsLegales

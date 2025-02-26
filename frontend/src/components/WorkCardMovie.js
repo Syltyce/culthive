@@ -1,14 +1,13 @@
-import React from "react";
-import Link from "next/link";
-import "../styles/WorkCard.css";
+import React from 'react'
+import Link from 'next/link'
+import '../styles/WorkCard.css'
 
 function WorkCardMovie({ work }) {
-
-if (!work || !work.id) {
-    return <div>Chargement...</div>; // Si `work` est inexistant ou mal formé, affiche un message
+  if (!work || !work.id) {
+    return <div>Chargement...</div> // Si `work` est inexistant ou mal formé, affiche un message
   }
 
-  const link = `/works/movies/${work.id}`;
+  const link = `/works/movies/${work.id}`
 
   return (
     <Link href={link}>
@@ -21,12 +20,14 @@ if (!work || !work.id) {
         <div className="work-card__info">
           <h2 className="work-card__title">{work.title}</h2>
           <p className="work-card__release-date">{work.release_date}</p>
-          <p className="work-card__overview">{work.overview.slice(0, 100)}...</p>
+          <p className="work-card__overview">
+            {work.overview.slice(0, 100)}...
+          </p>
           <p className="work-card__rating">Rating: {work.vote_average}/10</p>
         </div>
       </div>
     </Link>
-  );
+  )
 }
 
-export default WorkCardMovie;
+export default WorkCardMovie

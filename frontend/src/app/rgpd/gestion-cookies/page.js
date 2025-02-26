@@ -14,7 +14,7 @@ const GestionCookies = () => {
         les paramètres de votre navigateur.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default GestionCookies;
+export default GestionCookies

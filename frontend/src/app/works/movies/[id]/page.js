@@ -1,32 +1,32 @@
-"use client"; // Directive pour marquer ce fichier comme un composant client
+'use client' // Directive pour marquer ce fichier comme un composant client
 
 // Importation des dépendances nécessaires
-import React, { useState, useEffect, useContext } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import "../../../../styles/WorkDetail.css";
-import AuthContext from "@/components/AuthContext";
-import ReviewForm from "@/components/ReviewForm";
-import ReviewCard from "@/components/ReviewCard";
+import React, { useState, useEffect, useContext } from 'react'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
+import '../../../../styles/WorkDetail.css'
+import AuthContext from '@/components/AuthContext'
+import ReviewForm from '@/components/ReviewForm'
+import ReviewCard from '@/components/ReviewCard'
 
-export const dynamic = "force-dynamic"; // Empêche la génération statique au build
+export const dynamic = 'force-dynamic' // Empêche la génération statique au build
 
 function MovieDetail({ params: initialParams }) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
   // Récupération des informations d'authentification via le contexte
-  const { isAuthenticated, user } = useContext(AuthContext);
+  const { isAuthenticated, user } = useContext(AuthContext)
 
   // Déclaration des états du composant
-  const [params, setParams] = useState(null); // Paramètres à utiliser pour la récupération des détails du film
-  const [movie, setMovie] = useState(null); // Détails du film
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [params, setParams] = useState(null) // Paramètres à utiliser pour la récupération des détails du film
+  const [movie, setMovie] = useState(null) // Détails du film
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
 
-  const [isAdded, setIsAdded] = useState(false); // État pour savoir si le film est déjà ajouté à la liste
-  const [actionError, setActionError] = useState(null); // Erreurs d'actions d'ajout à la liste
+  const [isAdded, setIsAdded] = useState(false) // État pour savoir si le film est déjà ajouté à la liste
+  const [actionError, setActionError] = useState(null) // Erreurs d'actions d'ajout à la liste
 
-  const [reviews, setReviews] = useState([]); // Critiques du films
+  const [reviews, setReviews] = useState([]) // Critiques du films
 
   // useEffect(() => {
   //   if (isAuthenticated && user?.id) {
@@ -38,179 +38,179 @@ function MovieDetail({ params: initialParams }) {
   useEffect(() => {
     async function resolveParams() {
       if (initialParams instanceof Promise) {
-        const resolvedParams = await initialParams;
-        setParams(resolvedParams);
+        const resolvedParams = await initialParams
+        setParams(resolvedParams)
       } else {
-        setParams(initialParams);
+        setParams(initialParams)
       }
     }
-    resolveParams();
-  }, [initialParams]);
+    resolveParams()
+  }, [initialParams])
 
   // Fetch des détails d'un film
   useEffect(() => {
     async function fetchMovieDetails() {
       if (params?.id) {
         try {
-          setLoading(true);
+          setLoading(true)
           const response = await fetch(
             `${API_URL}/api/works/movies/${params.id}`
-          );
+          )
           if (!response.ok) {
             throw new Error(
-              "Erreur lors de la récupération des détails du film."
-            );
+              'Erreur lors de la récupération des détails du film.'
+            )
           }
-          const data = await response.json();
-          setMovie(data);
+          const data = await response.json()
+          setMovie(data)
         } catch (err) {
-          setError(err.message);
+          setError(err.message)
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
       }
     }
-    fetchMovieDetails();
-  }, [params]);
+    fetchMovieDetails()
+  }, [params])
 
   // Fetch des reviews
   useEffect(() => {
     async function fetchReviews() {
       if (params?.id) {
         try {
-          const response = await fetch(`${API_URL}/api/reviews/${params.id}`);
+          const response = await fetch(`${API_URL}/api/reviews/${params.id}`)
           if (!response.ok) {
-            throw new Error("Erreur lors de la récupération des critiques.");
+            throw new Error('Erreur lors de la récupération des critiques.')
           }
-          const data = await response.json();
-          setReviews(data);
+          const data = await response.json()
+          setReviews(data)
         } catch (err) {
-          console.error(err);
+          console.error(err)
         }
       }
     }
-    fetchReviews();
-  }, [params]);
+    fetchReviews()
+  }, [params])
 
   // Fonction pour ajouter un film à la liste
   const handleAddToList = async (type) => {
-    const token = localStorage.getItem("token"); // Récupère le token du localStorage
+    const token = localStorage.getItem('token') // Récupère le token du localStorage
     if (!token) {
       setActionError(
-        "Vous devez être connecté pour ajouter un film à votre liste."
-      );
-      return;
+        'Vous devez être connecté pour ajouter un film à votre liste.'
+      )
+      return
     }
 
     try {
       // Décoder le token pour obtenir l'ID utilisateur
-      const decodedToken = JSON.parse(atob(token.split(".")[1])); // Décoder le token JWT
-      const userId = decodedToken?.id; // Extraire l'ID de l'utilisateur
+      const decodedToken = JSON.parse(atob(token.split('.')[1])) // Décoder le token JWT
+      const userId = decodedToken?.id // Extraire l'ID de l'utilisateur
 
       if (!userId) {
-        setActionError("ID utilisateur manquant dans le token.");
-        return;
+        setActionError('ID utilisateur manquant dans le token.')
+        return
       }
 
       // Envoi de la requête POST avec l'ID de l'utilisateur
       const response = await fetch(`${API_URL}/api/list/add`, {
-        method: "POST", // Méthode HTTP
+        method: 'POST', // Méthode HTTP
         headers: {
-          "Content-Type": "application/json", // Type de contenu JSON
+          'Content-Type': 'application/json', // Type de contenu JSON
           Authorization: `Bearer ${token}`, // Envoie le token dans l'en-tête Authorization
         },
         body: JSON.stringify({
           userId, // Ajoute l'ID de l'utilisateur
           workId: movie.id, // L'ID du film à ajouter
           type, // 'watchlist' ou 'favorites'
-          workType: "film", // Film ou série
+          workType: 'film', // Film ou série
         }),
-      });
+      })
 
       if (response.ok) {
-        const data = await response.json();
-        setIsAdded(true);
-        setActionError(null);
-        alert(`Film ajouté à votre ${type}!`);
+        const data = await response.json()
+        setIsAdded(true)
+        setActionError(null)
+        alert(`Film ajouté à votre ${type}!`)
       } else {
-        const errorData = await response.json();
+        const errorData = await response.json()
         setActionError(
           errorData.message || "Erreur lors de l'ajout du film à votre liste."
-        );
+        )
       }
     } catch (err) {
-      console.error("Erreur lors de l'ajout :", err);
-      setActionError("Erreur lors de l'ajout du film à votre liste.");
+      console.error("Erreur lors de l'ajout :", err)
+      setActionError("Erreur lors de l'ajout du film à votre liste.")
     }
-  };
+  }
 
   // Fonction de mise à jour d'une review
   const handleUpdateReview = async (updatedReview) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token')
 
       const response = await fetch(
         `${API_URL}/api/reviews/${updatedReview.id}`,
         {
-          method: "PUT",
+          method: 'PUT',
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(updatedReview), // Passer les nouvelles données de la critique
         }
-      );
+      )
 
       if (response.ok) {
-        const data = await response.json();
+        const data = await response.json()
         setReviews((prevReviews) =>
           prevReviews.map((review) =>
             review.id === updatedReview.id ? data : review
           )
-        );
-        alert("Critique mise à jour !");
+        )
+        alert('Critique mise à jour !')
       } else {
-        alert("Erreur lors de la mise à jour de la critique.");
+        alert('Erreur lors de la mise à jour de la critique.')
       }
     } catch (error) {
-      console.error(error);
-      alert("Erreur lors de la mise à jour de la critique.");
+      console.error(error)
+      alert('Erreur lors de la mise à jour de la critique.')
     }
-  };
+  }
 
   // Fonction de suppression d'une review
   const handleDeleteReview = async (reviewId) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
 
     try {
       const response = await fetch(`${API_URL}/api/reviews/${reviewId}`, {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      });
+      })
 
       if (response.ok) {
         setReviews((prevReviews) =>
           prevReviews.filter((review) => review.id !== reviewId)
-        );
-        alert("Critique supprimée !");
+        )
+        alert('Critique supprimée !')
       } else {
-        alert("Erreur lors de la suppression de la critique.");
+        alert('Erreur lors de la suppression de la critique.')
       }
     } catch (error) {
-      console.error(error);
-      alert("Erreur lors de la suppression de la critique.");
+      console.error(error)
+      alert('Erreur lors de la suppression de la critique.')
     }
-  };
+  }
 
   if (!params) {
-    return <div className="loading">Chargement des paramètres...</div>;
+    return <div className="loading">Chargement des paramètres...</div>
   }
 
   if (loading) {
-    return <div className="loading">Chargement...</div>;
+    return <div className="loading">Chargement...</div>
   }
 
   if (error) {
@@ -220,7 +220,7 @@ function MovieDetail({ params: initialParams }) {
         <p>{error}</p>
         <Footer />
       </div>
-    );
+    )
   }
 
   if (!movie) {
@@ -230,7 +230,7 @@ function MovieDetail({ params: initialParams }) {
         <p>Aucun détail disponible pour ce film.</p>
         <Footer />
       </div>
-    );
+    )
   }
 
   return (
@@ -256,16 +256,16 @@ function MovieDetail({ params: initialParams }) {
         {/* Boutons d'ajout à la liste */}
         <div className="add-to-list-buttons">
           <button
-            onClick={() => handleAddToList("watchlist")}
+            onClick={() => handleAddToList('watchlist')}
             disabled={isAdded}
           >
-            {isAdded ? "Ajouté à la Watchlist" : "Ajouter à ma Watchlist"}
+            {isAdded ? 'Ajouté à la Watchlist' : 'Ajouter à ma Watchlist'}
           </button>
           <button
-            onClick={() => handleAddToList("favorites")}
+            onClick={() => handleAddToList('favorites')}
             disabled={isAdded}
           >
-            {isAdded ? "Ajouté aux Favoris" : "Ajouter à mes Favoris"}
+            {isAdded ? 'Ajouté aux Favoris' : 'Ajouter à mes Favoris'}
           </button>
         </div>
         {actionError && <p className="error">{actionError}</p>}
@@ -276,9 +276,9 @@ function MovieDetail({ params: initialParams }) {
         <ReviewForm workId={movie.id} userId={user?.id} />
       ) : (
         <p>
-          {" "}
+          {' '}
           Si vous voulez noter ou faire une critique sur une oeuvre, veuillez
-          vous connecter{" "}
+          vous connecter{' '}
         </p>
       )}
 
@@ -300,7 +300,7 @@ function MovieDetail({ params: initialParams }) {
 
       <Footer />
     </div>
-  );
+  )
 }
 
-export default MovieDetail;
+export default MovieDetail

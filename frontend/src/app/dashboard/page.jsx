@@ -1,26 +1,25 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import styles from "./Dashboard.module.css";
+import { useEffect, useState } from 'react'
+import Footer from '../../components/Footer'
+import Header from '../../components/Header'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import styles from './Dashboard.module.css'
 
 export default function Dashboard() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
-  const [userData, setUserData] = useState(null);
-  const [error, setError] = useState(null);
-  const router = useRouter();
+  const [userData, setUserData] = useState(null)
+  const [error, setError] = useState(null)
+  const router = useRouter()
 
   // Vérifier si l'utilisateur est authentifié
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
 
     if (!token) {
-      router.push("/users/login"); // Si pas de token, rediriger vers la page de login
+      router.push('/users/login') // Si pas de token, rediriger vers la page de login
     } else {
       // Si un token est présent, récupérer les données de l'utilisateur (exemple avec un appel API)
       fetch(`${API_URL}/api/users/profile`, {
@@ -30,20 +29,20 @@ export default function Dashboard() {
       })
         .then((response) => {
           if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`HTTP error! status: ${response.status}`)
           }
-          return response.json();
+          return response.json()
         })
         .then((data) => setUserData(data))
         .catch((err) => {
           console.error(
-            "Erreur lors de la récupération des données utilisateur",
+            'Erreur lors de la récupération des données utilisateur',
             err
-          );
-          setError("Une erreur est survenue lors du chargement des données.");
-        });
+          )
+          setError('Une erreur est survenue lors du chargement des données.')
+        })
     }
-  }, [router]);
+  }, [router])
 
   return (
     <div className={styles.container}>
@@ -77,5 +76,5 @@ export default function Dashboard() {
       </main>
       <Footer />
     </div>
-  );
+  )
 }

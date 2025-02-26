@@ -1,5 +1,4 @@
-
-  /* 
+/* 
   
   --bleu-clair: #82D0F5; 
   --bleu-foncé: #0084C6; 
@@ -46,7 +45,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.8); /* Couleur blanche avec opacité de 50% */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Couleur blanche avec opacité de 50% */
   z-index: 1; /* Pour que l'image soit derrière l'overlay */
 }
 
@@ -86,7 +90,7 @@
 
 /* Carte individuelle */
 .card {
-  background-color: #82D0F5;
+  background-color: #82d0f5;
   padding: 20px;
   border-radius: 10px;
   display: flex;
@@ -96,7 +100,7 @@
 }
 
 .card:hover {
-  background-color: #0084C6; /* Au survol, la carte devient plus foncée */
+  background-color: #0084c6; /* Au survol, la carte devient plus foncée */
 }
 
 /* Image dans la carte */
@@ -118,7 +122,6 @@
   text-align: center;
   margin: 10px;
 }
-
 
 /* MEDIA QUERIES - Pour les écrans plus petits */
 

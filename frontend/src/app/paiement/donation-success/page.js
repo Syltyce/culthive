@@ -1,6 +1,5 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 export default function SuccessPage() {
   return (
@@ -12,5 +11,5 @@ export default function SuccessPage() {
       </div>
       <Footer />
     </div>
-  );
+  )
 }

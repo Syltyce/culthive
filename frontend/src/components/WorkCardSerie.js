@@ -1,9 +1,9 @@
-import React from "react";
-import Link from "next/link";
-import "../styles/WorkCard.css";
+import React from 'react'
+import Link from 'next/link'
+import '../styles/WorkCard.css'
 
 function WorkCardSerie({ work }) {
-  const link = `/works/series/${work.id}`;
+  const link = `/works/series/${work.id}`
 
   return (
     <Link href={link}>
@@ -16,12 +16,14 @@ function WorkCardSerie({ work }) {
         <div className="work-card__info">
           <h2 className="work-card__title">{work.name}</h2>
           <p className="work-card__release-date">{work.first_air_date}</p>
-          <p className="work-card__overview">{work.overview.slice(0, 100)}...</p>
+          <p className="work-card__overview">
+            {work.overview.slice(0, 100)}...
+          </p>
           <p className="work-card__rating">Rating: {work.vote_average}/10</p>
         </div>
       </div>
     </Link>
-  );
+  )
 }
 
-export default WorkCardSerie;
+export default WorkCardSerie

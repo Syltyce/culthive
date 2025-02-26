@@ -1,46 +1,46 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import { useState } from 'react'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 export default function DonationPage() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-  const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleDonate = async () => {
     if (!amount || amount < 1) {
-      alert("Veuillez entrer un montant valide");
-      return;
+      alert('Veuillez entrer un montant valide')
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
 
     try {
       const response = await fetch(
         `${API_URL}/api/stripe/create-donation-session`,
         {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ amount }),
         }
-      );
+      )
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (data.url) {
-        window.location.href = data.url; // Redirige vers Stripe Checkout
+        window.location.href = data.url // Redirige vers Stripe Checkout
       } else {
-        alert("Erreur : " + data.error);
+        alert('Erreur : ' + data.error)
       }
     } catch (error) {
-      console.error("Erreur lors du paiement :", error);
+      console.error('Erreur lors du paiement :', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div>
@@ -54,10 +54,10 @@ export default function DonationPage() {
           onChange={(e) => setAmount(e.target.value)}
         />
         <button onClick={handleDonate} disabled={loading}>
-          {loading ? "Redirection..." : "Faire un don"}
+          {loading ? 'Redirection...' : 'Faire un don'}
         </button>
       </div>
       <Footer />
     </div>
-  );
+  )
 }

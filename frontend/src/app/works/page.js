@@ -1,5 +1,5 @@
 // frontend/src/app/works/page.js
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function Works() {
   return (
@@ -16,5 +16,5 @@ export default function Works() {
         </ul>
       </nav>
     </div>
-  );
+  )
 }

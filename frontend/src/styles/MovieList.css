@@ -2,33 +2,32 @@
 
 /* Grille des films */
 .movie-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.movie-list .work-card {
+  flex: 1 1 250px; /* Chaque carte prend une largeur minimale de 250px */
+  margin: 10px;
+}
+
+/* Styles pour mobile */
+@media (max-width: 768px) {
+  .movie-list {
+    justify-content: flex-start;
   }
-  
-  .movie-list .work-card {
-    flex: 1 1 250px; /* Chaque carte prend une largeur minimale de 250px */
-    margin: 10px;
+}
+
+/* Styles pour petits écrans */
+@media (max-width: 600px) {
+  .movie-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  /* Styles pour mobile */
-  @media (max-width: 768px) {
-    .movie-list {
-      justify-content: flex-start;
-    }
+
+  .work-card {
+    margin: 10px 0;
   }
-  
-  /* Styles pour petits écrans */
-  @media (max-width: 600px) {
-    .movie-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
-  
-    .work-card {
-      margin: 10px 0;
-    }
-  }
-  
+}

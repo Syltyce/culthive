@@ -1,5 +1,5 @@
 // admin/page.js
-import Link from "next/link";
+import Link from 'next/link'
 
 export default function AdminDashboard() {
   return (
@@ -8,5 +8,5 @@ export default function AdminDashboard() {
       <Link href="/admin/reviews">Voir les critiques</Link>
       <Link href="/admin/users">Gestion des utilisateurs</Link>
     </div>
-  );
+  )
 }

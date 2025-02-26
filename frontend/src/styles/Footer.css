@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
 :root {
-  --bleu-clair: #82D0F5; /* Bleu clair */
-  --bleu-foncé: #0084C6; /* Bleu foncé */
-  --rouge-clair: #E5281F; /* Rouge clair */
-  --rouge-foncé: #A01C18; /* Rouge foncé */ 
-  --noir: #1d1d1b; /* Noir foncé */ 
+  --bleu-clair: #82d0f5; /* Bleu clair */
+  --bleu-foncé: #0084c6; /* Bleu foncé */
+  --rouge-clair: #e5281f; /* Rouge clair */
+  --rouge-foncé: #a01c18; /* Rouge foncé */
+  --noir: #1d1d1b; /* Noir foncé */
   --font-family: 'Roboto', sans-serif; /* Roboto */
 }
 
@@ -25,7 +25,7 @@ footer nav {
   justify-content: center; /* Centre les éléments horizontalement */
   flex-wrap: wrap; /* Permet aux éléments de se renvoyer à la ligne si l'espace est trop petit */
 }
-  
+
 footer nav .footer-link {
   text-decoration: none; /* Supprime la décoration par défaut du lien (souligné) */
   color: white; /* Couleur du texte des liens */
@@ -34,7 +34,7 @@ footer nav .footer-link {
   transition: color 0.3s ease; /* Ajoute une transition douce pour l'effet hover */
   text-decoration: underline; /* Souligner au survol */
 }
-  
+
 footer nav .footer-link:hover {
   color: var(--bleu-clair);
   text-decoration: underline; /* Souligner au survol */

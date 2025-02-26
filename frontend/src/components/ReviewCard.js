@@ -1,41 +1,41 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect, useContext } from "react";
-import "../styles/ReviewCard.css";
+import React, { useState, useEffect, useContext } from 'react'
+import '../styles/ReviewCard.css'
 
 function ReviewCard({ review, onUpdate, onDelete }) {
+  const [userId, setUserId] = useState(null)
 
-  const [userId, setUserId] = useState(null);
-
-  const [isEditing, setIsEditing] = useState(false); // Suivi de l'état d'édition
-  const [updatedTitle, setUpdatedTitle] = useState(review.title);
-  const [updatedComment, setUpdatedComment] = useState(review.comment);
-  const [updatedRating, setUpdatedRating] = useState(review.rating); // Ajout de la note modifiable
+  const [isEditing, setIsEditing] = useState(false) // Suivi de l'état d'édition
+  const [updatedTitle, setUpdatedTitle] = useState(review.title)
+  const [updatedComment, setUpdatedComment] = useState(review.comment)
+  const [updatedRating, setUpdatedRating] = useState(review.rating) // Ajout de la note modifiable
 
   const [username, setUsername] = useState(
-    review.User ? review.User.username : ""
-  ); // Conserver le username séparément
+    review.User ? review.User.username : ''
+  ) // Conserver le username séparément
 
   const renderStars = (rating) => {
-    const maxStars = 10; // Note sur 10
+    const maxStars = 10 // Note sur 10
     return Array.from({ length: maxStars }, (_, i) => (
-      <span key={i} className={`star-review ${i < rating ? "filled" : ""}`}>★</span>
-    ));
-  };
-  
+      <span key={i} className={`star-review ${i < rating ? 'filled' : ''}`}>
+        ★
+      </span>
+    ))
+  }
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
     if (token) {
-      const decodedToken = JSON.parse(atob(token.split(".")[1]));
-      setUserId(decodedToken?.id); // Récupère l'ID utilisateur du token
+      const decodedToken = JSON.parse(atob(token.split('.')[1]))
+      setUserId(decodedToken?.id) // Récupère l'ID utilisateur du token
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     // Met à jour le username si review.User.change (si jamais l'objet `User` change au fil du temps)
-    setUsername(review.User ? review.User.username : "");
-  }, [review.User]); // Le username changera uniquement si review.User change
+    setUsername(review.User ? review.User.username : '')
+  }, [review.User]) // Le username changera uniquement si review.User change
 
   const handleUpdate = () => {
     const updatedReview = {
@@ -43,10 +43,10 @@ function ReviewCard({ review, onUpdate, onDelete }) {
       title: updatedTitle,
       comment: updatedComment,
       rating: updatedRating, // Inclure la nouvelle note
-    };
-    onUpdate(updatedReview); // Appel de la fonction onUpdate pour appliquer la modification
-    setIsEditing(false); // Fermer le mode édition après la mise à jour
-  };
+    }
+    onUpdate(updatedReview) // Appel de la fonction onUpdate pour appliquer la modification
+    setIsEditing(false) // Fermer le mode édition après la mise à jour
+  }
 
   return (
     <div className="review-card">
@@ -87,7 +87,8 @@ function ReviewCard({ review, onUpdate, onDelete }) {
             <h4>Titre : {review.title}</h4>
             <p>Commentaire : {review.comment}</p>
             <div className="star-review-rating">
-              <span className="note-label">Note :</span> {renderStars(review.rating)}
+              <span className="note-label">Note :</span>{' '}
+              {renderStars(review.rating)}
             </div>
 
             {userId && userId === review.userId && (
@@ -106,12 +107,11 @@ function ReviewCard({ review, onUpdate, onDelete }) {
                 </button>
               </>
             )}
-
           </>
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default ReviewCard;
+export default ReviewCard

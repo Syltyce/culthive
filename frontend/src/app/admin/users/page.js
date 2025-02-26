@@ -1,11 +1,10 @@
-"use client";
-import { useEffect, useState } from "react";
+'use client'
+import { useEffect, useState } from 'react'
 
 export default function UsersPage() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([])
 
   // Fonction pour récupérer les utilisateurs
   useEffect(() => {
@@ -13,46 +12,43 @@ export default function UsersPage() {
       try {
         const response = await fetch(`${API_URL}/api/admin/users`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
-        });
+        })
         if (!response.ok)
-          throw new Error("Erreur lors de la récupération des utilisateurs");
-        const data = await response.json();
-        setUsers(data);
+          throw new Error('Erreur lors de la récupération des utilisateurs')
+        const data = await response.json()
+        setUsers(data)
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
-    };
+    }
 
-    fetchUsers();
-  }, []);
+    fetchUsers()
+  }, [])
 
   // Fonction pour bannir un utilisateur
   const handleBanUser = async (userId) => {
     try {
-      const response = await fetch(
-        `${API_URL}/api/admin/ban/${userId}`,
-        {
-          method: "PATCH", // ou "PUT" selon la méthode utilisée
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await fetch(`${API_URL}/api/admin/ban/${userId}`, {
+        method: 'PATCH', // ou "PUT" selon la méthode utilisée
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
 
       if (!response.ok)
-        throw new Error("Erreur lors du bannissement de l'utilisateur");
+        throw new Error("Erreur lors du bannissement de l'utilisateur")
 
-      const data = await response.json();
-      console.log("Utilisateur banni : ", data);
+      const data = await response.json()
+      console.log('Utilisateur banni : ', data)
 
       // Mettre à jour l'état des utilisateurs après bannissement
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId))
     } catch (error) {
-      console.error("Erreur lors du bannissement :", error);
+      console.error('Erreur lors du bannissement :', error)
     }
-  };
+  }
 
   return (
     <div>
@@ -70,5 +66,5 @@ export default function UsersPage() {
         ))}
       </ul>
     </div>
-  );
+  )
 }

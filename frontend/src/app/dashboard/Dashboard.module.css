@@ -70,7 +70,9 @@
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .btn:hover {
@@ -87,7 +89,6 @@
   .title {
     font-size: 2rem;
   }
-
 
   .btn {
     width: 100%;

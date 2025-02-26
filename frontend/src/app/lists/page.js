@@ -1,189 +1,180 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import { useRouter } from "next/navigation";
-import "../../styles/ListsPage.css";
+import React, { useState, useEffect } from 'react'
+import Header from '../../components/Header'
+import Footer from '../../components/Footer'
+import { useRouter } from 'next/navigation'
+import '../../styles/ListsPage.css'
 
 function ListsPage() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
-  const [moviesWatchlist, setMoviesWatchlist] = useState([]);
-  const [seriesWatchlist, setSeriesWatchlist] = useState([]);
-  const [moviesFavorites, setMoviesFavorites] = useState([]);
-  const [seriesFavorites, setSeriesFavorites] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [moviesWatchlist, setMoviesWatchlist] = useState([])
+  const [seriesWatchlist, setSeriesWatchlist] = useState([])
+  const [moviesFavorites, setMoviesFavorites] = useState([])
+  const [seriesFavorites, setSeriesFavorites] = useState([])
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
 
     if (!token) {
-      router.push("/users/login");
+      router.push('/users/login')
     } else {
-      const decodedToken = JSON.parse(atob(token.split(".")[1]));
-      const userId = decodedToken?.id;
+      const decodedToken = JSON.parse(atob(token.split('.')[1]))
+      const userId = decodedToken?.id
 
       if (!userId) {
-        setError("ID utilisateur manquant dans le token.");
-        return;
+        setError('ID utilisateur manquant dans le token.')
+        return
       }
 
       const fetchUserLists = async () => {
         try {
-          setLoading(true);
+          setLoading(true)
 
           // Récupère les watchlist
           const watchlistResponse = await fetch(
             `${API_URL}/api/list/list?userId=${userId}&type=watchlist`,
             {
-              method: "GET",
+              method: 'GET',
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
-          );
+          )
 
           if (!watchlistResponse.ok) {
-            throw new Error("Erreur lors de la récupération de la Watchlist.");
+            throw new Error('Erreur lors de la récupération de la Watchlist.')
           }
 
-          const watchlistData = await watchlistResponse.json();
+          const watchlistData = await watchlistResponse.json()
 
           // Sépare les films et séries dans la watchlist
           const moviesWatchlistData = watchlistData.filter(
-            (item) => item.workType === "film"
-          );
+            (item) => item.workType === 'film'
+          )
           const seriesWatchlistData = watchlistData.filter(
-            (item) => item.workType === "serie"
-          );
+            (item) => item.workType === 'serie'
+          )
 
           // Récupère les détails des films et séries dans la watchlist
           const fetchWorkDetails = async (workId, workType) => {
             const response = await fetch(
               `${API_URL}/api/list/details/${workId}/${workType}`
-            );
+            )
 
             if (!response.ok) {
-              throw new Error("Erreur lors de la récupération des détails.");
+              throw new Error('Erreur lors de la récupération des détails.')
             }
 
-            return await response.json();
-          };
+            return await response.json()
+          }
 
           const moviesWatchlistDetails = await Promise.all(
             moviesWatchlistData.map(async (item) => {
-              return await fetchWorkDetails(item.workId, "film");
+              return await fetchWorkDetails(item.workId, 'film')
             })
-          );
+          )
 
           const seriesWatchlistDetails = await Promise.all(
             seriesWatchlistData.map(async (item) => {
-              return await fetchWorkDetails(item.workId, "serie");
+              return await fetchWorkDetails(item.workId, 'serie')
             })
-          );
+          )
 
-          setMoviesWatchlist(moviesWatchlistDetails);
-          setSeriesWatchlist(seriesWatchlistDetails);
+          setMoviesWatchlist(moviesWatchlistDetails)
+          setSeriesWatchlist(seriesWatchlistDetails)
 
           // Récupère les favoris
           const favoritesResponse = await fetch(
             `${API_URL}/api/list/list?userId=${userId}&type=favorites`,
             {
-              method: "GET",
+              method: 'GET',
               headers: {
                 Authorization: `Bearer ${token}`,
               },
             }
-          );
+          )
 
           if (!favoritesResponse.ok) {
-            throw new Error("Erreur lors de la récupération des Favoris.");
+            throw new Error('Erreur lors de la récupération des Favoris.')
           }
 
-          const favoritesData = await favoritesResponse.json();
+          const favoritesData = await favoritesResponse.json()
 
           // Sépare les films et séries dans les favoris
           const moviesFavoritesData = favoritesData.filter(
-            (item) => item.workType === "film"
-          );
+            (item) => item.workType === 'film'
+          )
           const seriesFavoritesData = favoritesData.filter(
-            (item) => item.workType === "serie"
-          );
+            (item) => item.workType === 'serie'
+          )
 
           const moviesFavoritesDetails = await Promise.all(
             moviesFavoritesData.map(async (item) => {
-              return await fetchWorkDetails(item.workId, "film");
+              return await fetchWorkDetails(item.workId, 'film')
             })
-          );
+          )
 
           const seriesFavoritesDetails = await Promise.all(
             seriesFavoritesData.map(async (item) => {
-              return await fetchWorkDetails(item.workId, "serie");
+              return await fetchWorkDetails(item.workId, 'serie')
             })
-          );
+          )
 
-          setMoviesFavorites(moviesFavoritesDetails);
-          setSeriesFavorites(seriesFavoritesDetails);
+          setMoviesFavorites(moviesFavoritesDetails)
+          setSeriesFavorites(seriesFavoritesDetails)
         } catch (err) {
-          setError(err.message);
+          setError(err.message)
         } finally {
-          setLoading(false);
+          setLoading(false)
         }
-      };
+      }
 
-      fetchUserLists();
+      fetchUserLists()
     }
-  }, [router]);
+  }, [router])
 
   const handleRemove = async (workId, type) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token')
     if (!token) {
-      router.push("/users/login");
-      return;
+      router.push('/users/login')
+      return
     }
 
-    const decodedToken = JSON.parse(atob(token.split(".")[1]));
-    const userId = decodedToken?.id;
+    const decodedToken = JSON.parse(atob(token.split('.')[1]))
+    const userId = decodedToken?.id
 
     try {
       const response = await fetch(`${API_URL}/api/list/remove`, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ userId, workId, type }),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la suppression.");
+        throw new Error('Erreur lors de la suppression.')
       }
 
       // Mise à jour de l'affichage après suppression
-      if (type === "watchlist") {
-        setMoviesWatchlist(
-          moviesWatchlist.filter((item) => item.id !== workId)
-        );
-        setSeriesWatchlist(
-          seriesWatchlist.filter((item) => item.id !== workId)
-        );
-      } else if (type === "favorites") {
-        setMoviesFavorites(
-          moviesFavorites.filter((item) => item.id !== workId)
-        );
-        setSeriesFavorites(
-          seriesFavorites.filter((item) => item.id !== workId)
-        );
+      if (type === 'watchlist') {
+        setMoviesWatchlist(moviesWatchlist.filter((item) => item.id !== workId))
+        setSeriesWatchlist(seriesWatchlist.filter((item) => item.id !== workId))
+      } else if (type === 'favorites') {
+        setMoviesFavorites(moviesFavorites.filter((item) => item.id !== workId))
+        setSeriesFavorites(seriesFavorites.filter((item) => item.id !== workId))
       }
     } catch (error) {
-      console.error("Erreur :", error);
-      setError("Erreur lors de la suppression.");
+      console.error('Erreur :', error)
+      setError('Erreur lors de la suppression.')
     }
-  };
+  }
 
   if (loading) {
     return (
@@ -192,7 +183,7 @@ function ListsPage() {
         <div className="loading">Chargement des listes...</div>
         <Footer />
       </div>
-    );
+    )
   }
 
   if (error) {
@@ -202,7 +193,7 @@ function ListsPage() {
         <p>{error}</p>
         <Footer />
       </div>
-    );
+    )
   }
 
   return (
@@ -220,18 +211,18 @@ function ListsPage() {
             <div className="list-items">
               {moviesWatchlist.map((item) => (
                 <div key={item.id} className="list-item">
-                  <h3>{item.title || "Titre non disponible"}</h3>
+                  <h3>{item.title || 'Titre non disponible'}</h3>
                   <img
                     src={
                       item.poster_path
                         ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                        : "/default-image.jpg"
+                        : '/default-image.jpg'
                     }
-                    alt={item.title || "Image indisponible"}
+                    alt={item.title || 'Image indisponible'}
                     className="list-item-poster"
                   />
 
-                  <button onClick={() => handleRemove(item.id, "watchlist")}>
+                  <button onClick={() => handleRemove(item.id, 'watchlist')}>
                     Supprimer
                   </button>
                 </div>
@@ -249,18 +240,18 @@ function ListsPage() {
             <div className="list-items">
               {seriesWatchlist.map((item) => (
                 <div key={item.id} className="list-item">
-                  <h3>{item.name || "Titre non disponible"}</h3>
+                  <h3>{item.name || 'Titre non disponible'}</h3>
                   <img
                     src={
                       item.poster_path
                         ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                        : "/default-image.jpg"
+                        : '/default-image.jpg'
                     }
-                    alt={item.name || "Image indisponible"}
+                    alt={item.name || 'Image indisponible'}
                     className="list-item-poster"
                   />
 
-                  <button onClick={() => handleRemove(item.id, "watchlist")}>
+                  <button onClick={() => handleRemove(item.id, 'watchlist')}>
                     Supprimer
                   </button>
                 </div>
@@ -278,18 +269,18 @@ function ListsPage() {
             <div className="list-items">
               {moviesFavorites.map((item) => (
                 <div key={item.id} className="list-item">
-                  <h3>{item.title || "Titre non disponible"}</h3>
+                  <h3>{item.title || 'Titre non disponible'}</h3>
                   <img
                     src={
                       item.poster_path
                         ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                        : "/default-image.jpg"
+                        : '/default-image.jpg'
                     }
-                    alt={item.title || "Image indisponible"}
+                    alt={item.title || 'Image indisponible'}
                     className="list-item-poster"
                   />
 
-                  <button onClick={() => handleRemove(item.id, "favorites")}>
+                  <button onClick={() => handleRemove(item.id, 'favorites')}>
                     Supprimer
                   </button>
                 </div>
@@ -307,21 +298,20 @@ function ListsPage() {
             <div className="list-items">
               {seriesFavorites.map((item) => (
                 <div key={item.id} className="list-item">
-                  <h3>{item.name || "Titre non disponible"}</h3>
+                  <h3>{item.name || 'Titre non disponible'}</h3>
                   <img
                     src={
                       item.poster_path
                         ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-                        : "/default-image.jpg"
+                        : '/default-image.jpg'
                     }
-                    alt={item.name || "Image indisponible"}
+                    alt={item.name || 'Image indisponible'}
                     className="list-item-poster"
                   />
 
-                  <button onClick={() => handleRemove(item.id, "favorites")}>
+                  <button onClick={() => handleRemove(item.id, 'favorites')}>
                     Supprimer
                   </button>
-
                 </div>
               ))}
             </div>
@@ -330,7 +320,7 @@ function ListsPage() {
       </div>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default ListsPage;
+export default ListsPage
