@@ -61,7 +61,7 @@ app.use("/api/stripe", stripeRoutes);
 app.use("/api/admin", adminRoutes);
 
 // Définition du port du serveur, soit celui dans le fichier .env ou 3000 par défaut
-const PORT = process.env.PORT || 3000 || 8080;
+const PORT = process.env.PORT || 3000;
 
 // Route de test
 app.get("/", (req, res) => {

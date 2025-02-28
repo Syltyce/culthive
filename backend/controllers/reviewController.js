@@ -49,7 +49,8 @@ exports.getReviewsByWork = async (req, res) => {
 
     res.json(reviews);
   } catch (error) {
-    res.status(500).json({ error: "Erreur serveur." });
+    console.error("Erreur lors de la création de l'avis :", error);
+    res.status(500).json({ error: error.message || "Erreur serveur." });
   }
 };
 
@@ -84,7 +85,8 @@ exports.updateReview = async (req, res) => {
 
     res.json(updatedReview);
   } catch (error) {
-    res.status(500).json({ error: "Erreur serveur." });
+    console.error("Erreur lors de la création de l'avis :", error);
+    res.status(500).json({ error: error.message || "Erreur serveur." });
   }
 };
 
@@ -110,6 +112,7 @@ exports.deleteReview = async (req, res) => {
     await review.destroy();
     res.json({ message: "Avis supprimé." });
   } catch (error) {
-    res.status(500).json({ error: "Erreur serveur." });
+    console.error("Erreur lors de la création de l'avis :", error);
+    res.status(500).json({ error: error.message || "Erreur serveur." });
   }
 };

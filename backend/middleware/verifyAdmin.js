@@ -9,7 +9,8 @@ const verifyAdmin = (req, res, next) => {
     }
     next();
   } catch (error) {
-    res.status(401).json({ message: "Authentification échouée" });
+    console.error("Erreur de vérification de l'administrateur :", error);
+    res.status(401).json({ message: "Authentification échouée", error: error.message });
   }
 };
 

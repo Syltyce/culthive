@@ -6,7 +6,6 @@ WORKDIR /app
 # Copier les fichiers nécessaires
 COPY package*.json ./
 
-RUN npm install -g nodemon
 RUN npm install
 
 # Copier tout le code source
@@ -16,4 +15,4 @@ COPY . .
 EXPOSE 3000
 
 # Commande pour démarrer l'application
-CMD ["npm", "run", "dev"]
+CMD ["node", "index.js"]

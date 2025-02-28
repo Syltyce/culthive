@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 
-// Définition du modèle Review (utilisateur : id, pseudo, email, mdp, telephone, date de création et de changement)
+// Définition du modèle User (utilisateur : id, pseudo, email, mdp, telephone, date de création et de changement)
 const User = sequelize.define(
   "User",
   {

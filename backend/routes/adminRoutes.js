@@ -15,9 +15,8 @@ router.get("/reviews", authenticate, verifyAdmin, async (req, res) => {
     });
     res.json(reviews);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Erreur lors de la récupération des reviews" });
+    console.error("Erreur lors de la récupération des reviews :", error);  // Utilisation de `error`
+    res.status(500).json({ error: "Erreur lors de la récupération des reviews" });
   }
 });
 
@@ -40,6 +39,7 @@ router.delete("/reviews/:id", authenticate, verifyAdmin, async (req, res) => {
       deletedReview: review, // Retourne les infos de la review supprimé
     });
   } catch (error) {
+    console.error("Erreur lors de la suppression de la review :", error);  // Utilisation de `error`
     res.status(500).json({ error: "Erreur lors de la suppression" });
   }
 });
@@ -70,7 +70,10 @@ router.patch("/ban/:id", authenticate, verifyAdmin, async (req, res) => {
     await user.update({ banned: true });
 
     res.json({ message: "Utilisateur banni avec succès", user: user });
-  } catch {}
+  } catch (error) {
+    console.error("Erreur lors du bannissement de l'utilisateur :", error);  // Log l'erreur
+    res.status(500).json({ error: "Erreur lors du bannissement de l'utilisateur" });
+  }
 });
 
 module.exports = router;

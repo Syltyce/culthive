@@ -9,7 +9,7 @@ services:
       - ./backend:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
       - DB_HOST=db
       - DB_PORT=3306
       - DB_NAME=${DB_NAME}
@@ -18,9 +18,8 @@ services:
       - TMDB_API_KEY=${TMDB_API_KEY}
       - TMDB_JWT=${TMDB_JWT}
     depends_on:
-      - db
-    command: ["sh", "-c", "until nc -z -v -w30 $DB_HOST $DB_PORT; do echo 'Waiting for DB...'; sleep 5; done; npm run dev"]
-
+      db:
+        condition: service_healthy
 
   frontend:
     build:
@@ -29,14 +28,14 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - PORT=3001
+      - NODE_ENV=production
     volumes:
       - ./frontend:/app
       - /app/node_modules 
-    command: ["npm", "run", "dev"]
 
   db:
     image: mysql:latest
+    restart: always
     ports:
       - "3307:3306"
     environment:
@@ -44,6 +43,11 @@ services:
       MYSQL_DATABASE: ${DB_NAME}          
     volumes:
       - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
 
 volumes:
   db_data:

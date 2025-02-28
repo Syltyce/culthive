@@ -1,18 +1,18 @@
 module.exports = {
 
       // Ajoute la colonne `role` à la table `Users`
-  up: async (queryInterface, Sequelize) => {
+  up: async (queryInterface) => {
 
     // Ajoute la colonne `banned` à la table `Users`
     await queryInterface.addColumn('users', 'banned', {
-      type: Sequelize.BOOLEAN,
+      type: queryInterface.Sequelize.BOOLEAN,
       defaultValue: false,  // Par défaut, l'utilisateur n'est pas banni
       allowNull: false,     // Cette colonne ne peut pas être nulle
     });
 
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: async (queryInterface) => {
     // En cas de rollback, on supprime la colonne `banned`
     await queryInterface.removeColumn('users', 'banned');
   }
