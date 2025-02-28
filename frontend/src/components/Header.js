@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation' // Importer useRouter
 import '../styles/Header.css'
 
 const Header = () => {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+
   const [user, setUser] = useState(null)
   const router = useRouter() // Déclarer le hook useRouter
 
@@ -18,7 +21,7 @@ const Header = () => {
     const token = localStorage.getItem('token')
     if (token) {
       // Si un token est trouvé, récupérer les données de l'utilisateur (par exemple via l'API)
-      fetch('http://localhost:3000/api/users', {
+      fetch(`${API_URL}/api/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -52,7 +55,7 @@ const Header = () => {
       setLoading(true)
       try {
         const res = await fetch(
-          `http://localhost:3000/api/search?query=${query}`
+          `${API_URL}/api/search?query=${query}`
         )
         const data = await res.json()
         setResults(data)

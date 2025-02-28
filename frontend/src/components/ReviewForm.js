@@ -4,6 +4,9 @@ import React, { useState, useEffect } from 'react'
 import '../styles/ReviewForm.css'
 
 function ReviewForm({ workId }) {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+
   const [rating, setRating] = useState(0)
   const [title, setTitle] = useState('')
   const [comment, setComment] = useState('')
@@ -51,7 +54,7 @@ function ReviewForm({ workId }) {
         throw new Error('Vous devez être connecté pour soumettre une review')
       }
 
-      const response = await fetch(`http://localhost:3000/api/reviews/`, {
+      const response = await fetch(`${API_URL}/api/reviews/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
