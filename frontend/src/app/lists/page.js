@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import '../../styles/ListsPage.css'
 
 function ListsPage() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const [moviesWatchlist, setMoviesWatchlist] = useState([])
   const [seriesWatchlist, setSeriesWatchlist] = useState([])

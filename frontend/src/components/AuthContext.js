@@ -5,7 +5,7 @@ import React, { createContext, useState, useEffect } from 'react'
 // Création du contexte
 const AuthContext = createContext()
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL
 
 // Fournisseur du contexte
 export const AuthProvider = ({ children }) => {

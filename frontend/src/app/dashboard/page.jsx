@@ -8,7 +8,7 @@ import Link from 'next/link'
 import styles from './Dashboard.module.css'
 
 export default function Dashboard() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   const [userData, setUserData] = useState(null)
   const [error, setError] = useState(null)

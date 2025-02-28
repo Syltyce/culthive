@@ -12,7 +12,7 @@ import { useState } from 'react'
 
 // Composant fonctionnel Register qui représente la page d'inscription
 export default function Register() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   // Déclaration des états pour gérer les différents champs du formulaire
   const [registerUsername, setRegisterUsername] = useState('')

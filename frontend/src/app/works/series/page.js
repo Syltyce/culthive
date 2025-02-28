@@ -8,7 +8,7 @@ import '../../../styles/MovieList.css' // Import du CSS de la liste de films
 import '../../../styles/Loading.css' // Import du CSS de l'indicateur de chargement
 
 function Series() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   const [series, setSeries] = useState([])
   const [error, setError] = useState(null) // Pour afficher l'erreur si nécessaire

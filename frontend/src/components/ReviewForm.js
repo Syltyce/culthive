@@ -5,7 +5,7 @@ import '../styles/ReviewForm.css'
 
 function ReviewForm({ workId }) {
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   const [rating, setRating] = useState(0)
   const [title, setTitle] = useState('')

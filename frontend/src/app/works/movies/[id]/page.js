@@ -12,7 +12,7 @@ import ReviewCard from '@/components/ReviewCard'
 export const dynamic = 'force-dynamic' // Empêche la génération statique au build
 
 function MovieDetail({ params: initialParams }) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   // Récupération des informations d'authentification via le contexte
   const { isAuthenticated, user } = useContext(AuthContext)

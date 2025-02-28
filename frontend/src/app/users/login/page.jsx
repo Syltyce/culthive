@@ -13,7 +13,7 @@ import AuthContext from '@/components/AuthContext'
 import styles from './Login.module.css'
 
 export default function Login() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

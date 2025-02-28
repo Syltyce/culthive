@@ -11,7 +11,7 @@ import ReviewCard from '@/components/ReviewCard'
 export const dynamic = 'force-dynamic'
 
 function SeriesDetail({ params: initialParams }) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   const { isAuthenticated, user } = useContext(AuthContext) // Correction ici
 

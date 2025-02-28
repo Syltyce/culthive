@@ -7,6 +7,9 @@ import AuthContext from '@/components/AuthContext'
 global.fetch = jest.fn()
 
 describe('AuthContext', () => {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
+
   beforeEach(() => {
     // Réinitialiser fetch avant chaque test
     fetch.mockClear()
@@ -40,7 +43,7 @@ describe('AuthContext', () => {
     // Attendre la mise à jour de l'état
     await waitFor(() => {
       expect(fetch).toHaveBeenCalledWith(
-        'http://localhost:3000/api/users/profile',
+        `${API_URL}/api/users/profile`,
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: 'Bearer fake-token',

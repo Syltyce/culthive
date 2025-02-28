@@ -7,7 +7,7 @@ import '../styles/Header.css'
 
 const Header = () => {
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+  const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
   const [user, setUser] = useState(null)
   const router = useRouter() // Déclarer le hook useRouter
