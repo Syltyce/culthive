@@ -48,17 +48,7 @@ app.use(
   })
 );
 
-console.log("Middleware CORS appliqué");
-
 app.use(express.json()); // Middleware pour parser le corps en JSON
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://culthive-frontend.vercel.app");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
 
 // Enregistrement des différentes routes
 app.use("/api", authRoutes);
