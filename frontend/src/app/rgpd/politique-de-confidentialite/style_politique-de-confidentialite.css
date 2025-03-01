@@ -1,0 +1,96 @@
+/* style_politique-de-confidentialite.css */
+
+/* Style global pour le contenu de la politique */
+.policy-content {
+    margin: 0 auto;
+    max-width: 900px;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+  }
+  
+  /* Style du titre principal */
+  .policy-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Style pour chaque section */
+  .policy-section {
+    margin-bottom: 30px;
+  }
+  
+  /* Style pour les sous-titres des articles */
+  .policy-subtitle {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    color: #2c3e50;
+  }
+  
+  /* Style pour les sous-sections (ex : 3.1, 3.2, etc.) */
+  .policy-subsection {
+    font-size: 1.2rem;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #34495e;
+  }
+  
+  /* Liste des éléments dans les sections */
+  .policy-list {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  
+  .policy-list li {
+    margin-bottom: 10px;
+  }
+  
+  /* Liens dans les sections */
+  .policy-links {
+    margin-top: 10px;
+  }
+  
+  .policy-links a {
+    color: #3498db;
+    text-decoration: none;
+  }
+  
+  .policy-links a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style des sections concernant les informations de contact ou autres détails spécifiques */
+  strong {
+    font-weight: bold;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Style de la mise en page sur mobile */
+  @media (max-width: 768px) {
+    .policy-content {
+      padding: 10px;
+    }
+  
+    .policy-title {
+      font-size: 1.8rem;
+    }
+  
+    .policy-subtitle {
+      font-size: 1.3rem;
+    }
+  
+    .policy-subsection {
+      font-size: 1.1rem;
+    }
+  }
+  
