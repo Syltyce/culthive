@@ -5,6 +5,33 @@ require("dotenv").config();
 
 const router = express.Router();
 
+/**
+ * @swagger
+ * tags:
+ *   name: Search
+ *   description: Recherche de films, séries et personnes via TMDb.
+ * 
+ * /api/search:
+ *   get:
+ *     summary: Recherche globale
+ *     tags: [Search]
+ *     parameters:
+ *       - in: query
+ *         name: query
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Terme de recherche.
+ *     responses:
+ *       200:
+ *         description: Succès - Retourne les résultats de la recherche.
+ *       400:
+ *         description: Erreur - Requête vide.
+ *       500:
+ *         description: Erreur serveur.
+ */
+
+
 router.get("/", async (req, res) => {
   const { query } = req.query;
 

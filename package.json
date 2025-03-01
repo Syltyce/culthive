@@ -1,5 +1,11 @@
 {
+  "scripts": {
+    "generate-docs": "jsdoc ./frontend ./backend -d ./docs"
+  },
   "dependencies": {
     "tarteaucitronjs": "^1.19.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.4"
   }
 }

@@ -13,7 +13,59 @@ const router = express.Router();
 
 const apiKey = process.env.TMDB_API_KEY; // La clé API pour accéder à l'API TMDb
 
-// Route GET pour récupérer les films populaires
+/**
+ * @swagger
+ * tags:
+ *   name: Works
+ *   description: API pour récupérer des films et séries populaires depuis TMDb.
+ * 
+ * /api/works/movies:
+ *   get:
+ *     summary: Liste des films populaires
+ *     tags: [Works]
+ *     responses:
+ *       200:
+ *         description: Succès - Retourne les films populaires.
+ * 
+ * /api/works/series:
+ *   get:
+ *     summary: Liste des séries populaires
+ *     tags: [Works]
+ *     responses:
+ *       200:
+ *         description: Succès - Retourne les séries populaires.
+ * 
+ * /api/works/movies/{id}:
+ *   get:
+ *     summary: Détails d'un film
+ *     tags: [Works]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID du film.
+ *     responses:
+ *       200:
+ *         description: Succès - Retourne les détails du film.
+ * 
+ * /api/works/series/{id}:
+ *   get:
+ *     summary: Détails d'une série
+ *     tags: [Works]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID de la série.
+ *     responses:
+ *       200:
+ *         description: Succès - Retourne les détails de la série.
+ */
+
 router.get("/movies", async (req, res) => {
   try {
     // Effectuer une requête GET à l'API TMDb pour récupérer les films populaires

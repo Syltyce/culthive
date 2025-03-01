@@ -5,6 +5,10 @@ dotenv.config();
 const express = require("express");
 const sequelize = require("./config/database");
 
+// Importation de swagger-ui-express et swagger-jsdoc
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
+
 // Import des routes pour les différentes fonctionnalités du backend
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -44,7 +48,25 @@ app.use(
   })
 );
 
-app.use(express.json()); // Middleware pour parser le corps en JSON
+app.use(express.json()); // Middleware pour parser le corps en JSON 
+
+// Configuration de Swagger (swagger-jsdoc et swagger-ui-express)
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API CultHive",
+      version: "1.0.0",
+      description: "API pour la gestion des films, séries et des critiques",
+    },
+  },
+  apis: ["./routes/*.js"], // Path vers tes fichiers de routes et contrôleurs
+};
+
+const swaggerSpec = swaggerJsdoc(options);
+
+// Utilisation de Swagger UI pour afficher la documentation à l'adresse /api-docs
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Enregistrement des différentes routes
 app.use("/api", authRoutes);
