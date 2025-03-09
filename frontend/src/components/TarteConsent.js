@@ -1,69 +1,63 @@
-// src/components/TarteConsent.js
-'use client' // Pour indiquer que ce fichier doit être exécuté côté client
+'use client'; // directive pour indiquer un composant client
 
-import { useEffect } from 'react'
+import { useEffect } from 'react';
+import Script from 'next/script';
 
 const TarteConsent = () => {
   useEffect(() => {
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = '/tarteaucitron/css/tarteaucitron.min.css' // Chemin du fichier CSS
-    document.head.appendChild(link)
+    if (typeof window !== 'undefined') {
+      const script = document.createElement('script');
+      script.src = '/tarteaucitron/tarteaucitron.min.js';
+      script.async = true;
+      script.onload = () => {
+        console.log('Script Tarteaucitron chargé');
+        // Maintenant que le script est chargé, on peut l'initialiser
+        if (typeof tarteaucitron !== 'undefined') {
+          tarteaucitron.init({
+            privacyUrl: '', // URL de la politique de confidentialité
+            bodyPosition: 'top', // Position de la bannière
+            hashtag: '#tarteaucitron', // Hashtag pour ouvrir le panneau
+            cookieName: 'tarteaucitron', // Nom du cookie
+            orientation: 'middle', // Position de la bannière
+            groupServices: true, // Grouper les services par catégorie
+            showDetailsOnClick: true, // Cliquer pour ouvrir la description
+            serviceDefaultState: 'wait', // Statut par défaut
+            showAlertSmall: false, // Afficher la petite bannière
+            cookieslist: false, // Afficher la liste des cookies
+            closePopup: true, // Afficher un X pour fermer
+            showIcon: true, // Afficher l'icône pour ouvrir le panneau
+            iconPosition: 'BottomRight', // Position de l'icône
+            adblocker: false, // Afficher un message si un Adblocker est détecté
+            DenyAllCta: true, // Bouton pour refuser tout
+            AcceptAllCta: true, // Bouton pour accepter tout
+            highPrivacy: true, // Attendre le consentement
+            alwaysNeedConsent: false, // Demander le consentement même pour les services "Privacy by design"
+            handleBrowserDNTRequest: false, // Refuser tout si Do Not Track est activé
+            removeCredit: false, // Retirer le lien de crédit vers tarteaucitron.io
+            moreInfoLink: true, // Lien "En savoir plus"
+            useExternalCss: false, // Ne pas utiliser un CSS externe
+            useExternalJs: false, // Ne pas utiliser un JS externe
+            mandatory: true, // Afficher un message pour les cookies obligatoires
+            mandatoryCta: false, // Ne pas afficher de bouton pour les cookies obligatoires
+            googleConsentMode: true, // Activer le Google Consent Mode
+            bingConsentMode: true, // Activer le Bing Consent Mode
+            partnersList: true, // Afficher le nombre de partenaires
+          });
+        } else {
+          console.error("Le script Tarteaucitron n'a pas été chargé correctement.");
+        }
+      };
+      document.head.appendChild(script);
 
-    // Dynamically import the script only on the client
-    const script = document.createElement('script')
-    script.src = '/tarteaucitron/tarteaucitron.min.js' // Chemin du fichier tarteaucitron.min.js
-    script.async = false // Charger le script de façon asynchrone
-
-    document.head.appendChild(script)
-
-    script.onload = () => {
-      console.log('Tarteaucitron script loaded') // Vérifie si le script se charge
-
-      // Initialisation après le chargement du script
-      if (window.tarteaucitron) {
-        console.log('Tarteaucitron initialized') // Vérifie si l'initialisation fonctionne
-
-        window.tarteaucitron.init({
-          privacyUrl: '', // Lien vers la politique de confidentialité
-          bodyPosition: 'top',
-          hashtag: '#tarteaucitron',
-          cookieName: 'tarteaucitron',
-          orientation: 'middle',
-          groupServices: true,
-          showDetailsOnClick: true,
-          serviceDefaultState: 'wait',
-          showAlertSmall: false,
-          cookieslist: false,
-          closePopup: true,
-          showIcon: true,
-          iconPosition: 'BottomRight',
-          adblocker: false,
-          DenyAllCta: true,
-          AcceptAllCta: true,
-          highPrivacy: true,
-          alwaysNeedConsent: false,
-          handleBrowserDNTRequest: false,
-          removeCredit: false,
-          moreInfoLink: true,
-          useExternalCss: false,
-          useExternalJs: false,
-          readmoreLink: '',
-          mandatory: true,
-          mandatoryCta: false,
-          googleConsentMode: true,
-          partnersList: true,
-        })
-      }
+      // Charger le fichier CSS manuellement
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/tarteaucitron/css/tarteaucitron.min.css';
+      document.head.appendChild(link);
     }
+  }, []); // Ce useEffect se déclenche seulement une fois au montage du composant
 
-    // Nettoyage en cas de départ du composant
-    return () => {
-      document.head.removeChild(script)
-    }
-  }, [])
+  return <div></div>; // Tu peux aussi ajouter un message ou un autre contenu dans ce div
+};
 
-  return null // Ce composant n'affiche rien à l'écran, il se charge uniquement du script
-}
-
-export default TarteConsent
+export default TarteConsent;

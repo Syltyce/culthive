@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from 'next/font/google'
 import { AuthProvider } from '@/components/AuthContext'
-
+import Script from 'next/script'
+import TarteConsent from '@/components/TarteConsent'
 import './globals.css'
 
 const geistSans = Geist({
@@ -26,19 +27,26 @@ export default function RootLayout({ children }) {
     <AuthProvider>
       <html lang="fr">
         <head>
-          <link
-            rel="stylesheet"
-            href="/tarteaucitron/css/tarteaucitron.min.css"
+
+          {/* Google Analytics */}
+          <Script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-BTPWGJ6YHV"
           />
-          {/* Ajouter le script JavaScript de Tarteaucitron */}
-          <script
-            src="/tarteaucitron/tarteaucitron.min.js"
-            async={false} // Charger de façon synchrone
-          />
+          <Script id="google-analytics">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-BTPWGJ6YHV');
+            `}
+          </Script>
+
           <link rel="icon" href="/logo_culthive_svg.svg" />
         </head>
 
         <body className={`${geistSans.variable} ${geistMono.variable}`}>
+          <TarteConsent />
           {children}
         </body>
       </html>

@@ -23,6 +23,7 @@ const adminRoutes = require("./routes/adminRoutes");
 const cors = require("cors");
 
 // models nécessaires
+// const { sequelize, User, List, Review } = require("./models"); 
 const User = require("./models/User");
 const List = require("./models/List");
 

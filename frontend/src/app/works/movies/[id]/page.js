@@ -92,6 +92,10 @@ function MovieDetail({ params: initialParams }) {
     fetchReviews()
   }, [params])
 
+  const handleNewReview = (newReview) => {
+    setReviews((prevReviews) => [newReview, ...prevReviews])
+  }  
+
   // Fonction pour ajouter un film à la liste
   const handleAddToList = async (type) => {
     const token = localStorage.getItem('token') // Récupère le token du localStorage
@@ -273,7 +277,7 @@ function MovieDetail({ params: initialParams }) {
 
       {/* Formulaire Note et Critique */}
       {isAuthenticated ? (
-        <ReviewForm workId={movie.id} userId={user?.id} />
+        <ReviewForm workId={movie.id} userId={user?.id} onReviewAdded={handleNewReview} />
       ) : (
         <p>
           {' '}

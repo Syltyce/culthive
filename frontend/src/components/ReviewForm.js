@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/ReviewForm.css'
 
-function ReviewForm({ workId }) {
+function ReviewForm({ workId, onReviewAdded }) {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL 
 
@@ -73,7 +73,9 @@ function ReviewForm({ workId }) {
         throw new Error(await response.text())
       }
 
-      console.log('Review créée avec succès:', await response.json())
+      // console.log('Review créée avec succès:', await response.json())
+      const newReview = await response.json()
+      onReviewAdded(newReview) // Ajoute immédiatement la critique à la liste
       setIsSubmitting(false)
       setRating(0)
       setTitle('')
