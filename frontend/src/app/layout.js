@@ -1,8 +1,8 @@
-import { Geist, Geist_Mono } from 'next/font/google'
-import { AuthProvider } from '@/components/AuthContext'
-import Script from 'next/script'
-import TarteConsent from '@/components/TarteConsent'
-import './globals.css'
+import { Geist, Geist_Mono } from 'next/font/google';
+import { AuthProvider } from '@/components/AuthContext';
+import Script from 'next/script';
+import TarteConsent from '@/components/TarteConsent';
+import './globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -27,6 +27,11 @@ export default function RootLayout({ children }) {
     <AuthProvider>
       <html lang="fr">
         <head>
+          {/* Ajouter le fichier CSS de Tarteaucitron */}
+          <link
+            rel="stylesheet"
+            href="/tarteaucitron/css/tarteaucitron.min.css"
+          />
 
           {/* Google Analytics */}
           <Script

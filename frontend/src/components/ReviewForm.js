@@ -81,7 +81,7 @@ function ReviewForm({ workId, onReviewAdded }) {
       setTitle('')
       setComment('')
     } catch (error) {
-      console.error('Erreur lors de la création de la review:', error)
+      console.error('Erreur lors de la création de la critique:', error)
       setErrorMessage(error.message || "Une erreur s'est produite")
       setIsSubmitting(false)
     }
@@ -90,14 +90,14 @@ function ReviewForm({ workId, onReviewAdded }) {
   if (!isLoggedIn) {
     return (
       <div className="login-message">
-        <p>Veuillez vous connecter pour ajouter une review.</p>
+        <p>Veuillez vous connecter pour ajouter une critique.</p>
       </div>
     )
   }
 
   return (
     <form className="review-form" onSubmit={handleSubmit}>
-      <h2>Ajouter une Review</h2>
+      <h2>Ajouter une critique</h2>
 
       <div className="form-group">
         <label htmlFor="rating">Note :</label>

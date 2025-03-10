@@ -30,7 +30,16 @@ exports.createReview = async (req, res) => {
       title,
       comment,
     });
-    res.status(201).json(newReview);
+
+    // Récupérer la critique avec les informations de l'utilisateur
+    const reviewWithUser = await Review.findByPk(newReview.id, {
+      include: {
+        model: User,
+        attributes: ["username"], // On récupère uniquement le username
+      },
+    });
+
+    res.status(201).json(reviewWithUser);
   } catch (error) {
     console.error("Erreur lors de la création de l'avis :", error);
     res.status(500).json({ error: "Erreur serveur." });
@@ -72,7 +81,7 @@ exports.getReviewsByWork = async (req, res) => {
 exports.updateReview = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user.id; 
+    const userId = req.user.id;
     const { rating, title, comment } = req.body;
 
     const review = await Review.findByPk(id);

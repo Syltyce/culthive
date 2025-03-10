@@ -33,7 +33,7 @@ export default function Home() {
                 height={50}
               />
               <p className={styles.paragraph}>
-                Garder une trace de des films et séries ce que vous regardez
+                Garder une trace des films et séries que vous regardez
               </p>
             </div>
             <div className={styles.card}>

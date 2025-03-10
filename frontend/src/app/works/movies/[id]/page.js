@@ -12,7 +12,7 @@ import ReviewCard from '@/components/ReviewCard'
 export const dynamic = 'force-dynamic' // Empêche la génération statique au build
 
 function MovieDetail({ params: initialParams }) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   // Récupération des informations d'authentification via le contexte
   const { isAuthenticated, user } = useContext(AuthContext)
@@ -94,7 +94,7 @@ function MovieDetail({ params: initialParams }) {
 
   const handleNewReview = (newReview) => {
     setReviews((prevReviews) => [newReview, ...prevReviews])
-  }  
+  }
 
   // Fonction pour ajouter un film à la liste
   const handleAddToList = async (type) => {
@@ -277,7 +277,11 @@ function MovieDetail({ params: initialParams }) {
 
       {/* Formulaire Note et Critique */}
       {isAuthenticated ? (
-        <ReviewForm workId={movie.id} userId={user?.id} onReviewAdded={handleNewReview} />
+        <ReviewForm
+          workId={movie.id}
+          userId={user?.id}
+          onReviewAdded={handleNewReview}
+        />
       ) : (
         <p>
           {' '}
