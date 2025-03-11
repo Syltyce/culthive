@@ -1,4 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 :root {
+  --bleu-clair: #82d0f5; /* Bleu clair */
+  --bleu-foncé: #0084c6; /* Bleu foncé */
+  --rouge-clair: #e5281f; /* Rouge clair */
+  --rouge-foncé: #a01c18; /* Rouge foncé */
+  --noir: #1d1d1b; /* Noir foncé */
+  --font-family: 'Roboto', sans-serif; /* Roboto */
+}
+
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -8,7 +19,7 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 html,
 body {

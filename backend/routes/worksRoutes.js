@@ -18,7 +18,7 @@ const apiKey = process.env.TMDB_API_KEY; // La clé API pour accéder à l'API T
  * tags:
  *   name: Works
  *   description: API pour récupérer des films et séries populaires depuis TMDb.
- * 
+ *
  * /api/works/movies:
  *   get:
  *     summary: Liste des films populaires
@@ -26,7 +26,7 @@ const apiKey = process.env.TMDB_API_KEY; // La clé API pour accéder à l'API T
  *     responses:
  *       200:
  *         description: Succès - Retourne les films populaires.
- * 
+ *
  * /api/works/series:
  *   get:
  *     summary: Liste des séries populaires
@@ -34,7 +34,7 @@ const apiKey = process.env.TMDB_API_KEY; // La clé API pour accéder à l'API T
  *     responses:
  *       200:
  *         description: Succès - Retourne les séries populaires.
- * 
+ *
  * /api/works/movies/{id}:
  *   get:
  *     summary: Détails d'un film
@@ -49,7 +49,7 @@ const apiKey = process.env.TMDB_API_KEY; // La clé API pour accéder à l'API T
  *     responses:
  *       200:
  *         description: Succès - Retourne les détails du film.
- * 
+ *
  * /api/works/series/{id}:
  *   get:
  *     summary: Détails d'une série
@@ -68,6 +68,8 @@ const apiKey = process.env.TMDB_API_KEY; // La clé API pour accéder à l'API T
 
 router.get("/movies", async (req, res) => {
   try {
+    const { page = 1 } = req.query; // Récupérer le numéro de page depuis la requête (1 par défaut)
+
     // Effectuer une requête GET à l'API TMDb pour récupérer les films populaires
     const response = await axios.get(
       "https://api.themoviedb.org/3/movie/popular",
@@ -75,12 +77,16 @@ router.get("/movies", async (req, res) => {
         params: {
           api_key: apiKey, // Clé API pour s'authentifier auprès de TMDb
           language: "fr-FR", // Langue des résultats (français)
+          page,
         },
       }
     );
 
-    const movies = response.data.results; // Extraire la liste des films populaires
-    res.json(movies); // Retourner les films populaires en JSON
+    res.json({
+      movies: response.data.results, // Liste des films
+      total_pages: response.data.total_pages, // Nombre total de pages
+      current_page: Number(page), // Page actuelle
+    });
   } catch (error) {
     console.error("Erreur lors de la récupération des films :", error);
     res.status(500).json({ message: "Erreur du serveur" });
@@ -90,6 +96,8 @@ router.get("/movies", async (req, res) => {
 // Route GET pour récupérer les séries populaires
 router.get("/series", async (req, res) => {
   try {
+    const { page = 1 } = req.query;
+
     // Effectuer une requête GET à l'API TMDb pour récupérer les séries populaires
     const response = await axios.get(
       "https://api.themoviedb.org/3/tv/popular",
@@ -97,12 +105,16 @@ router.get("/series", async (req, res) => {
         params: {
           api_key: apiKey, // Clé API pour s'authentifier auprès de TMDb
           language: "fr-FR", // Langue des résultats (français)
+          page,
         },
       }
     );
 
-    const series = response.data.results; // Extraire la liste des séries populaires
-    res.json(series); // Retourner les séries populaires en JSON
+    res.json({
+      series: response.data.results,
+      total_pages: response.data.total_pages,
+      current_page: Number(page),
+    });
   } catch (error) {
     console.error("Erreur lors de la récupération des séries :", error);
     res.status(500).json({ message: "Erreur du serveur" });
@@ -156,11 +168,9 @@ router.get("/series/:id", async (req, res) => {
       "Erreur lors de la récupération des détails de la série : ",
       error
     );
-    res
-      .status(500)
-      .json({
-        error: "Erreur lors de la récupération des détails de la série.",
-      });
+    res.status(500).json({
+      error: "Erreur lors de la récupération des détails de la série.",
+    });
   }
 });
 

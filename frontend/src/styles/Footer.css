@@ -18,6 +18,7 @@ footer {
   bottom: 0;
   width: 100%;
   font-family: var(--font-family);
+  height: 10vh;
 }
 
 footer nav {

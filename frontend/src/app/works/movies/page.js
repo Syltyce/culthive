@@ -8,16 +8,21 @@ import '../../../styles/MovieList.css' // Import du CSS de la liste de films
 import '../../../styles/Loading.css' // Import du CSS de l'indicateur de chargement
 
 function Movies() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const [movies, setMovies] = useState([])
   const [error, setError] = useState(null) // Pour afficher l'erreur si nécessaire
 
+  const [currentPage, setCurrentPage] = useState(1) // Page actuelle
+  const [totalPages, setTotalPages] = useState(1) // Total des pages
+
   useEffect(() => {
     async function fetchMovies() {
       try {
-        console.log('Fetching movies...')
-        const response = await fetch(`${API_URL}/api/works/movies`) // L'URL du backend
+        console.log(`Fetching movies from page ${currentPage}...`)
+        const response = await fetch(
+          `${API_URL}/api/works/movies?page=${currentPage}`
+        ) // L'URL du backend
         console.log('Response:', response)
 
         if (!response.ok) {
@@ -26,9 +31,9 @@ function Movies() {
 
         const data = await response.json()
         console.log('Data:', data)
-        console.log('First movie:', data[0]) // Afficher le premier objet movie pour vérifier sa structure
 
-        setMovies(data)
+        setMovies(data.movies)
+        setTotalPages(data.total_pages) // Mettre à jour le nombre total de pages
       } catch (err) {
         console.error('Error:', err)
         setError(err.message) // Stocke l'erreur pour l'afficher
@@ -36,7 +41,19 @@ function Movies() {
     }
 
     fetchMovies()
-  }, [])
+  }, [currentPage])
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1)
+    }
+  }
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1)
+    }
+  }
 
   return (
     <div>
@@ -49,6 +66,18 @@ function Movies() {
         ) : (
           <p>Aucun film trouvé</p>
         )}
+      </div>
+      {/* Boutons de pagination */}
+      <div className="pagination">
+        <button onClick={handlePrevPage} disabled={currentPage === 1}>
+          Précédent
+        </button>
+        <span>
+          Page {currentPage} / {totalPages}
+        </span>
+        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+          Suivant
+        </button>
       </div>
       <Footer />
     </div>

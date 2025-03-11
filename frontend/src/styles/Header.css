@@ -17,6 +17,7 @@
   background-color: #fff; /* Fond blanc */
   border-bottom: 2px solid var(--bleu-clair); /* Bordure en bas */
   font-family: var(--font-family);
+  height: 10vh;
 }
 
 /* Logo du header */

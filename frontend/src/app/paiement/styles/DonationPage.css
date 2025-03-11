@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  --bleu-clair: #82d0f5; /* Bleu clair */
+  --bleu-foncé: #0084c6; /* Bleu foncé */
+  --rouge-clair: #e5281f; /* Rouge clair */
+  --rouge-foncé: #a01c18; /* Rouge foncé */
+  --noir: #1d1d1b; /* Noir foncé */
+  --font-family: 'Roboto', sans-serif; /* Roboto */
+}
+
+/* Conteneur principal */
+.donation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  height: 80vh;
+}
+
+/* Titre */
+.donation-container h1 {
+  font-size: 2rem;
+  color: var(--bleu-foncé);
+  margin-bottom: 20px;
+}
+
+/* Champ de saisie */
+.donation-container input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 2px solid var(--bleu-foncé);
+  border-radius: 5px;
+  outline: none;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.donation-container input:focus {
+  border-color: var(--bleu-clair);
+}
+
+/* Bouton */
+.donation-container button {
+  background-color: var(--bleu-clair);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.donation-container button:hover {
+  background-color: var(--bleu-foncé);
+}
+
+.donation-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .donation-container {
+    padding: 15px;
+  }
+
+  .donation-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .donation-container input {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .donation-container button {
+    font-size: 1rem;
+    padding: 10px 16px;
+  }
+}

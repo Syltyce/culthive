@@ -45,9 +45,9 @@ export default function Dashboard() {
   }, [router])
 
   return (
-    <div className={styles.container}>
+    <div>
       <Header />
-      <main className={styles.main}>
+      <div className={styles.containerDashboard}>
         <h1 className={styles.title}>Bienvenue sur votre tableau de bord</h1>
 
         {error && <p className={styles.error}>{error}</p>}
@@ -73,7 +73,7 @@ export default function Dashboard() {
         ) : (
           <p>Chargement des données...</p>
         )}
-      </main>
+      </div>
       <Footer />
     </div>
   )

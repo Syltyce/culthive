@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import './styles/DonationPage.css'
 
 export default function DonationPage() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL 
