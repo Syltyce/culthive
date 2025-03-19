@@ -81,7 +81,7 @@ export default function Login() {
         <form className={styles.form} onSubmit={handleLogin}>
           <input
             type="text"
-            placeholder="Nom d'utilisateur ou email"
+            placeholder="Email"
             name="username"
             className={styles.input}
             onChange={(e) => setEmail(e.target.value)}

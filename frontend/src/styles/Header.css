@@ -13,16 +13,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  background-color: #fff; /* Fond blanc */
-  border-bottom: 2px solid var(--bleu-clair); /* Bordure en bas */
+  padding: 10px;
+  background-color: #fff; 
+  border-bottom: 2px solid var(--bleu-clair); 
   font-family: var(--font-family);
-  height: 10vh;
 }
 
 /* Logo du header */
 .header-logo {
-  width: 100px;
+  width: 80px;
   height: auto;
 }
 
@@ -43,17 +42,13 @@
   color: var(--bleu-foncé);
 }
 
-/* Conteneur de la barre de recherche */
-.search-container {
-  position: relative;
-}
-
 .search-bar {
-  padding: 8px 12px;
+  padding: 10px;
   font-size: 14px;
   border: 2px solid var(--bleu-clair); /* Bordure claire */
   border-radius: 4px;
-  width: 200px;
+  background-color: white;
+  color: black;
 }
 
 .loading-text {
@@ -62,6 +57,7 @@
   position: absolute;
   top: 35px;
   left: 10px;
+  color: black;
 }
 
 .search-results {
@@ -69,9 +65,9 @@
   padding: 0;
   margin-top: 10px;
   background-color: white;
+  color: black;
   border: 1px solid var(--bleu-clair);
   border-radius: 4px;
-  width: 200px;
   position: absolute;
   z-index: 10;
 }
@@ -93,7 +89,7 @@
 
 /* Boutons : Connexion, Inscription, Profil */
 .btn {
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 4px;
   border: 2px solid var(--bleu-foncé); /* Bordure bleue par défaut */
   background-color: #fff; /* Fond blanc */
@@ -144,38 +140,35 @@
 @media (max-width: 768px) {
   .header {
     flex-direction: column; /* Colonne pour les petits écrans */
-    align-items: flex-start;
+    align-items: center;
   }
 
   .header-nav {
     flex-direction: column; /* Empiler les liens de navigation */
     gap: 10px;
-    margin-top: 20px;
+    text-align: center;
   }
 
   .header-logo {
-    width: 120px; /* Réduire la taille du logo */
-    margin-bottom: 10px; /* Espacement en bas */
+    width: 120px; 
   }
 
   .search-container {
-    margin-top: 10px; /* Ajouter de l'espace au-dessus */
-    width: 100%; /* S'assurer que la recherche prend tout l'espace */
-  }
-
-  .header-actions {
-    flex-direction: column; /* Empiler les boutons */
-    gap: 10px;
-    align-items: flex-start; /* Aligner à gauche sur petit écran */
+    width: 100%; 
+    text-align: center;
+    padding: 10px;
   }
 
   .btn {
-    width: 100%; /* Boutons prennent toute la largeur sur petits écrans */
+    width: 100%; 
   }
 
   .search-results {
     max-height: 200px; /* Limite la hauteur des résultats de recherche */
     overflow-y: auto; /* Ajoute un scroll si nécessaire */
+    width: 250px; /* Largeur fixe pour éviter que la liste s'étende */
+    left: 50%; /* Déplace le bord gauche au centre */
+    transform: translateX(-50%); /* Centre parfaitement la liste */
   }
 }
 

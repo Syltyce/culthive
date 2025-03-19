@@ -44,7 +44,7 @@ export default function DonationPage() {
   }
 
   return (
-    <div>
+    <div className="page-container">
       <Header />
       <div className="donation-container">
         <h1>Faire un don</h1>

@@ -17,6 +17,7 @@
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  color: #0084c6;
 }
 
 .main {
@@ -132,21 +133,31 @@
   }
 }
 
-/* Sur les petits écrans, afficher 1 carte par ligne */
 @media (max-width: 768px) {
-  .cards {
-    grid-template-columns: 1fr; /* 1 carte par ligne */
-  }
-
   .title {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .paragraph {
     font-size: 1rem;
+    text-align: center;
+  }
+
+  .presentation {
+    height: 20vh; /* Réduction de la hauteur */
+  }
+
+  .cards {
+    grid-template-columns: 1fr; /* Une seule colonne */
+  }
+
+  .card {
+    padding: 15px;
   }
 
   .callToAction {
     font-size: 1.2rem;
+    text-align: center;
+    padding: 10px;
   }
 }

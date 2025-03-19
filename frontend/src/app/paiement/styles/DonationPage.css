@@ -10,6 +10,11 @@
 }
 
 /* Conteneur principal */
+.page-container {
+  display: flex;
+  flex-direction: column; /* Affiche les éléments en colonne */
+  height: 100%; /* Prend toute la hauteur de la page */
+}
 .donation-container {
   display: flex;
   flex-direction: column;
@@ -17,7 +22,6 @@
   justify-content: center;
   padding: 20px;
   text-align: center;
-  height: 80vh;
 }
 
 /* Titre */
@@ -38,6 +42,8 @@
   outline: none;
   text-align: center;
   margin-bottom: 15px;
+  background-color: white;
+  color: black;
 }
 
 .donation-container input:focus {

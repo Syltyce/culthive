@@ -11,7 +11,7 @@ import ReviewCard from '@/components/ReviewCard'
 export const dynamic = 'force-dynamic'
 
 function SeriesDetail({ params: initialParams }) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const { isAuthenticated, user } = useContext(AuthContext) // Correction ici
 
@@ -82,6 +82,10 @@ function SeriesDetail({ params: initialParams }) {
     fetchReviews()
   }, [params])
 
+  const handleNewReview = (newReview) => {
+    setReviews((prevReviews) => [newReview, ...prevReviews])
+  }
+
   // Fonction pour ajouter une série à la liste
   const handleAddToList = async (type) => {
     const token = localStorage.getItem('token') // Récupère le token du localStorage
@@ -138,11 +142,14 @@ function SeriesDetail({ params: initialParams }) {
   // Fonction de mise à jour d'une review
   const handleUpdateReview = async (updatedReview) => {
     try {
+      const token = localStorage.getItem('token')
+
       const response = await fetch(
         `${API_URL}/api/reviews/${updatedReview.id}`,
         {
           method: 'PUT',
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(updatedReview), // Passer les nouvelles données de la critique
@@ -168,10 +175,13 @@ function SeriesDetail({ params: initialParams }) {
 
   // Fonction de suppression d'une review
   const handleDeleteReview = async (reviewId) => {
+    const token = localStorage.getItem('token')
+
     try {
       const response = await fetch(`${API_URL}/api/reviews/${reviewId}`, {
         method: 'DELETE',
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       })
@@ -258,7 +268,11 @@ function SeriesDetail({ params: initialParams }) {
 
       {/* Formulaire Note et Critique */}
       {isAuthenticated ? (
-        <ReviewForm workId={series.id} userId={user?.id} />
+        <ReviewForm
+          workId={series.id}
+          userId={user?.id}
+          onReviewAdded={handleNewReview}
+        />
       ) : (
         <p>
           {' '}

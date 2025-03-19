@@ -1,17 +1,12 @@
-/* Style pour le titre principal */
 .containerDashboard {
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
   text-align: center;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  max-width: 900px;
-  width: 100%;
-  margin: 0 auto;
+  padding: 2rem;
+  background-color: white;
 }
 
 .title {
@@ -21,60 +16,71 @@
   font-weight: 600;
 }
 
-/* Style pour l'affichage des erreurs */
 .error {
-  color: #a01c18;
+  color: #e5281f;
   font-size: 1rem;
   margin-top: 1rem;
   text-align: center;
 }
 
-/* Style du menu de navigation */
-.navDashboard {
-  margin-top: 2rem;
+.titleUser {
+  font-size: 1.8rem;
+  color: #1d1d1b;
+  margin-bottom: 1rem;
+  font-weight: 500;
 }
 
-.navDashboard ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.navDashboard ul li {
-  margin-bottom: 10px;
-  text-align: center;
-}
 
 .btn {
-  background-color: #82d0f5;
+  background-color: #0084c6;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease;
 }
 
 .btn:hover {
-  background-color: #0084c6;
-  transform: translateY(-2px);
+  background-color: #82d0f5;
 }
 
 .btn:focus {
   outline: none;
 }
 
-/* Réactivité - Ajuster pour les petits écrans */
+/* 🌍 Responsive Design */
 @media (max-width: 768px) {
+  .containerDashboard {
+    padding: 1.5rem;
+  }
+
   .title {
     font-size: 2rem;
   }
 
+  .titleUser {
+    font-size: 1.5rem;
+  }
+
   .btn {
     width: 100%;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .titleUser {
+    font-size: 1.4rem;
+  }
+
+  .btn {
+    font-size: 0.9rem;
     padding: 12px;
   }
 }

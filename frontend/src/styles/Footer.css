@@ -18,7 +18,7 @@ footer {
   bottom: 0;
   width: 100%;
   font-family: var(--font-family);
-  height: 10vh;
+  margin-top: auto; 
 }
 
 footer nav {
@@ -31,7 +31,7 @@ footer nav .footer-link {
   text-decoration: none; /* Supprime la décoration par défaut du lien (souligné) */
   color: white; /* Couleur du texte des liens */
   font-size: 16px; /* Taille de police */
-  margin: 40px; /* Espace entre chaque lien */
+  margin: 20px; /* Espace entre chaque lien */
   transition: color 0.3s ease; /* Ajoute une transition douce pour l'effet hover */
   text-decoration: underline; /* Souligner au survol */
 }
@@ -45,4 +45,28 @@ footer p {
   font-size: 14px; /* Taille de police du texte */
   color: white; /* Couleur de texte */
   margin-top: 20px;
+}
+
+/* 🌍 Responsive Design */
+
+/* 📱 Pour les écrans de moins de 768px */
+@media (max-width: 768px) {
+  footer nav {
+    flex-direction: column; 
+    text-align: center;
+    gap: 10px;
+  }
+
+  footer nav ul {
+    display: flex;
+    flex-direction: column; /* Passe la liste en colonne */
+    align-items: center; /* Centre les liens */
+    padding: 0;
+  }
+
+  footer nav .footer-link {
+
+    margin: 5px; /* Espace entre chaque lien */
+
+  }
 }

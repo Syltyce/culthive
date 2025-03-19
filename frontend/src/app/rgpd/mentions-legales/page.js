@@ -13,7 +13,7 @@ const MentionsLegales = () => {
         <section className="site-info">
           <h2>Site</h2>
           <p>
-            CultHive, accessible via <a href="https://www.culthive.fictyverse.com/">https://www.culthive.fictyverse.com/</a> ou <a href="https://www.fictyverse.com/culthive">https://www.fictyverse.com/culthive</a>.
+            CultHive, accessible via <a href="https://www.culthive.fictyverse.com/">https://www.culthive.fictyverse.com/</a> ou <a href="https://culthive-frontend.vercel.app/">https://culthive-frontend.vercel.app/</a>
           </p>
         </section>
 

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { useRouter } from 'next/navigation'
-import '../../styles/ListsPage.css'
+import './ListsPage.css'
 
 function ListsPage() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL

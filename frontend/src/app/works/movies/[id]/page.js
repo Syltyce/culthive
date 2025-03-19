@@ -9,7 +9,7 @@ import AuthContext from '@/components/AuthContext'
 import ReviewForm from '@/components/ReviewForm'
 import ReviewCard from '@/components/ReviewCard'
 
-export const dynamic = 'force-dynamic' // Empêche la génération statique au build
+export const dynamic = 'force-dynamic'
 
 function MovieDetail({ params: initialParams }) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL

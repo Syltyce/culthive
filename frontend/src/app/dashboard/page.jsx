@@ -58,17 +58,10 @@ export default function Dashboard() {
               Bonjour {userData.username}, bienvenue sur votre profil CultHive
             </h2>
 
-            {/* Menu de navigation avec un lien vers la liste */}
-            <nav className={styles.navDashboard}>
-              <ul>
-                <li>
                   <Link href="/lists">
                     <button className={styles.btn}> Voir mes listes </button>
                   </Link>
-                </li>
-                {/* Ajouter d'autres liens si nécessaire */}
-              </ul>
-            </nav>
+
           </div>
         ) : (
           <p>Chargement des données...</p>

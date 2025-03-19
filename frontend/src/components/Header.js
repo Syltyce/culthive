@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation' // Importer useRouter
 import '../styles/Header.css'
 
 const Header = () => {
-
-  const API_URL = process.env.NEXT_PUBLIC_API_URL 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const [user, setUser] = useState(null)
   const router = useRouter() // Déclarer le hook useRouter
@@ -54,9 +53,7 @@ const Header = () => {
     const fetchData = async () => {
       setLoading(true)
       try {
-        const res = await fetch(
-          `${API_URL}/api/search?query=${query}`
-        )
+        const res = await fetch(`${API_URL}/api/search?query=${query}`)
         const data = await res.json()
         setResults(data)
       } catch (error) {
@@ -88,6 +85,30 @@ const Header = () => {
         <Link href="/paiement">Faire un don</Link>
       </nav>
 
+      <div className="header-actions">
+        {/* Afficher les boutons de connexion/inscription si l'utilisateur n'est pas connecté */}
+        {!user ? (
+          <>
+            <Link href="/users/login">
+              <button className="btn login">Connexion</button>
+            </Link>
+            <Link href="/users/register">
+              <button className="btn signup">Inscription</button>
+            </Link>
+          </>
+        ) : (
+          <>
+            {/* Afficher le lien vers le profil et le bouton de déconnexion si l'utilisateur est connecté */}
+            <Link href={`/dashboard`}>
+              <button className="btn profile">Mon Profil</button>
+            </Link>
+            <button className="btn logout" onClick={handleLogout}>
+              Déconnexion
+            </button>
+          </>
+        )}
+      </div>
+
       {/* Barre de recherche */}
       <div className="search-container">
         <input
@@ -115,30 +136,6 @@ const Header = () => {
               </li>
             ))}
           </ul>
-        )}
-      </div>
-
-      <div className="header-actions">
-        {/* Afficher les boutons de connexion/inscription si l'utilisateur n'est pas connecté */}
-        {!user ? (
-          <>
-            <Link href="/users/login">
-              <button className="btn login">Connexion</button>
-            </Link>
-            <Link href="/users/register">
-              <button className="btn signup">Inscription</button>
-            </Link>
-          </>
-        ) : (
-          <>
-            {/* Afficher le lien vers le profil et le bouton de déconnexion si l'utilisateur est connecté */}
-            <Link href={`/dashboard`}>
-              <button className="btn profile">Mon Profil</button>
-            </Link>
-            <button className="btn logout" onClick={handleLogout}>
-              Déconnexion
-            </button>
-          </>
         )}
       </div>
     </header>

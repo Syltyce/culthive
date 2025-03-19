@@ -47,11 +47,15 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  background-color: white;
+  color: black;
 }
 
 .input:focus {
   border-color: #0070f3;
   outline: none;
+  background-color: white;
+  color: black;
 }
 
 .button {

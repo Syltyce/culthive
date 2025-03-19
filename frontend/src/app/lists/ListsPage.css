@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  --bleu-clair: #82d0f5;
+  --bleu-foncé: #0084c6;
+  --rouge-clair: #e5281f;
+  --rouge-foncé: #a01c18;
+  --noir: #1d1d1b;
+  --font-family: 'Roboto', sans-serif;
+  --background: #f4f4f4;
+  --white: #ffffff;
+}
+
+.lists-page {
+  margin: auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--bleu-foncé);
+}
+
+.list-section {
+  margin: 20px;
+  background-color: var(--white);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px var(--bleu-foncé);
+}
+
+h2 {
+  color: var(--bleu-foncé);
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.list-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.list-item {
+  max-width: 20vh;
+  padding: 15px;
+  background-color: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 0 5px var(--noir);
+  text-align: center;
+}
+
+.list-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.list-item h3 {
+  font-size: 0.8rem;
+  margin: 5px;
+}
+
+button {
+  background-color: var(--rouge-clair);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: var(--rouge-foncé);
+}
+
+@media (max-width: 768px) {
+  .list-items {
+    flex-direction: wrap;
+    align-items: center;
+  }
+}

@@ -88,7 +88,7 @@ export default function Register() {
           <input
             className={styles.input}
             type="text"
-            placeholder="Nom d'utilisateur ou pseudo"
+            placeholder="Votre nom d'utilisateur"
             name="username"
             onChange={(e) => setRegisterUsername(e.target.value)}
           />
