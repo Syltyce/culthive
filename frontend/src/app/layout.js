@@ -33,19 +33,7 @@ export default function RootLayout({ children }) {
             href="/tarteaucitron/css/tarteaucitron.min.css"
           />
 
-          {/* Google Analytics */}
-          <Script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-BTPWGJ6YHV"
-          />
-          <Script id="google-analytics">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-BTPWGJ6YHV');
-            `}
-          </Script>
+
 
           <link rel="icon" href="/logo_culthive_svg.svg" />
         </head>

@@ -85,17 +85,16 @@ h1 {
   .movie-list .work-card {
     flex: 1 1 100%;
   }
+
+  /* Cartes des films */
+.movie-list .work-card {
+  flex: 1 1 250px; /* Largeur minimale de 250px */
+  max-width: 200px;
+  margin: 10px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 5px var(--noir);
+  transition: transform 0.3s ease-in-out;
 }
-
-/* Grille sur petits écrans */
-@media (max-width: 600px) {
-  .movie-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-  }
-
-  .work-card {
-    margin: 10px 0;
-  }
 }

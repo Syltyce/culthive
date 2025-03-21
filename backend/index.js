@@ -39,10 +39,15 @@ app.use((req, res, next) => {
   next();  // Passe à la suite des middlewares
 });
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL, // URL Principal (Vercel)
+  process.env.FRONTEND_URL_2, // 2nd URL du frontend (Hostinger)
+].filter(Boolean); // Supprime les valeurs undefined
+
 // Middleware CORS pour permettre l'accès depuis le frontend 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(',') : "*",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

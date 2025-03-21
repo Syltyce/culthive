@@ -53,3 +53,11 @@
   color: #333;
   margin-top: 10px;
 }
+
+/* Cacher le synopsis et la note sur les écrans mobiles */
+@media (max-width: 768px) {
+  .work-card__overview, 
+  .work-card__rating {
+    display: none;
+  }
+}

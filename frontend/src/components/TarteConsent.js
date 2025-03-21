@@ -14,6 +14,7 @@ const TarteConsent = () => {
         // Maintenant que le script est chargé, on peut l'initialiser
         if (typeof tarteaucitron !== 'undefined') {
           console.log('Tarteaucitron disponible et défini')
+          const privacyUrl = `${window.location.origin}/rgpd/politique-de-confidentialite`;
           tarteaucitron.init({
             privacyUrl:
               'https://culthive-frontend.vercel.app/rgpd/politique-de-confidentialite', // URL de la politique de confidentialité
@@ -43,6 +44,8 @@ const TarteConsent = () => {
             googleConsentMode: true, // Activer le Google Consent Mode
             partnersList: false, // Afficher le nombre de partenaires
           })
+          tarteaucitron.user.gtagUa = 'G-BTPWGJ6YHV'
+          ;(tarteaucitron.job = tarteaucitron.job || []).push('gtag')
         } else {
           console.error(
             "Le script Tarteaucitron n'a pas été chargé correctement."
@@ -61,4 +64,4 @@ const TarteConsent = () => {
   return <div></div> // Tu peux aussi ajouter un message ou un autre contenu dans ce div
 }
 
-export default TarteConsent;
+export default TarteConsent

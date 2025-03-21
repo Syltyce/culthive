@@ -1,5 +1,5 @@
 // "use client" indique que ce fichier utilise React côté client (frontend), ce qui permet l'interactivité.
-'use client'
+'use client';
 
 // Importations des components
 import Footer from '../../../components/Footer'
@@ -12,7 +12,7 @@ import { useState } from 'react'
 
 // Composant fonctionnel Register qui représente la page d'inscription
 export default function Register() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 
   // Déclaration des états pour gérer les différents champs du formulaire
   const [registerUsername, setRegisterUsername] = useState('')
