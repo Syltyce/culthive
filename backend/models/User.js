@@ -35,6 +35,15 @@ const User = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false, 
     },
+    resetToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resetTokenExpiration: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    }
+    
   },
   {
     tableName: "users", // Nom de la table dans la base de données

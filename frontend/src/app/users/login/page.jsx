@@ -95,7 +95,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <Link href="#" className={styles.link}>
+          <Link href="/password/forgot-password" className={styles.link}>
             <span className={styles.highlight_2}>Mot de passe oublié ?</span>
           </Link>
 
