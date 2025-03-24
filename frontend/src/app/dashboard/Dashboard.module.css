@@ -1,3 +1,11 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  background-color: white;
+}
+
 .containerDashboard {
   flex: 1;
   display: flex;
@@ -29,7 +37,6 @@
   margin-bottom: 1rem;
   font-weight: 500;
 }
-
 
 .btn {
   background-color: #0084c6;

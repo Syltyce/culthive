@@ -51,7 +51,7 @@ export default function Register() {
     if (response.ok) {
       console.log('Inscription réussie :', data)
       setSuccessMessage(
-        'Inscription réussie ! Vous pouvez vous connecter désormais !'
+        'Inscription réussie ! Un email de confirmation vous a été envoyé. Veuillez valider votre adresse email avant de pouvoir vous connecter.'
       )
       setErrorMessage('') // Efface les messages d'erreur en cas de succès
     } else {

@@ -21,6 +21,7 @@ const User = sequelize.define(
       validate: {
         isEmail: true,
       },
+      index: true, 
     },
     password: {
       type: DataTypes.STRING,
@@ -42,8 +43,14 @@ const User = sequelize.define(
     resetTokenExpiration: {
       type: DataTypes.DATE,
       allowNull: true,
+    },
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false // L'utilisateur est non vérifié par défaut
+    },
+    verificationToken: {
+      type: DataTypes.STRING
     }
-    
   },
   {
     tableName: "users", // Nom de la table dans la base de données

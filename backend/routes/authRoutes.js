@@ -15,8 +15,8 @@ const router = express.Router();
 
 const bcrypt = require("bcryptjs"); // Module de hashage des mdp
 const jwt = require("jsonwebtoken"); // Module pour manipuler les tokens JWT
+const crypto = require("crypto");
 
-const nodemailer = require("nodemailer");
 const envoyerEmail = require("../utils/email"); // Importer la fonction d'email
 
 // Route d'inscription (register)
@@ -63,6 +63,9 @@ router.post("/register", async (req, res) => {
       });
     }
 
+    // Générer un code de vérification aléatoire
+    const verificationToken = crypto.randomBytes(3).toString("hex"); // Code de 6 caractères
+
     // Hache le mot de passe
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -71,7 +74,14 @@ router.post("/register", async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      verificationToken,
     });
+
+    // Envoie le code de vérification par email
+    const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?code=${verificationToken}`;
+    const message = `Merci pour votre inscription. Veuillez cliquer sur ce lien pour vérifier votre adresse email et vous connecter : ${verificationUrl}`;
+
+    await envoyerEmail(email, "Vérification de votre adresse email", message);
 
     // Réponse de succès avec les informations de l'utilisateur (sans le mot de passe)
     res.status(201).json({
@@ -117,6 +127,16 @@ router.post("/login", async (req, res) => {
       return res.status(403).json({ message: "Votre compte a été banni." });
     }
 
+    // Vérifier si l'utilisateur a bien validé son email
+    if (!user.isVerified) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "Veuillez vérifier votre adresse email avant de vous connecter.",
+        });
+    }
+
     // Comparer le mot de passe avec celui haché en BDD
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
@@ -140,9 +160,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// PARTIE POUR LA RECUPERATION D'UN NOUVEAU MOT DE PASSE 
+// PARTIE POUR LA RECUPERATION D'UN NOUVEAU MOT DE PASSE
 
-// Envoie un email pour l'oublie de mot de passe 
+// Envoie un email pour l'oublie de mot de passe
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body;
 
@@ -214,6 +234,33 @@ router.post("/reset-password", async (req, res) => {
     res.json({ message: "Mot de passe mis à jour avec succès." });
   } catch (error) {
     return res.status(400).json({ message: "Token invalide ou expiré." });
+  }
+});
+
+// Route de vérification d'email
+router.post("/verify-email", async (req, res) => {
+  const { code } = req.body; // Code de vérification envoyé par l'utilisateur
+
+  try {
+    // Vérifier si un utilisateur avec ce code existe
+    const user = await User.findOne({ where: { verificationToken: code } });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Code de vérification invalide." });
+    }
+
+    // Mettre à jour l'utilisateur pour indiquer que l'email est vérifié
+    user.isVerified = true;
+    user.verificationToken = null; // Supprimer le code une fois l'email vérifié
+    await user.save();
+
+    res
+      .status(200)
+      .json({ message: "Votre email a été vérifié avec succès !" });
+  } catch (error) {
+    console.error("Erreur dans /verify-email :", error.message, error.stack);
+    res.status(500).json({ message: "Erreur serveur" });
   }
 });
 

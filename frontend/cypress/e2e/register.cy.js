@@ -20,7 +20,7 @@ describe('Inscription utilisateur', () => {
     cy.get('button[type="submit"]').click()
 
     // Vérifie que le message de succès est affiché
-    cy.contains('Inscription réussie ! Vous pouvez vous connecter désormais !')
+    cy.contains('Inscription réussie ! Un email de confirmation vous a été envoyé. Veuillez valider votre adresse email avant de pouvoir vous connecter.')
   })
 
   it('Doit afficher une erreur si le mot de passe est trop faible', () => {

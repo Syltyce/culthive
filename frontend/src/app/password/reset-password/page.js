@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 
 import Header from '@/components/Header'
@@ -7,7 +7,9 @@ import Footer from '@/components/Footer'
 
 import './style_reset-password.css'
 
-export default function ResetPassword() {
+function ResetPasswordContent() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
+
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
@@ -32,7 +34,7 @@ export default function ResetPassword() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/reset-password`,
+        `${API_URL}/api/reset-password`,
         {
           method: 'POST',
           headers: {
@@ -77,5 +79,15 @@ export default function ResetPassword() {
       </div>
       <Footer />
     </div>
+  )
+}
+
+export default function ResetPassword() {
+  return (
+    <Suspense fallback={<p>Chargement...</p>}>
+      <Header />
+      <ResetPasswordContent />
+      <Footer />
+    </Suspense>
   )
 }

@@ -45,7 +45,7 @@ export default function Dashboard() {
   }, [router])
 
   return (
-    <div>
+    <div className={styles.container}>
       <Header />
       <div className={styles.containerDashboard}>
         <h1 className={styles.title}>Bienvenue sur votre tableau de bord</h1>
