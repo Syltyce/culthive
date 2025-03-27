@@ -57,6 +57,21 @@
   outline: none;
 }
 
+.btnDelete {
+  background-color: red;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btnDelete:hover {
+  background-color: darkred;
+}
+
+
 /* 🌍 Responsive Design */
 @media (max-width: 768px) {
   .containerDashboard {

@@ -57,6 +57,27 @@ router.get("/profile", authenticate, async (req, res) => {
     );
     res.status(500).json({ message: "Erreur du serveur" });
   }
+}); 
+
+router.delete('/delete', authenticate, async (req, res) => {
+  try {
+    const userId = req.user.id; // ID de l'utilisateur authentifié
+
+    // Vérifier si l'utilisateur existe
+    const user = await User.findOne({ where: { id: userId } });
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    // Supprimer l'utilisateur
+    await user.destroy();
+
+    res.json({ message: "Compte supprimé avec succès" });
+  } catch (error) {
+    console.error("Erreur lors de la suppression du compte :", error);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
 });
+
 
 module.exports = router;

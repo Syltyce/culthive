@@ -38,7 +38,7 @@ const VerifyEmailPage = () => {
         const data = await res.json()
 
         if (res.status === 200) {
-          setSuccess('Votre email a été vérifié avec succès !')
+          setSuccess('Votre email a été vérifié avec succès ! Vous pouves désormais vous connecter.')
           setTimeout(() => {
             window.location.href = '/users/login' // Rediriger vers la page de connexion
           }, 2000)
