@@ -21,7 +21,7 @@ const TarteConsent = () => {
             bodyPosition: 'bottom', // Position de la bannière
             hashtag: '#tarteaucitron', // Hashtag pour ouvrir le panneau
             cookieName: 'tarteaucitron', // Nom du cookie
-            orientation: 'middle', // Position de la bannière
+            orientation: 'bottom', // Position de la bannière
             groupServices: false, // Grouper les services par catégorie
             showDetailsOnClick: true, // Cliquer pour ouvrir la description
             serviceDefaultState: 'wait', // Statut par défaut

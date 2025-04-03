@@ -1,8 +1,13 @@
 'use client'
 import { useEffect, useState } from 'react'
 
+import Header from '@/components/Header'
+import Footer from '@/components/Footer' 
+
+import '../styles/AdminUsers.css'
+
 export default function UsersPage() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
   const [users, setUsers] = useState([])
 
@@ -51,20 +56,24 @@ export default function UsersPage() {
   }
 
   return (
-    <div>
-      <h1>Gestion des Utilisateurs</h1>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <strong>{user.email}</strong> - {user.role}
-            {user.banned ? (
-              <span> (Banni)</span>
-            ) : (
-              <button onClick={() => handleBanUser(user.id)}>Bannir</button>
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className='page-container'>
+      <Header />
+      <div className='admin-users'>
+        <h1>Gestion des Utilisateurs</h1>
+        <ul>
+          {users.map((user) => (
+            <li key={user.id}>
+              <strong>{user.email}</strong> 
+              {user.banned ? (
+                <span> (Banni)</span>
+              ) : (
+                <button onClick={() => handleBanUser(user.id)}>Bannir</button>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Footer />
     </div>
   )
 }

@@ -78,12 +78,28 @@
 .reviews-section h2 {
   color: var(--bleu-foncé);
   padding: 20px;
-  text-decoration: underline;
+  text-align: center;
 }
 
 .reviews-section p {
   font-size: 14px;
-  color: black;
+  color: white;
+  text-align: center;
+}
+
+.review-form-details p {
+  text-align: center;
+  padding: 20px;
+}
+
+.review-form-details p strong {
+  text-decoration: underline;
+  font-weight: normal;
+  color: var(--bleu-foncé);
+}
+
+.review-form-details p strong:hover {
+  font-weight: bold;
 }
 
 /* Messages d'erreur */

@@ -1,6 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
 
+import Header from '@/components/Header'
+import Footer from '@/components/Footer' 
+
+import '../styles/AdminReviews.css' 
+
 export default function ReviewsPage() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -53,19 +58,23 @@ export default function ReviewsPage() {
   }
 
   return (
-    <div>
-      <h1>Gestion des Reviews</h1>
-      <ul>
-        {reviews.map((review) => (
-          <li key={review.id}>
-            <strong>{review.title}</strong> - {review.comment} (par{' '}
-            {review.User?.email || 'Utilisateur inconnu'})
-            <button onClick={() => handleDeleteReview(review.id)}>
-              Supprimer
-            </button>
-          </li>
-        ))}
-      </ul>
+    <div className='page-container'>
+      <Header />
+      <div className='admin-reviews'>
+        <h1>Gestion des Critiques</h1>
+        <ul>
+          {reviews.map((review) => (
+            <li key={review.id}>
+              <strong>{review.title}</strong> - {review.comment} (par{' '}
+              {review.User?.email || 'Utilisateur inconnu'})
+              <button onClick={() => handleDeleteReview(review.id)}>
+                Supprimer
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <Footer />
     </div>
   )
 }

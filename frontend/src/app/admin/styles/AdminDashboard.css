@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  --bleu-clair: #82d0f5; /* Bleu clair */
+  --bleu-foncé: #0084c6; /* Bleu foncé */
+  --rouge-clair: #e5281f; /* Rouge clair */
+  --rouge-foncé: #a01c18; /* Rouge foncé */
+  --noir: #1d1d1b; /* Noir foncé */
+  --font-family: 'Roboto', sans-serif; /* Roboto */
+}
+
+/* Menu Administrateur */
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: var(--font-family);
+  background-color: white;
+}
+.admin-dashboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.admin-dashboard h1 {
+  font-size: 24px;
+  text-align: center;
+}
+
+.admin-dashboard a {
+  display: block;
+  padding: 12px;
+  background-color: var(--bleu-clair);
+  color: black;
+  margin: 10px 0;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.admin-dashboard a:hover {
+  background-color: var(--bleu-foncé);
+}

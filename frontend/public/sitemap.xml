@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://culthive.fictyverse.com/</loc>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://culthive.fictyverse.com/works/movies</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://culthive.fictyverse.com/works/series</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://culthive.fictyverse.com/paiement</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://culthive.fictyverse.com/users/login</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://culthive.fictyverse.com/users/register</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>

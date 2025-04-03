@@ -114,9 +114,10 @@ const Header = () => {
         <input
           type="text"
           className="search-bar"
-          placeholder="Rechercher..."
+          placeholder="Rechercher film/série"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          aria-label="Rechercher" 
         />
         {loading && <p className="loading-text">Chargement...</p>}
         {results.length > 0 && (

@@ -1,6 +1,7 @@
 'use client' // Directive pour marquer ce fichier comme un composant client
 
 // Importation des dépendances nécessaires
+import Link from 'next/link'
 import React, { useState, useEffect, useContext } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -276,19 +277,21 @@ function MovieDetail({ params: initialParams }) {
       </div>
 
       {/* Formulaire Note et Critique */}
-      {isAuthenticated ? (
-        <ReviewForm
-          workId={movie.id}
-          userId={user?.id}
-          onReviewAdded={handleNewReview}
-        />
-      ) : (
-        <p>
-          {' '}
-          Si vous voulez noter ou faire une critique sur une oeuvre, veuillez
-          vous connecter{' '}
-        </p>
-      )}
+      <div className="review-form-details">
+        {isAuthenticated ? (
+          <ReviewForm
+            workId={movie.id}
+            userId={user?.id}
+            onReviewAdded={handleNewReview}
+          />
+        ) : (
+          <p>
+            {' '}
+            Si vous voulez noter ou faire une critique sur une oeuvre,{' '}
+            <Link href="/users/login"> <strong> veuillez vous connecter </strong> </Link>{' '}
+          </p>
+        )}
+      </div>
 
       <div className="reviews-section">
         <h2>Critiques des spectateurs sur ce film </h2>

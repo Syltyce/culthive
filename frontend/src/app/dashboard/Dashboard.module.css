@@ -39,8 +39,8 @@
 }
 
 .btn {
-  background-color: #0084c6;
-  color: white;
+  background-color: #82d0f5;
+  color: black;
   border: none;
   padding: 12px 20px;
   font-size: 1rem;
@@ -50,7 +50,7 @@
 }
 
 .btn:hover {
-  background-color: #82d0f5;
+  background-color: #0084c6;
 }
 
 .btn:focus {
@@ -58,7 +58,7 @@
 }
 
 .btnDelete {
-  background-color: red;
+  background-color: #e5281f;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -68,7 +68,7 @@
 }
 
 .btnDelete:hover {
-  background-color: darkred;
+  background-color: #a01c18;
 }
 
 

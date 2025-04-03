@@ -100,10 +100,6 @@
   text-align: center;
 }
 
-.card:hover {
-  background-color: #0084c6; /* Au survol, la carte devient plus foncée */
-}
-
 /* Image dans la carte */
 .card img {
   width: 50px;

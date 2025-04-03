@@ -10,7 +10,7 @@
 }
 
 footer {
-  background-color: var(--bleu-foncé);
+  background-color: var(--bleu-clair);
   color: #fff;
   text-align: center;
   padding: 1rem 0;
@@ -19,6 +19,7 @@ footer {
   width: 100%;
   font-family: var(--font-family);
   margin-top: auto; 
+  border-top: 2px solid var(--bleu-foncé); 
 }
 
 footer nav {
@@ -29,21 +30,19 @@ footer nav {
 
 footer nav .footer-link {
   text-decoration: none; /* Supprime la décoration par défaut du lien (souligné) */
-  color: white; /* Couleur du texte des liens */
+  color: black; /* Couleur du texte des liens */
   font-size: 16px; /* Taille de police */
   margin: 20px; /* Espace entre chaque lien */
   transition: color 0.3s ease; /* Ajoute une transition douce pour l'effet hover */
-  text-decoration: underline; /* Souligner au survol */
 }
 
 footer nav .footer-link:hover {
-  color: var(--bleu-clair);
   text-decoration: underline; /* Souligner au survol */
 }
 
 footer p {
   font-size: 14px; /* Taille de police du texte */
-  color: white; /* Couleur de texte */
+  color: black; /* Couleur de texte */
   margin-top: 20px;
 }
 
@@ -65,8 +64,6 @@ footer p {
   }
 
   footer nav .footer-link {
-
     margin: 5px; /* Espace entre chaque lien */
-
   }
 }
