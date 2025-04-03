@@ -7,7 +7,7 @@ const GestionCookies = () => {
   return (
     <div>
       <Header />
-      <main className="content-container">
+      <main className="cookie-container">
         <h1>Gestion des Cookies</h1>
 
         <section className="cookie-info">

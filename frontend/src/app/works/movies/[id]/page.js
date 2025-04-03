@@ -29,12 +29,6 @@ function MovieDetail({ params: initialParams }) {
 
   const [reviews, setReviews] = useState([]) // Critiques du films
 
-  // useEffect(() => {
-  //   if (isAuthenticated && user?.id) {
-  //     console.log("User ID:", user.id);
-  //   }
-  // }, [isAuthenticated, user]);
-
   // Utilisation d'un useEffect pour résoudre les paramètres initiaux passés
   useEffect(() => {
     async function resolveParams() {

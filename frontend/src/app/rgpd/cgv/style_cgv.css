@@ -1,19 +1,19 @@
 
   
-  .content-container {
+  .cgv-container {
     width: 80%;
     margin: 0 auto;
     padding: 40px 0;
   }
   
-  h1 {
+  .cgv-container h1 {
     text-align: center;
     font-size: 36px;
     color: #222;
     margin-bottom: 20px;
   }
   
-  h2 {
+  .cgv-container h2 {
     font-size: 28px;
     color: #222;
     border-bottom: 2px solid #000000;
@@ -21,13 +21,13 @@
     margin-bottom: 15px;
   }
   
-  p {
+  .cgv-container p {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 20px;
   }
   
-  section {
+  .cgv-container section {
     margin-bottom: 40px;
   }
   
@@ -43,12 +43,12 @@
     line-height: 1.6;
   }
   
-  a {
+  .cgv-container a {
     color: #000000;
     text-decoration: none;
   }
   
-  a:hover {
+  .cgv-container a:hover {
     text-decoration: underline;
   }
   

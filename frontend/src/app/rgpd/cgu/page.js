@@ -8,7 +8,7 @@ const CGU = () => {
     <div>
       <Header />
       
-      <div className="container">
+      <div className="cgu-container">
         <h1 className="title">Conditions Générales d'Utilisation</h1>
         
         <section>

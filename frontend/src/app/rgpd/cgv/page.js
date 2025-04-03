@@ -7,7 +7,7 @@ const CGV = () => {
   return (
     <div>
       <Header />
-      <main className="content-container">
+      <main className="cgv-container">
         <h1>Conditions Générales de Vente</h1>
         
         <section className="donations">

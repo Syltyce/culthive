@@ -118,7 +118,7 @@ const PolitiqueConfidentialite = () => {
           <p>
             <strong>Sylvain GONCALVES</strong>
             <br />
-            Email : <a href="mailto:contact@fictyverse.fr">contact@fictyverse.fr</a>
+            Email : <a href="mailto:contact@culthive.fictyverse.com">contact@culthive.fictyverse.com</a>
           </p>
           <p>
             Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une plainte à la CNIL.

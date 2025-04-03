@@ -1,5 +1,6 @@
 'use client' // Directive pour marquer ce fichier comme un composant client
 
+import Link from 'next/link'
 import React, { useState, useEffect, useContext } from 'react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
@@ -13,9 +14,9 @@ export const dynamic = 'force-dynamic'
 function SeriesDetail({ params: initialParams }) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-  const { isAuthenticated, user } = useContext(AuthContext) // Correction ici
+  const { isAuthenticated, user } = useContext(AuthContext)
 
-  const [params, setParams] = useState(null) // Stockage des paramètres résolus
+  const [params, setParams] = useState(null)
   const [series, setSeries] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -267,19 +268,24 @@ function SeriesDetail({ params: initialParams }) {
       </div>
 
       {/* Formulaire Note et Critique */}
-      {isAuthenticated ? (
-        <ReviewForm
-          workId={series.id}
-          userId={user?.id}
-          onReviewAdded={handleNewReview}
-        />
-      ) : (
-        <p>
-          {' '}
-          Si vous voulez noter ou faire une critique sur une oeuvre, veuillez
-          vous connecter{' '}
-        </p>
-      )}
+      <div className="review-form-details">
+        {isAuthenticated ? (
+          <ReviewForm
+            workId={series.id}
+            userId={user?.id}
+            onReviewAdded={handleNewReview}
+          />
+        ) : (
+          <p>
+            {' '}
+            Si vous voulez noter ou faire une critique sur une oeuvre,{' '}
+            <Link href="/users/login">
+              {' '}
+              <strong> veuillez vous connecter </strong>{' '}
+            </Link>{' '}
+          </p>
+        )}
+      </div>
 
       <div className="reviews-section">
         <h2>Critiques des spectateurs sur ce film </h2>

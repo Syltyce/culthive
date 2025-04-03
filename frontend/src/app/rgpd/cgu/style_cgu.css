@@ -1,19 +1,19 @@
 /* style_cgu.css */
   
-  .container {
+  .cgu-container {
     width: 80%;
     margin: 0 auto;
     padding: 40px 0;
   }
   
-  .title {
+  .cgu-container .title {
     text-align: center;
     font-size: 36px;
     color: #222;
     margin-bottom: 40px;
   }
   
-  h2 {
+  .cgu-container  h2 {
     font-size: 28px;
     color: #222;
     border-bottom: 2px solid #000000;
@@ -21,28 +21,28 @@
     margin-bottom: 20px;
   }
   
-  h3 {
+  .cgu-container h3 {
     font-size: 22px;
     color: #333;
     margin-top: 20px;
   }
   
-  p {
+  .cgu-container p {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 20px;
   }
   
-  a {
+  .cgu-container a {
     color: #000000;
     text-decoration: none;
   }
   
-  a:hover {
+  .cgu-container a:hover {
     text-decoration: underline;
   }
   
-  section {
+  .cgu-container section {
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
@@ -51,24 +51,24 @@
   }
   
   @media (max-width: 768px) {
-    .container {
+    .cgu-container .container {
       width: 90%;
       padding: 20px;
     }
   
-    .title {
+    .cgu-container .title {
       font-size: 30px;
     }
   
-    h2 {
+    .cgu-container h2 {
       font-size: 24px;
     }
   
-    h3 {
+    .cgu-container h3 {
       font-size: 20px;
     }
   
-    p {
+    .cgu-container p {
       font-size: 14px;
     }
   }

@@ -7,13 +7,13 @@ const MentionsLegales = () => {
   return (
     <div>
       <Header />
-      <main className="content-container">
+      <main className="mention-legales-container">
         <h1>Mentions légales</h1>
 
         <section className="site-info">
           <h2>Site</h2>
           <p>
-            CultHive, accessible via <a href="https://www.culthive.fictyverse.com/">https://www.culthive.fictyverse.com/</a> ou <a href="https://culthive-frontend.vercel.app/">https://culthive-frontend.vercel.app/</a>
+            CultHive, accessible via <a href="https://culthive.fictyverse.com/">https://culthive.fictyverse.com/</a> ou <a href="https://culthive-frontend.vercel.app/">https://culthive-frontend.vercel.app/</a>
           </p>
         </section>
 
@@ -28,7 +28,8 @@ const MentionsLegales = () => {
         <section className="host-info">
           <h2>Hébergeur du site</h2>
           <p>
-            Le site est hébergé par <strong>Hostinger</strong>.
+            Le nom de domaine est fourni par <strong>Hostinger</strong>.
+            Pour contacter Hostinger, veuillez visiter leur <strong> <a href="https://www.hostinger.fr/contact">page de contact.</a> </strong>
           </p>
           <p>
             La partie Front est hébergée sur <strong>Vercel</strong>.
@@ -41,9 +42,9 @@ const MentionsLegales = () => {
         <section className="headquarters">
           <h2>Siège social</h2>
           <p>
-            Hostinger International Ltd<br />
-            61 Lordou Vironos Street, 6023 Larnaca, Chypre<br />
-            Pour contacter Hostinger, veuillez visiter leur <a href="https://www.hostinger.fr/contact">page de contact</a>.
+            CultHive - Fictyverse <br />
+            75 001 Paris, France<br />
+            Pour contacter CultHive, veuillez envoyer un mail à <strong> <a href="mailto:contact@culthive.fictyverse.com">contact@culthive.fictyverse.com</a> </strong>
           </p>
         </section>
       </main>
