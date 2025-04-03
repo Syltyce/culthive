@@ -66,7 +66,9 @@ export default function ReviewsPage() {
           {reviews.map((review) => (
             <li key={review.id}>
               <strong>{review.title}</strong> - {review.comment} (par{' '}
-              {review.User?.email || 'Utilisateur inconnu'})
+              {review.User?.email || 'Utilisateur inconnu'}) 
+              <br />
+              <span>Film ID: {review.workId}</span> {/* Affichage du workId */}
               <button onClick={() => handleDeleteReview(review.id)}>
                 Supprimer
               </button>
