@@ -23,6 +23,11 @@
   margin-bottom: 5px;
 }
 
+.review-content p {
+  color: black;
+  text-align: left;
+}
+
 .star-review-rating {
   display: flex;
   align-items: center; /* Alignement vertical parfait */
@@ -82,7 +87,7 @@
 
   .review-content h3 {
     font-size: 16px;
-  }
+  } 
 
   .star-review {
     font-size: 16px;

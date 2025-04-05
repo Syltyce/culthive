@@ -85,9 +85,7 @@ function ResetPasswordContent() {
 export default function ResetPassword() {
   return (
     <Suspense fallback={<p>Chargement...</p>}>
-      <Header />
       <ResetPasswordContent />
-      <Footer />
     </Suspense>
   )
 }
